@@ -15,15 +15,12 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <weihuagu.com.jian.ui.view.PhoneUrlBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
 
-    </weihuagu.com.jian.ui.view.PhoneUrlBar>
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
 </RelativeLayout>

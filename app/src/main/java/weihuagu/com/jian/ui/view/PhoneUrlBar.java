@@ -65,9 +65,14 @@ public class PhoneUrlBar extends LinearLayout{
     public PhoneUrlBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.mContext = context;
-        this.initResouces(context);
-        this.setListerner();
-        this.UrlSuggestion();
+
+        LayoutInflater layoutInflater = (LayoutInflater)LayoutInflater.from(context);
+        View v = layoutInflater.inflate(R.layout.phone_url_bar, null);
+        addView(v);
+
+        //this.initResouces(context);
+       // this.setListerner();
+        //this.UrlSuggestion();
     }
 
     public void initResouces(Context context){
@@ -75,6 +80,8 @@ public class PhoneUrlBar extends LinearLayout{
 
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = layoutInflater.inflate(R.layout.phone_url_bar, this);
+
+        addView(v);
 
         mPrivateBrowsing = (ImageView) v.findViewById(R.id.ImagePrivateBrowsing);
 
