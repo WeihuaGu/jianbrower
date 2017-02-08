@@ -7,8 +7,6 @@
 package weihuagu.com.jian;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +21,8 @@ import android.webkit.WebViewClient;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
+
+import weihuagu.com.jian.controllers.Controller;
 
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +40,9 @@ public class BrowserActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+
+
+        Controller.getInstance().init(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -126,15 +129,9 @@ public class BrowserActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

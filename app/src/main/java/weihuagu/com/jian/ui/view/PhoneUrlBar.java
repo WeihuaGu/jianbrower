@@ -6,13 +6,8 @@
 
 package weihuagu.com.jian.ui.view;
 
-/**
- * Created by root on 17-2-8.
- */
-
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -25,58 +20,39 @@ import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 
 
+import android.widget.ArrayAdapter;
 import weihuagu.com.jian.controllers.Controller;
 import weihuagu.com.jian.R;
-public class PhoneUrlBar extends LinearLayout {
+import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 
-    public interface OnPhoneUrlBarEventListener {
 
-        void onVisibilityChanged(boolean urlBarVisible);
-
-        void onUrlValidated();
-
-        void onGoStopReloadClicked();
-
-        void onMenuVisibilityChanged(boolean isVisible);
-
-    }
+public class PhoneUrlBar extends LinearLayout{
 
     private Context mContext;
     private Activity mActivity;
 
-    private PopupMenu mPopupMenu;
 
     private LinearLayout mTitleLayout;
     private LinearLayout mUrlLayout;
-
     private TextView mTitle;
     private TextView mSubTitle;
-
     private AutoCompleteTextView mUrl;
 
     private ImageView mPrivateBrowsing;
-
     private ImageView mGoStopReload;
-    private ImageView mMenuButton;
-
     private TextWatcher mUrlTextWatcher;
-
     private boolean mIsUrlBarVisible = false;
     private boolean mIsUrlChangedByUser = false;
-
     private OnPhoneUrlBarEventListener mEventListener = null;
 
-    private boolean mOverflowMenuShowing;
 
     public PhoneUrlBar(Context context) {
         this(context, null);
@@ -88,9 +64,13 @@ public class PhoneUrlBar extends LinearLayout {
 
     public PhoneUrlBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.mContext = context;
+        this.initResouces(context);
+        this.setListerner();
+        this.UrlSuggestion();
+    }
 
-        mContext = context;
-
+    public void initResouces(Context context){
         mActivity = Controller.getInstance().getMainActivity();
 
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -108,64 +88,26 @@ public class PhoneUrlBar extends LinearLayout {
 
         mGoStopReload = (ImageView) v.findViewById(R.id.UrlBarGoStopReload);
 
-        mMenuButton = (ImageView) v.findViewById(R.id.MenuButton);
+        mUrlTextWatcher = new TextWatcher() {
 
-        if (ViewConfiguration.get(mContext).hasPermanentMenuKey()) {
-            mMenuButton.setVisibility(View.GONE);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mGoStopReload.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            mGoStopReload.setLayoutParams(params);
-        } else {
-            mMenuButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, 	int after) { }
 
-                    if (mActivity == null) {
-                        mActivity = Controller.getInstance().getMainActivity();
-                    }
+            @Override
+            public void afterTextChanged(Editable s) {
+                mIsUrlChangedByUser = true;
+                mGoStopReload.setImageResource(R.drawable.ic_go);
+            }
+        };
 
-                    if (mPopupMenu == null) {
-                        mPopupMenu = new PopupMenu(mContext, mMenuButton);
 
-                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                return mActivity.onOptionsItemSelected(item);
-                            }
-                        });
 
-                        mPopupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+    }
 
-                            @Override
-                            public void onDismiss(PopupMenu menu) {
-                                if (menu == mPopupMenu) {
-                                    mOverflowMenuShowing = false;
-                                    if (mEventListener != null) {
-                                        mEventListener.onMenuVisibilityChanged(mOverflowMenuShowing);
-                                    }
-                                }
-                            }
-                        });
-
-                        if (!mActivity.onCreateOptionsMenu(mPopupMenu.getMenu())) {
-                            mPopupMenu = null;
-                            return;
-                        }
-                    }
-                    Menu menu = mPopupMenu.getMenu();
-                    if (mActivity.onPrepareOptionsMenu(menu)) {
-                        mOverflowMenuShowing = true;
-                        mPopupMenu.show();
-
-                        if (mEventListener != null) {
-                            mEventListener.onMenuVisibilityChanged(mOverflowMenuShowing);
-                        }
-                    }
-                }
-            });
-        }
-
+    public void setListerner(){
         mTitleLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,68 +128,6 @@ public class PhoneUrlBar extends LinearLayout {
                 showUrl();
             }
         });
-
-
-        /**
-        String[] from = new String[] { BookmarksProvider.Columns.TITLE, BookmarksProvider.Columns.URL };
-        int[] to = new int[] {R.id.AutocompleteTitle, R.id.AutocompleteUrl};
-
-        UrlSuggestionCursorAdapter adapter = new UrlSuggestionCursorAdapter(
-                mContext,
-                R.layout.url_autocomplete_line,
-                null,
-                from,
-                to,
-                0,
-                new QueryBuilderListener() {
-                    @Override
-                    public void onSuggestionSelected(String url) {
-                        setUrl(url);
-                        mUrl.setSelection(url.length());
-                    }
-                });
-
-        adapter.setCursorToStringConverter(new CursorToStringConverter() {
-            @Override
-            public CharSequence convertToString(Cursor cursor) {
-                String aColumnString = cursor.getString(cursor.getColumnIndex(BookmarksProvider.Columns.URL));
-                return aColumnString;
-            }
-        });
-
-        adapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                if ((constraint != null) &&
-                        (constraint.length() > 0)) {
-                    return BookmarksWrapper.getUrlSuggestions(mContext.getContentResolver(),
-                            constraint.toString());
-                } else {
-                    return BookmarksWrapper.getUrlSuggestions(mContext.getContentResolver(),
-                            null);
-                }
-            }
-        });
-
-        mUrl.setThreshold(1);
-        mUrl.setAdapter(adapter);
-
-         **/
-
-        mUrlTextWatcher = new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, 	int after) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mIsUrlChangedByUser = true;
-                mGoStopReload.setImageResource(R.drawable.ic_go);
-            }
-        };
 
         mUrl.addTextChangedListener(mUrlTextWatcher);
 
@@ -280,6 +160,15 @@ public class PhoneUrlBar extends LinearLayout {
                 }
             }
         });
+
+    }
+
+    public void UrlSuggestion(){
+        String [] from={"aa","aab","aac"};
+        mUrl.setThreshold(1);
+        ArrayAdapter adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1,from);
+        mUrl.setAdapter(adapter);
+
     }
 
     public void setTitle(String title) {
@@ -382,9 +271,6 @@ public class PhoneUrlBar extends LinearLayout {
         mEventListener = listener;
     }
 
-    public boolean isMenuShowing() {
-        return mOverflowMenuShowing;
-    }
 
     public void setPrivateBrowsingIndicator(boolean value) {
         if (value) {

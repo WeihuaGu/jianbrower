@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Created By WeihuaGu (email:weihuagu_work@163.com)
+  ~ Copyright (c) 2017
+  ~ All right reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@+id/AutocompleteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"        
+        android:layout_alignBottom="@+id/AutocompleteContainer"
+        android:paddingLeft="5dip"
+        android:layout_margin="5dip"
+        android:contentDescription="test it " >
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/AutocompleteContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/AutoCompleteQueryBuilder"
+        android:layout_toRightOf="@+id/AutocompleteImageView"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/AutocompleteTitle"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/AutocompleteUrl"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:ellipsize="end"
+            android:singleLine="true"            
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/AutoCompleteQueryBuilder"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/AutocompleteContainer"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="tesit it "
+        android:focusable="true"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:src="@drawable/ic_querybuilder" />
+
+</RelativeLayout>

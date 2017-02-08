@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">jian</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="ContentDescriptionPrivateBrowsingIndicator">test it i don not kown</string>
+    <string name="ContentDescriptionMenuButton">test it</string>
+    <string name="ContentDescriptionGoStopReloadButton">test it </string>
+    <string name="UrlBarUrlHint">test it</string>
     <string name="action_settings">Settings</string>
 </resources>

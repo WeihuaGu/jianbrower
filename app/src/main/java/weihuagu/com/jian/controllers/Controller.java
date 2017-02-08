@@ -8,11 +8,9 @@ package weihuagu.com.jian.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import weihuagu.com.jian.BrowserActivity;
-import weihuagu.com.jian.addons.AddonManager;
 import weihuagu.com.jian.model.DownloadItem;
-import  weihuagu.com.jian.ui.managers.UIManager;
+
 
 public class Controller { 
 	
@@ -41,23 +39,18 @@ public class Controller {
 	private Controller() {
 		mDownloads = new ArrayList<DownloadItem>();
 	}
-	
-	private UIManager mUIManager;
+
 	private BrowserActivity mMainActivity;
 	
 	private List<DownloadItem> mDownloads;
-	
-	private AddonManager mAddonManager;
-	
-	public void init(UIManager uiManager, BrowserActivity activity) {
-		mUIManager = uiManager;
+
+
+	public void init(BrowserActivity activity) {
 		mMainActivity = activity;
-		mAddonManager = new AddonManager(mMainActivity, mUIManager);
+
 	}
 	
-	public UIManager getUIManager() {
-		return mUIManager;
-	}
+
 	
 	public BrowserActivity getMainActivity() {
 		return mMainActivity;
@@ -76,9 +69,6 @@ public class Controller {
 		
 		return null;
 	}
-	
-	public AddonManager getAddonManager() {
-		return mAddonManager;
-	}
+
 	
 }
