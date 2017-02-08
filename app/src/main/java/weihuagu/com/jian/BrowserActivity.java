@@ -24,7 +24,7 @@ import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity
+public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     WebView webView=null;
