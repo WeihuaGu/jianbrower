@@ -126,9 +126,7 @@ public class BrowserActivity extends AppCompatActivity
     }
 
     public void bindUIManager(){
-        this.phoneuimanager=new PhoneUIManager();
-        this.phoneuimanager.setUrlbar(urlbar);
-        this.phoneuimanager.setWebview(webview);
+        this.phoneuimanager=new PhoneUIManager(urlbar,webview);
     }
 
 }
