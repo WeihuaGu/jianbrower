@@ -26,6 +26,16 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <weihuagu.com.jian.ui.view.PhoneUrlBar
+                android:id="@+id/urlbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </weihuagu.com.jian.ui.view.PhoneUrlBar>
+
+        </android.support.v7.widget.Toolbar>
+
+
 
         <EditText
             android:id="@+id/et_address"
@@ -43,14 +53,6 @@
             android:text="GO"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"/>
-        </android.support.v7.widget.Toolbar>
-
-        <weihuagu.com.jian.ui.view.PhoneUrlBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible">
-
-        </weihuagu.com.jian.ui.view.PhoneUrlBar>
 
     </android.support.design.widget.AppBarLayout>
 

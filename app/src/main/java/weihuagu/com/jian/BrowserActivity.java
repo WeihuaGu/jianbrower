@@ -23,9 +23,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import weihuagu.com.jian.controllers.Controller;
+import weihuagu.com.jian.ui.view.PhoneUrlBar;
 
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    PhoneUrlBar urlbar=null;
 
     WebView webView=null;
     EditText et_address=null;
@@ -64,6 +67,12 @@ public class BrowserActivity extends AppCompatActivity
                 return true;
             }
         }); //设置浏览
+
+
+
+        /////////////////////////////
+        urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
+
 
 
 

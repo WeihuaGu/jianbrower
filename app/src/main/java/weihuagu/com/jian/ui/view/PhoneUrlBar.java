@@ -6,23 +6,17 @@
 
 package weihuagu.com.jian.ui.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -37,17 +31,12 @@ import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 public class PhoneUrlBar extends LinearLayout{
 
     private Context mContext;
-    private Activity mActivity;
-
-
     private LinearLayout mTitleLayout;
     private LinearLayout mUrlLayout;
     private TextView mTitle;
     private TextView mSubTitle;
     private AutoCompleteTextView mUrl;
 
-    private ImageView mPrivateBrowsing;
-    private ImageView mGoStopReload;
     private TextWatcher mUrlTextWatcher;
     private boolean mIsUrlBarVisible = false;
     private boolean mIsUrlChangedByUser = false;
@@ -65,25 +54,18 @@ public class PhoneUrlBar extends LinearLayout{
     public PhoneUrlBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.mContext = context;
-
-        LayoutInflater layoutInflater = (LayoutInflater)LayoutInflater.from(context);
-        View v = layoutInflater.inflate(R.layout.phone_url_bar, null);
-        addView(v);
-
-        //this.initResouces(context);
-       // this.setListerner();
-        //this.UrlSuggestion();
+        this.initResouces(context);
+        this.setListerner();
+        this.UrlSuggestion();
     }
 
     public void initResouces(Context context){
-        mActivity = Controller.getInstance().getMainActivity();
 
-        LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.phone_url_bar, this);
-
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        View v = mInflater.inflate(R.layout.phone_url_bar, null);
         addView(v);
 
-        mPrivateBrowsing = (ImageView) v.findViewById(R.id.ImagePrivateBrowsing);
+
 
         mTitleLayout = (LinearLayout) v.findViewById(R.id.UrlBarTitleLayout);
         mUrlLayout = (LinearLayout) v.findViewById(R.id.UrlBarUrlLayout);
@@ -92,8 +74,6 @@ public class PhoneUrlBar extends LinearLayout{
         mSubTitle = (TextView) v.findViewById(R.id.UrlBarSubTitle);
 
         mUrl = (AutoCompleteTextView) v.findViewById(R.id.UrlBarUrlEdit);
-
-        mGoStopReload = (ImageView) v.findViewById(R.id.UrlBarGoStopReload);
 
         mUrlTextWatcher = new TextWatcher() {
 
@@ -106,7 +86,6 @@ public class PhoneUrlBar extends LinearLayout{
             @Override
             public void afterTextChanged(Editable s) {
                 mIsUrlChangedByUser = true;
-                mGoStopReload.setImageResource(R.drawable.ic_go);
             }
         };
 
@@ -159,14 +138,6 @@ public class PhoneUrlBar extends LinearLayout{
 
         mUrl.setDropDownAnchor(R.id.UrlBarContainer);
 
-        mGoStopReload.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEventListener != null) {
-                    mEventListener.onGoStopReloadClicked();
-                }
-            }
-        });
 
     }
 
@@ -262,29 +233,8 @@ public class PhoneUrlBar extends LinearLayout{
         return mIsUrlChangedByUser;
     }
 
-    public void setGoStopReloadImage(int resId) {
-        mGoStopReload.setImageResource(resId);
-    }
-
-    public void showGoStopReloadButton() {
-        mGoStopReload.setVisibility(View.VISIBLE);
-    }
-
-    public void hideGoStopReloadButton() {
-        mGoStopReload.setVisibility(View.GONE);
-    }
-
     public void setEventListener(OnPhoneUrlBarEventListener listener) {
         mEventListener = listener;
-    }
-
-
-    public void setPrivateBrowsingIndicator(boolean value) {
-        if (value) {
-            mPrivateBrowsing.setVisibility(View.VISIBLE);
-        } else {
-            mPrivateBrowsing.setVisibility(View.GONE);
-        }
     }
 
     private void triggerOnUrlBarVisibilityChanged() {
