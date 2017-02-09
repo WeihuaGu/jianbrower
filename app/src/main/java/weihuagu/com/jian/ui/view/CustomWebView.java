@@ -7,6 +7,7 @@
 package weihuagu.com.jian.ui.view;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -16,8 +17,19 @@ import android.webkit.WebViewClient;
 public class CustomWebView extends WebView {
     public CustomWebView(Context context) {
         super(context);
+
+    }
+
+    public CustomWebView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public CustomWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         this.initSetting();
     }
+
+
     public void initSetting(){
         this.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
 

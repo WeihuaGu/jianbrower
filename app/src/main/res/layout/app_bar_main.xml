@@ -35,25 +35,6 @@
 
         </android.support.v7.widget.Toolbar>
 
-
-
-        <EditText
-            android:id="@+id/et_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/webView"
-            android:layout_toLeftOf="@+id/btn_go"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/btn_go"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GO"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
-
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main" />

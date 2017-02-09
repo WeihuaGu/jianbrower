@@ -8,7 +8,7 @@ package weihuagu.com.jian.util;
 
 
 public class UrlUtil {
-    public static String [] commonusedurls={"aa","aab","aac"};
+    public static String [] commonusedurls={"m.baidu.com","www.baidu.com","cn.bing.com"};
     public static String [] getCommonlyUsedUrls(){
         return commonusedurls;
     }

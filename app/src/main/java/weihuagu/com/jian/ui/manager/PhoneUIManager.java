@@ -30,8 +30,23 @@ public class PhoneUIManager implements UIManager{
         this.webview = webview;
     }
 
+    public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview){
+        this.urlbar=urlbar;
+        this.webview=webview;
+        this.init();
+
+
+
+    }
+
     @Override
     public void loadUrl(String url) {
+
+    }
+
+    public void init(){
+        this.webview.loadUrl("http://m.baidu.com");
+
 
     }
 
