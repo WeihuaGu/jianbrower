@@ -7,7 +7,6 @@
 package weihuagu.com.jian;
 
 import android.os.Bundle;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,23 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.view.KeyEvent;
-import android.widget.Button;
-import android.widget.EditText;
 
 import weihuagu.com.jian.controllers.Controller;
+import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     PhoneUrlBar urlbar=null;
+    CustomWebView webview =null;
 
-    WebView webView=null;
-    EditText et_address=null;
-    Button btn_go=null;
 
 
     @Override
@@ -45,7 +39,7 @@ public class BrowserActivity extends AppCompatActivity
 
 
 
-        Controller.getInstance().init(this);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,21 +51,12 @@ public class BrowserActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //////////////////////
 
-        webView = (WebView) findViewById(R.id.webView); //加载WebView
-        webView.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
-        webView.loadUrl("http://www.baidu.com/");  //加载地址
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        }); //设置浏览
+        Controller.getInstance().init(this);
 
 
 
         /////////////////////////////
-        urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
+
 
 
 
@@ -79,20 +64,6 @@ public class BrowserActivity extends AppCompatActivity
         //////////////////////////
 
 
-        et_address = (EditText) findViewById(R.id.et_address);
-        et_address.setText("http://www.baidu.com/");
-        btn_go = (Button) findViewById(R.id.btn_go);
-        btn_go.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String address = et_address.getText().toString();
-                if(!address.startsWith("http://")) {
-                    address = "http://" + address;
-                } // 如果不以http://开头，识别不了，所以判断
-                webView.loadUrl(address);
-                et_address.setText(address);
-            }
-        });
 
 
 
@@ -153,13 +124,13 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if(webView.canGoBack())
-                webView.goBack();
-            else
-                finish();
-            return true;
-        }
-        return false;
+        return true;
     }
+
+
+    public void initResources(){
+        webview = (CustomWebView) findViewById(R.id.webView); //加载WebView
+        urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
+    }
+
 }

@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import weihuagu.com.jian.controllers.Controller;
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
+import weihuagu.com.jian.util.UrlUtil;
 
 
 public class PhoneUrlBar extends LinearLayout{
@@ -142,7 +143,7 @@ public class PhoneUrlBar extends LinearLayout{
     }
 
     public void UrlSuggestion(){
-        String [] from={"aa","aab","aac"};
+        String [] from= UrlUtil.getCommonlyUsedUrls();
         mUrl.setThreshold(1);
         ArrayAdapter adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1,from);
         mUrl.setAdapter(adapter);
