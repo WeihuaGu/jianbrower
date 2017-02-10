@@ -17,13 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
 import android.widget.ArrayAdapter;
-import weihuagu.com.jian.controllers.Controller;
+
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.util.UrlUtil;

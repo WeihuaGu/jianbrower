@@ -6,6 +6,7 @@
 
 package weihuagu.com.jian;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
 
-import weihuagu.com.jian.controllers.Controller;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
+import weihuagu.com.jian.ui.manager.UIManager;
 import weihuagu.com.jian.ui.manager.PhoneUIManager;
 
 public class BrowserActivity extends AppCompatActivity
@@ -28,7 +29,7 @@ public class BrowserActivity extends AppCompatActivity
     PhoneUrlBar urlbar=null;
     CustomWebView webview =null;
 
-    PhoneUIManager phoneuimanager=null;
+    UIManager phoneuimanager=null;
 
 
 
@@ -38,14 +39,6 @@ public class BrowserActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.initResources();
         this.bindUIManager();
-
-
-
-
-        //////////////////////////
-
-
-
 
 
     }
@@ -75,7 +68,8 @@ public class BrowserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_fresh) {
+            this.phoneuimanager.freshUrl();
             return true;
         }
 
@@ -90,9 +84,15 @@ public class BrowserActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_setting) {
+            Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
+            String sharestring=phoneuimanager.getCurrentUrl();
+            Intent intent1=new Intent(Intent.ACTION_SEND);
+            intent1.putExtra(Intent.EXTRA_TEXT,sharestring);
+            intent1.setType("text/plain");
+            startActivity(Intent.createChooser(intent1,"share"));
 
         }
 
@@ -105,7 +105,17 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return true;
+        if((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if(this.phoneuimanager.onKeyBack())
+                ;
+            else
+                finish();
+            return true;
+        }
+        return false;
+
+
+
     }
 
 

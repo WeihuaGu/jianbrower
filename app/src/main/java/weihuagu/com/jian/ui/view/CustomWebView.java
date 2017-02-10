@@ -11,10 +11,15 @@ import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+
+import weihuagu.com.jian.model.OnCustemWebViewEventListener;
+
 /**
  * Created by root on 17-2-9.
  */
 public class CustomWebView extends WebView {
+
+    private OnCustemWebViewEventListener mEventListener = null;
     public CustomWebView(Context context) {
         super(context);
 
@@ -31,15 +36,9 @@ public class CustomWebView extends WebView {
 
 
     public void initSetting(){
-        this.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
 
-        this.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        }); //设置浏览
+
+
 
     }
 

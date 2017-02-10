@@ -10,5 +10,7 @@ import android.view.View.OnTouchListener;
 public interface UIManager extends OnTouchListener{
     void loadUrl(String url);
     boolean onKeyBack();
+    String getCurrentUrl();
+    void freshUrl();
 
 }

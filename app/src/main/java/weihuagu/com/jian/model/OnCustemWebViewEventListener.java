@@ -9,7 +9,7 @@ package weihuagu.com.jian.model;
 /**
  * Created by root on 17-2-9.
  */
-public interface OnCustemEventListener {
+public interface OnCustemWebViewEventListener {
 
 
 
