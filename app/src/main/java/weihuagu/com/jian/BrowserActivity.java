@@ -84,6 +84,10 @@ public class BrowserActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            Intent intent=new Intent(BrowserActivity.this,ScanActivity.class);
+            startActivity(intent);
+
+
         } else if (id == R.id.nav_setting) {
             Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
             startActivity(intent);

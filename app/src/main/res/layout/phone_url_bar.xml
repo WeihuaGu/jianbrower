@@ -43,6 +43,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text=""
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 

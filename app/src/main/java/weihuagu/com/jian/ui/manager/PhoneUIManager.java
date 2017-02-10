@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 import android.util.Log;
 
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
@@ -60,7 +61,19 @@ public class PhoneUIManager implements UIManager{
                 view.loadUrl(url);
                 return true;
             }
+
+
         }); //设置浏览
+
+        this.webview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                // TODO Auto-generated method stub
+                super.onProgressChanged(view, newProgress);
+                urlbar.setTitle(webview.getTitle());
+            }
+
+        });
 
         this.urlbarEventhandle=new UrlBarEventHandle();
         this.urlbar.setEventListener(urlbarEventhandle);
