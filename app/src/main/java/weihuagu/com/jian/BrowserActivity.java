@@ -37,10 +37,10 @@ import com.yanzhenjie.permission.PermissionListener;
 
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private static final String ACTION_OPENURL = "com.weihuagu.jian.action.OPENURL";
+    private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
     PhoneUrlBar urlbar=null;
     CustomWebView webview =null;
-
     UIManager phoneuimanager=null;
 
 
@@ -51,6 +51,7 @@ public class BrowserActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.initResources();
         this.bindUIManager();
+        this.handleIntent();
 
 
     }
@@ -168,7 +169,14 @@ public class BrowserActivity extends AppCompatActivity
         this.phoneuimanager=new PhoneUIManager(urlbar,webview);
     }
 
+    public void handleIntent(){
+        Intent intent=getIntent();
+        if(intent.getAction()==ACTION_OPENURL){
+            String url=intent.getStringExtra(EXTRA_URL);
+            this.phoneuimanager.loadUrl(url);
+        }
 
+    }
 
 
 
