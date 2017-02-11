@@ -10,30 +10,39 @@ package weihuagu.com.jian;
  * Created by root on 17-2-10.
  */
 import android.os.Bundle;
-import android.widget.Toast;
-import com.kenumir.materialsettings.MaterialSettings;
-import com.kenumir.materialsettings.items.HeaderItem;
-import com.kenumir.materialsettings.items.CheckboxItem;
-import com.kenumir.materialsettings.storage.StorageInterface;
-import com.kenumir.materialsettings.storage.PreferencesStorageInterface;
-public class SettingsActivity extends MaterialSettings {
+import android.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
+import android.preference.PreferenceFragment;
+public class SettingsActivity extends ActionBarActivity{
 
+
+    private SettingsFragment mSettingsFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_material_settings);
-        addItem(new HeaderItem(this).setTitle("Sample title 1"));
-        addItem(new CheckboxItem(this, "key1").setTitle("Checkbox item 1").setSubtitle("Subtitle text 1").setOnCheckedChangeListener(new CheckboxItem.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChange(CheckboxItem cbi, boolean isChecked) {
-                Toast.makeText(SettingsActivity.this, "CHECKED: " + isChecked, Toast.LENGTH_SHORT).show();
-            }
-        }));
+
+        setContentView(R.layout.activity_settings);
+        if (savedInstanceState == null) {
+            mSettingsFragment = new SettingsFragment();
+            replaceFragment(R.id.settings_container, mSettingsFragment);
+        }
+
     }
-    @Override
-    public StorageInterface initStorageInterface() {
-        return new PreferencesStorageInterface(this);
+
+    public void replaceFragment(int viewId, android.app.Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(viewId, fragment).commit();
     }
+
+    public static class SettingsFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+        }
+    }
+
 
 
 }

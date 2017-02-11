@@ -30,9 +30,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:theme="@style/MaterialSettingsTheme"></activity>
-        <activity android:name=".ScanActivity"></activity>
+            android:name=".SettingsActivity">
+
+        </activity>
+        <activity android:name=".ScanActivity">
+
+        </activity>
 
 
     </application>
