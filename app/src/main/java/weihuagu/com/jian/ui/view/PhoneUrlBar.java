@@ -182,7 +182,7 @@ public class PhoneUrlBar extends LinearLayout{
     public void setSubtitle(int resId) {
         setSubtitle(mContext.getString(resId));
     }
-
+    public void getUrlFocus(){ mUrl.requestFocus();}
     public void showUrl() {
         mTitleLayout.setVisibility(View.GONE);
         mUrlLayout.setVisibility(View.VISIBLE);

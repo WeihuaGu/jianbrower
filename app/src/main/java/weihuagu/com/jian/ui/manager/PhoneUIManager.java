@@ -64,6 +64,16 @@ public class PhoneUIManager implements UIManager{
                 return true;
             }
 
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+//结束
+                super.onPageFinished(view, url);
+                urlbar.hideUrl();
+                urlbar.setTitle(webview.getTitle());
+                Log.i("phonuimanager","pagefinised and title:"+webview.getTitle());
+            }
+
 
         }); //设置浏览
 
@@ -73,6 +83,7 @@ public class PhoneUIManager implements UIManager{
                 // TODO Auto-generated method stub
                 super.onProgressChanged(view, newProgress);
                 urlbar.setTitle(webview.getTitle());
+                Log.i("phonuimanager","pageprogressChanged and title:"+webview.getTitle());
             }
 
         });
@@ -89,6 +100,8 @@ public class PhoneUIManager implements UIManager{
 
     public void init(){
         //this.webview.loadUrl("http://m.baidu.com");
+        this.urlbar.showUrl();
+        this.urlbar.getUrlFocus();
 
 
     }
