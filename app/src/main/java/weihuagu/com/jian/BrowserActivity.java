@@ -17,11 +17,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
+import android.Manifest;
+import java.util.List;
+import android.support.v4.content.ContextCompat;
+import android.content.pm.PackageManager;
+
 
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.ui.manager.UIManager;
 import weihuagu.com.jian.ui.manager.PhoneUIManager;
+
+
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+
+
+
 
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,14 +95,27 @@ public class BrowserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-            Intent intent=new Intent(BrowserActivity.this,ScanActivity.class);
-            startActivity(intent);
+            if(this.checkPermissionCAMERA()) {
+                // Handle the camera action
+                Intent intent=new Intent(BrowserActivity.this,ScanActivity.class);
+                startActivity(intent);
+
+            }else{
+                this.getPermissionCAMERA();
+
+            }
+
+
+
+
+
 
 
         } else if (id == R.id.nav_setting) {
-            Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
-            startActivity(intent);
+                // 有权限，直接do anything.
+                Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
+                startActivity(intent);
+
         } else if (id == R.id.nav_share) {
             String sharestring=phoneuimanager.getCurrentUrl();
             Intent intent1=new Intent(Intent.ACTION_SEND);
@@ -142,5 +167,64 @@ public class BrowserActivity extends AppCompatActivity
     public void bindUIManager(){
         this.phoneuimanager=new PhoneUIManager(urlbar,webview);
     }
+
+
+
+
+
+    //permission
+
+
+    public void getPermissionCAMERA(){
+        AndPermission.with(this)
+                .requestCode(100)
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .send();
+
+
+    }
+
+    public boolean checkPermissionCAMERA(){
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+        if(permissionCheck==PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        // 只需要调用这一句，其它的交给AndPermission吧，最后一个参数是PermissionListener。
+        AndPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, listener);
+    }
+
+    private PermissionListener listener = new PermissionListener() {
+        @Override
+        public void onSucceed(int requestCode, List<String> grantedPermissions) {
+            // 权限申请成功回调。
+            if(requestCode == 100) {
+                // TODO 相应代码。
+
+                Intent intent=new Intent(BrowserActivity.this,ScanActivity.class);
+                startActivity(intent);
+            } else if(requestCode == 101) {
+                // TODO 相应代码。
+            }
+        }
+
+        @Override
+        public void onFailed(int requestCode, List<String> deniedPermissions) {
+            // 权限申请失败回调。
+
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+
+        }
+    };
+
+
 
 }
