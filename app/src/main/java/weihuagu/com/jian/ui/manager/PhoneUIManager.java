@@ -50,6 +50,8 @@ public class PhoneUIManager implements UIManager{
 
     @Override
     public void loadUrl(String url) {
+        String openurl= UrlUtil.addressMatch(url);
+        this.webview.loadUrl(openurl);
 
     }
     public void initresources(){
@@ -86,7 +88,7 @@ public class PhoneUIManager implements UIManager{
     }
 
     public void init(){
-        this.webview.loadUrl("http://m.baidu.com");
+        //this.webview.loadUrl("http://m.baidu.com");
 
 
     }
@@ -137,9 +139,7 @@ public class PhoneUIManager implements UIManager{
         @Override
         public void onUrlValidated() {
             Log.v("urlbar","key enter");
-            String openurl= UrlUtil.addressMatch(urlbar.getUrl());
-            Log.v("openurlstring",openurl);
-            webview.loadUrl(openurl);
+            loadUrl(urlbar.getUrl());
 
         }
 

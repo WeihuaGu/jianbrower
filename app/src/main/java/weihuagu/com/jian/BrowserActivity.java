@@ -21,6 +21,7 @@ import android.Manifest;
 import java.util.List;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -172,6 +173,7 @@ public class BrowserActivity extends AppCompatActivity
     public void handleIntent(){
         Intent intent=getIntent();
         if(intent.getAction()==ACTION_OPENURL){
+            Log.i("broseractivity","received:"+ACTION_OPENURL);
             String url=intent.getStringExtra(EXTRA_URL);
             this.phoneuimanager.loadUrl(url);
         }
