@@ -56,6 +56,7 @@ public class PhoneUIManager implements UIManager{
     }
     public void initresources(){
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
+        this.webview.getSettings().setDomStorageEnabled(true);
 
         this.webview.setWebViewClient(new WebViewClient() {
             @Override
@@ -69,6 +70,7 @@ public class PhoneUIManager implements UIManager{
             {
 //结束
                 super.onPageFinished(view, url);
+                setUrlbarUrl(getCurrentUrl());
                 urlbar.hideUrl();
                 urlbar.setTitle(webview.getTitle());
                 Log.i("phonuimanager","pagefinised and title:"+webview.getTitle());
@@ -103,6 +105,11 @@ public class PhoneUIManager implements UIManager{
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
 
+
+    }
+
+    public void setUrlbarUrl(String url){
+        this.urlbar.setUrl(url);
 
     }
 

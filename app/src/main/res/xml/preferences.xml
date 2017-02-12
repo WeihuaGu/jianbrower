@@ -73,12 +73,20 @@
         android:title="感谢有你">
         <Preference
             android:layout="@layout/preference_item"
-            android:summary="我的博客：http://drakeet.me"
-            android:title="作者：drakeet"/>
+            android:summary="邮箱：weihuagu_work@163.com"
+            android:title="作者：weihuagu"/>
 
         <Preference
             android:layout="@layout/preference_item"
             android:title="退出登录"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="广告">
+
+        <Preference
+            android:layout="@layout/preference_item"
+            android:title="广告"/>
     </PreferenceCategory>
 
 

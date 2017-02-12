@@ -177,6 +177,17 @@ public class BrowserActivity extends AppCompatActivity
             String url=intent.getStringExtra(EXTRA_URL);
             this.phoneuimanager.loadUrl(url);
         }
+        if(intent.getAction()=="android.intent.action.VIEW"){
+            String [] categories= new String [2];
+            intent.getCategories().toArray(categories);
+            if(categories!=null){
+                for(int i=0;i<categories.length;i++){
+                    if(categories[i]=="android.intent.category.BROWSABLE")
+                        this.phoneuimanager.loadUrl(intent.getData().toString());
+
+                }
+            }
+        }
 
     }
 
