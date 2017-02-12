@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">jian</string>
+    <string name="app_name">jian qin browser</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="ContentDescriptionPrivateBrowsingIndicator">test it i don not kown</string>
@@ -11,4 +11,5 @@
     <string name="action_scan">scan</string>
     <string name="action_share">Share</string>
     <string name="action_openscanedurl">open url</string>
+    <string name="icon_grant">Icons made by Madebyoliver from www.flaticon.com is licensed by CC 3.0 BY</string>
 </resources>

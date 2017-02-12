@@ -6,6 +6,7 @@
 
 package weihuagu.com.jian.ui.manager;
 
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -17,6 +18,7 @@ import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.util.UrlUtil;
+import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 
 
 /**
@@ -27,6 +29,7 @@ public class PhoneUIManager implements UIManager{
     PhoneUrlBar urlbar=null;
     CustomWebView webview=null;
     OnPhoneUrlBarEventListener urlbarEventhandle=null;
+    Context context=null;
 
 
     public void setUrlbar(PhoneUrlBar urlbar) {
@@ -38,7 +41,8 @@ public class PhoneUIManager implements UIManager{
         this.webview = webview;
     }
 
-    public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview){
+    public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview,Context context){
+        this.context=context;
         this.urlbar=urlbar;
         this.webview=webview;
         this.initresources();
@@ -57,6 +61,8 @@ public class PhoneUIManager implements UIManager{
     public void initresources(){
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
         this.webview.getSettings().setDomStorageEnabled(true);
+
+        webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
 
         this.webview.setWebViewClient(new WebViewClient() {
             @Override
@@ -111,6 +117,11 @@ public class PhoneUIManager implements UIManager{
     public void setUrlbarUrl(String url){
         this.urlbar.setUrl(url);
 
+    }
+
+    @Override
+    public void hideurl(){
+        this.urlbar.hideUrl();
     }
 
     @Override

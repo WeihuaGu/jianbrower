@@ -12,5 +12,6 @@ public interface UIManager extends OnTouchListener{
     boolean onKeyBack();
     String getCurrentUrl();
     void freshUrl();
+    void hideurl();
 
 }

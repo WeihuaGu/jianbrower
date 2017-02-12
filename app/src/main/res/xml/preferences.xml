@@ -9,62 +9,25 @@
 
     <PreferenceCategory
         android:layout="@layout/preference_category_widget"
-        android:title="人性化自由选择">
+        android:title="浏览设置">
 
-        <CheckBoxPreference
-            android:layout="@layout/preference_item"
-            android:title="贝壳通知栏单词处于最高位置"
-            android:summaryOn="当前为最高位置"
-            android:summaryOff="当前为最低位置(默认)"
-            android:defaultValue="false"/>
-        <Preference
-            android:layout="@layout/preference_item"
-            android:title="在通知栏显示音标"
-            android:summary="当前为不显示"
-            android:defaultValue="false"/>
-        <CheckBoxPreference
-            android:layout="@layout/preference_item"
-            android:title="全局复习小吐司"
-            android:defaultValue="true"/>
-        <CheckBoxPreference
-            android:layout="@layout/preference_item"
-            android:title="通知栏消息字体颜色"
-            android:summaryOff="当前为黑色"
-            android:summaryOn="当前为白色"
-            android:defaultValue="true"/>
-        <CheckBoxPreference
-            android:layout="@layout/preference_item"
-            android:title="开机自启动"
-            android:defaultValue="true"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:layout="@layout/preference_category_widget"
-        android:title="帮助">
-        <Preference
-            android:layout="@layout/preference_item"
-            android:title="关于">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://fir.im/seashell"/>
-        </Preference>
+        android:title="关于">
 
         <Preference
             android:layout="@layout/preference_item"
-            android:title="手动检查更新">
+            android:title="图标授权"
+            android:summary="@string/icon_grant">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="http://fir.im/seashell"/>
+                android:category="android.intent.category.DEFAULT"
+                android:data="http://www.flaticon.com/authors/madebyoliver"/>
         </Preference>
 
-        <Preference
-            android:layout="@layout/preference_item"
-            android:title="喜欢贝壳单词"
-            android:summary="若你觉得贝壳单词很赞的话，麻烦点击此处到应用商店给个好评，非常感谢">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="market://details?id=me.drakeet.seashell"/>
-        </Preference>
 
     </PreferenceCategory>
 
@@ -78,7 +41,12 @@
 
         <Preference
             android:layout="@layout/preference_item"
-            android:title="退出登录"/>
+            android:title="捐助开发者">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:category="android.intent.category.DEFAULT"
+            android:data="https://weihuagu.github.io/donate/"/>
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:layout="@layout/preference_category_widget"

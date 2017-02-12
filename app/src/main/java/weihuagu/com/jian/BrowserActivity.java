@@ -167,7 +167,7 @@ public class BrowserActivity extends AppCompatActivity
     }
 
     public void bindUIManager(){
-        this.phoneuimanager=new PhoneUIManager(urlbar,webview);
+        this.phoneuimanager=new PhoneUIManager(urlbar,webview,getApplicationContext());
     }
 
     public void handleIntent(){
@@ -178,15 +178,24 @@ public class BrowserActivity extends AppCompatActivity
             this.phoneuimanager.loadUrl(url);
         }
         if(intent.getAction()=="android.intent.action.VIEW"){
-            String [] categories= new String [2];
-            intent.getCategories().toArray(categories);
+            //String [] categories= new String [2];
+            //intent.getCategories().toArray(categories);
+            String url=intent.getData().toString();
+            if(url!=null){
+                this.phoneuimanager.loadUrl(intent.getData().toString());
+                this.phoneuimanager.hideurl();
+
+            }
+            /**
             if(categories!=null){
                 for(int i=0;i<categories.length;i++){
-                    if(categories[i]=="android.intent.category.BROWSABLE")
+                    //if(categories[i]=="android.intent.category.BROWSABLE")
                         this.phoneuimanager.loadUrl(intent.getData().toString());
+                        this.phoneuimanager.hideurl();
 
                 }
             }
+             **/
         }
 
     }
