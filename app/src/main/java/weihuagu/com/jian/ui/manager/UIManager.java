@@ -9,6 +9,7 @@ package weihuagu.com.jian.ui.manager;
 import android.view.View.OnTouchListener;
 public interface UIManager extends OnTouchListener{
     void loadUrl(String url);
+    void loadUrlInHttps(String url);
     boolean onKeyBack();
     String getCurrentUrl();
     void freshUrl();

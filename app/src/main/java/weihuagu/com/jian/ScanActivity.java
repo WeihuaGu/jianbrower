@@ -77,7 +77,9 @@ public class ScanActivity extends AppCompatActivity implements OnQRCodeReadListe
     public void openScanedUrl(View v){
         Log.i("Qrcode","open url");
         String url=resultTextView.getText().toString();
-        if(url!=null){
+
+        if(!url.equals("")){
+            Log.i("Qrcode",url);
             Intent send=new Intent(getApplicationContext(), BrowserActivity.class);
             send.setAction(ACTION_OPENURL);
             send.putExtra(EXTRA_URL,url);

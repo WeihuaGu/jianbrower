@@ -17,12 +17,11 @@ public class MyWebViewDownLoadListener implements DownloadListener{
     }
     @Override
     public void onDownloadStart(String url, String s1, String s2, String s3, long l) {
-        /**
+
         DownloadManager downloadManager;
-        downloadManager = (DownloadManager)getSystemService(serviceString);
+        downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadItem request=new DownloadItem(url);
         downloadManager.enqueue(request);
-         **/
 
 
     }

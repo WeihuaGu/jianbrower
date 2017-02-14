@@ -53,6 +53,9 @@ public class BrowserActivity extends AppCompatActivity
         this.initResources();
         this.bindUIManager();
         this.handleIntent();
+        if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
+            this.getPermissionWRITE_EXTERNAL_STORAGE();
+        }
 
 
     }
@@ -85,6 +88,10 @@ public class BrowserActivity extends AppCompatActivity
         if (id == R.id.action_fresh) {
             this.phoneuimanager.freshUrl();
             return true;
+        }
+
+        if (id==R.id.action_loadinhttps){
+            this.phoneuimanager.loadUrlInHttps(phoneuimanager.getCurrentUrl());
         }
 
         return super.onOptionsItemSelected(item);
@@ -186,16 +193,7 @@ public class BrowserActivity extends AppCompatActivity
                 this.phoneuimanager.hideurl();
 
             }
-            /**
-            if(categories!=null){
-                for(int i=0;i<categories.length;i++){
-                    //if(categories[i]=="android.intent.category.BROWSABLE")
-                        this.phoneuimanager.loadUrl(intent.getData().toString());
-                        this.phoneuimanager.hideurl();
 
-                }
-            }
-             **/
         }
 
     }
@@ -204,7 +202,12 @@ public class BrowserActivity extends AppCompatActivity
 
     //permission
 
-
+    public void getPermissionWRITE_EXTERNAL_STORAGE(){
+        AndPermission.with(this)
+                .requestCode(101)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .send();
+    }
     public void getPermissionCAMERA(){
         AndPermission.with(this)
                 .requestCode(100)
@@ -214,9 +217,21 @@ public class BrowserActivity extends AppCompatActivity
 
     }
 
+
     public boolean checkPermissionCAMERA(){
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
+        if(permissionCheck==PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean checkPermissionWRITE_EXTERNAL_STORAGE(){
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if(permissionCheck==PackageManager.PERMISSION_GRANTED){
             return true;
         }

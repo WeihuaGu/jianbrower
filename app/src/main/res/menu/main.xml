@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="@string/action_fresh"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_loadinhttps"
+        android:orderInCategory="100"
+        android:title="@string/action_loadinhttps"
+        app:showAsAction="never" />
 </menu>

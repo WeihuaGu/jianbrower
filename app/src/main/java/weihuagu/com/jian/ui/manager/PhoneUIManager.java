@@ -9,6 +9,7 @@ package weihuagu.com.jian.ui.manager;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
@@ -57,6 +58,11 @@ public class PhoneUIManager implements UIManager{
         String openurl= UrlUtil.addressMatch(url);
         this.webview.loadUrl(openurl);
 
+    }
+    @Override
+    public void loadUrlInHttps(String url){
+        String openurl= UrlUtil.addressMatchInHttps(url);
+        this.webview.loadUrl(openurl);
     }
     public void initresources(){
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
