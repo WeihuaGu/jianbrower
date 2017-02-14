@@ -58,6 +58,7 @@ public class BrowserActivity extends AppCompatActivity
         }
 
 
+
     }
 
     @Override
@@ -269,7 +270,6 @@ public class BrowserActivity extends AppCompatActivity
 
         }
     };
-
 
 
 }

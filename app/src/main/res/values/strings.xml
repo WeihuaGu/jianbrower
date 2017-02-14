@@ -13,4 +13,6 @@
     <string name="action_loadinhttps">load url use https </string>
     <string name="action_openscanedurl">open url</string>
     <string name="icon_grant">Icons made by Madebyoliver from www.flaticon.com is licensed by CC 3.0 BY</string>
+
+    <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
 </resources>

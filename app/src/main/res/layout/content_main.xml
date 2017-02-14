@@ -13,14 +13,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".BrowserActivity"
     tools:showIn="@layout/app_bar_main">
-
-
-
-
     <weihuagu.com.jian.ui.view.CustomWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
 </RelativeLayout>

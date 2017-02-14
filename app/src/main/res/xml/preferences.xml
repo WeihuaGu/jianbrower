@@ -49,12 +49,9 @@
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory
+
         android:layout="@layout/preference_category_widget"
         android:title="广告">
-
-        <Preference
-            android:layout="@layout/preference_item"
-            android:title="广告"/>
     </PreferenceCategory>
 
 

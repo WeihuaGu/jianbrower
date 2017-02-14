@@ -1,1 +1,2 @@
 include ':app'
+include ':bDIntegrationSDK_LibProject'

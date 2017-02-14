@@ -6,11 +6,23 @@
 
 package weihuagu.com.jian.util;
 
-
 public class UrlUtil {
     public static String [] commonusedurls={"m.baidu.com","www.baidu.com","cn.bing.com","Jd.com","weibo.com","weibo.cn","sina.cn","www.tmall.com","www.taobao.com","tianya.cn","github.com","news.163.com","mail.163.com"};
     public static String [] getCommonlyUsedUrls(){
         return commonusedurls;
+    }
+
+    public static boolean isUrl(String url) {
+        return
+                url.contains(".") ||
+                        url.equals(Constants.URL_ABOUT_BLANK) ||
+                        url.equals(Constants.URL_ABOUT_START) ||
+                        url.equals(Constants.URL_ABOUT_TUTORIAL);
+    }
+
+
+    public static String getSearchUrl(String searchurl,String serchcontent) {
+        return searchurl.replaceAll("\\{searchTerms\\}", serchcontent);
     }
     public static String addressMatch(String address){
         if(address.startsWith("http://")){

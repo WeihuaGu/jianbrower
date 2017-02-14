@@ -9,12 +9,12 @@ package weihuagu.com.jian.ui.manager;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.util.Log;
 
+import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
@@ -55,8 +55,19 @@ public class PhoneUIManager implements UIManager{
 
     @Override
     public void loadUrl(String url) {
-        String openurl= UrlUtil.addressMatch(url);
-        this.webview.loadUrl(openurl);
+        if(UrlUtil.isUrl(url)){
+            String openurl= UrlUtil.addressMatch(url);
+            this.webview.loadUrl(openurl);
+
+        }
+        else{
+            String searchurl=context.getString(R.string.SearchUrlGoogle);
+            UrlUtil.getSearchUrl(searchurl,url);
+
+        }
+
+
+
 
     }
     @Override

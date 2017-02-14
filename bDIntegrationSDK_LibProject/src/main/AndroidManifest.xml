@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><manifest android:versionCode="1" android:versionName="1.0" package="com.baidu.integrationsdk.lib" xmlns:android="http://schemas.android.com/apk/res/android">
+     
+
+    <application>
+        
+        <meta-data android:name="BDAPPID" android:value=""/>
+        <meta-data android:name="BDAPPKEY" android:value=""/>
+        
+	 
+        
+    <receiver android:name="com.baidu.appx.app_download.CompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+
+                <data android:scheme="package"/> <!-- 注意！！ 这句必须要加，否则接收不到安装完成广播 -->
+            </intent-filter>
+        </receiver><!-- 注册SDK的activity --><activity android:configChanges="orientation|screenSize" android:name="com.baidu.appx.uikit.BDActivity">
+        </activity></application>
+
+<uses-permission android:name="android.permission.INTERNET"/><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/><uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/><uses-permission android:name="android.permission.READ_PHONE_STATE"/><uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/><uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/><!-- cuid需要write settings --><uses-permission android:name="android.permission.WRITE_SETTINGS"/></manifest>

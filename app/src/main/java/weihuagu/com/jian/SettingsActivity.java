@@ -6,13 +6,20 @@
 
 package weihuagu.com.jian;
 
-/**
- * Created by root on 17-2-10.
- */
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.preference.PreferenceFragment;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.preference.Preference;
+import android.widget.TextView;
+
+import weihuagu.com.jian.model.Advertising;
+
+import com.baidu.appx.BDBannerAd;
+
 public class SettingsActivity extends ActionBarActivity{
 
 
@@ -26,6 +33,8 @@ public class SettingsActivity extends ActionBarActivity{
             mSettingsFragment = new SettingsFragment();
             replaceFragment(R.id.settings_container, mSettingsFragment);
         }
+
+        this.showBannerAd();
 
     }
 
@@ -41,6 +50,21 @@ public class SettingsActivity extends ActionBarActivity{
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
         }
+
+
+    }
+
+    private BDBannerAd bannerview=null;
+    public void showBannerAd(){
+
+        bannerview=new BDBannerAd(this, "ZHY7GuRu0ycYGlGkiwjzv7glD2GHgcB3", "gY4DR1QGzxYkCDQxlArO9dyG");
+        bannerview.setAdSize(BDBannerAd.SIZE_FLEXIBLE);
+        bannerview.setAdListener(new Advertising("Banner"));
+        Log.v("ad", "adview new");
+        ViewGroup container=(LinearLayout)findViewById(R.id.adview_container);
+        container.addView(bannerview);
+
+
     }
 
 
