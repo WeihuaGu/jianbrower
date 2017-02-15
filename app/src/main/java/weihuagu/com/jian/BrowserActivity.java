@@ -92,7 +92,9 @@ public class BrowserActivity extends AppCompatActivity
         }
 
         if (id==R.id.action_loadinhttps){
-            this.phoneuimanager.loadUrlInHttps(phoneuimanager.getCurrentUrl());
+            String url=phoneuimanager.getCurrentUrl();
+            if(url!=null)
+            this.phoneuimanager.loadUrlInHttps(url);
         }
 
         return super.onOptionsItemSelected(item);
@@ -114,12 +116,6 @@ public class BrowserActivity extends AppCompatActivity
                 this.getPermissionCAMERA();
 
             }
-
-
-
-
-
-
 
         } else if (id == R.id.nav_setting) {
                 // 有权限，直接do anything.
@@ -212,7 +208,7 @@ public class BrowserActivity extends AppCompatActivity
     public void getPermissionCAMERA(){
         AndPermission.with(this)
                 .requestCode(100)
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE)
                 .send();
 
 

@@ -56,13 +56,13 @@ public class PhoneUIManager implements UIManager{
     @Override
     public void loadUrl(String url) {
         if(UrlUtil.isUrl(url)){
+            Log.v("loadurl","is url"+url);
             String openurl= UrlUtil.addressMatch(url);
             this.webview.loadUrl(openurl);
 
         }
         else{
-            String searchurl=context.getString(R.string.SearchUrlGoogle);
-            UrlUtil.getSearchUrl(searchurl,url);
+            this.searchByBing(url);
 
         }
 
@@ -70,9 +70,20 @@ public class PhoneUIManager implements UIManager{
 
 
     }
+
+    public void searchByBing(String searchkey){
+        Log.v("loadurl","not url"+searchkey+"use research");
+        String searchurl=context.getString(R.string.SearchUrlBing);
+        String openurl=UrlUtil.getSearchUrl(searchurl,searchkey);
+        this.webview.loadUrl(openurl);
+
+
+    }
     @Override
     public void loadUrlInHttps(String url){
+        Log.v("loadinhttps:","sorce url"+url);
         String openurl= UrlUtil.addressMatchInHttps(url);
+        Log.v("loadinhttps:","open url"+openurl);
         this.webview.loadUrl(openurl);
     }
     public void initresources(){

@@ -15,4 +15,6 @@
     <string name="icon_grant">Icons made by Madebyoliver from www.flaticon.com is licensed by CC 3.0 BY</string>
 
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
+    <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
+    <string name="version">v1.1</string>
 </resources>

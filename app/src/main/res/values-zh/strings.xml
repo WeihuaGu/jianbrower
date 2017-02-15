@@ -5,12 +5,17 @@
     <string name="ContentDescriptionPrivateBrowsingIndicator">test it i don not kown</string>
     <string name="ContentDescriptionMenuButton">test it</string>
     <string name="ContentDescriptionGoStopReloadButton">test it </string>
+    <string name="icon_grant">Icons made by Madebyoliver from www.flaticon.com is licensed by CC 3.0 BY</string>
+
     <string name="UrlBarUrlHint">请输入网址</string>
     <string name="action_settings">设置</string>
     <string name="action_fresh">刷新</string>
     <string name="action_scan">扫一扫</string>
     <string name="action_share">分享</string>
     <string name="action_openscanedurl">打开识别网址</string>
-    <string name="action_loadinhttps">使用https载入 </string>
+    <string name="action_loadinhttps">使用https重新载入 </string>
+    <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
+    <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
+    <string name="version">v1.1</string>
 
 </resources>

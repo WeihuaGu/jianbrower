@@ -20,6 +20,11 @@
 
         <Preference
             android:layout="@layout/preference_item"
+            android:title="版本"
+            android:summary="@string/version">
+        </Preference>
+        <Preference
+            android:layout="@layout/preference_item"
             android:title="图标授权"
             android:summary="@string/icon_grant">
             <intent
