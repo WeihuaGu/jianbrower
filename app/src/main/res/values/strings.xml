@@ -16,5 +16,5 @@
 
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
-    <string name="version">v1.1</string>
+    <string name="version">v1.2</string>
 </resources>

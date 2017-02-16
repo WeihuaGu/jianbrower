@@ -89,6 +89,10 @@ public class PhoneUIManager implements UIManager{
     public void initresources(){
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
         this.webview.getSettings().setDomStorageEnabled(true);
+        this.webview.getSettings().setUseWideViewPort(true);//设置加载进来的页面自适应手机屏幕
+        this.webview.getSettings().setLoadWithOverviewMode(true);
+
+        this.webview.getSettings().setSupportZoom(true);
 
         webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
 
