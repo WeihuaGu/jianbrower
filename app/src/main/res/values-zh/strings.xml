@@ -18,4 +18,7 @@
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
     <string name="version">v1.2</string>
 
+    <string name="pref_key_home">prefhome</string>
+    <string name="pref_summary_home">设置主页网址</string>
+
 </resources>

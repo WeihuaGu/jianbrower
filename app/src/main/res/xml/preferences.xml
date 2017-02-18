@@ -11,6 +11,12 @@
         android:layout="@layout/preference_category_widget"
         android:title="浏览设置">
 
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="@string/pref_key_home"
+            android:summary="@string/pref_summary_home"
+            android:title="主页" />
+
 
     </PreferenceCategory>
 

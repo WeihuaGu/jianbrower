@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.util.Log;
+import android.preference.PreferenceManager;
+
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
@@ -22,11 +24,13 @@ import weihuagu.com.jian.util.UrlUtil;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 
 
+
 /**
  * Created by root on 17-2-9.
  */
 public class PhoneUIManager implements UIManager{
 
+    PreferenceManager sharedPref=null;
     PhoneUrlBar urlbar=null;
     CustomWebView webview=null;
     OnPhoneUrlBarEventListener urlbarEventhandle=null;
@@ -71,6 +75,10 @@ public class PhoneUIManager implements UIManager{
 
     }
 
+    public void loadHome(){
+
+    }
+
     public void searchByBing(String searchkey){
         Log.v("loadurl","not url"+searchkey+"use research");
         String searchurl=context.getString(R.string.SearchUrlBing);
@@ -89,9 +97,6 @@ public class PhoneUIManager implements UIManager{
     public void initresources(){
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
         this.webview.getSettings().setDomStorageEnabled(true);
-        this.webview.getSettings().setUseWideViewPort(true);//设置加载进来的页面自适应手机屏幕
-        this.webview.getSettings().setLoadWithOverviewMode(true);
-
         this.webview.getSettings().setSupportZoom(true);
 
         webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
@@ -142,6 +147,8 @@ public class PhoneUIManager implements UIManager{
         //this.webview.loadUrl("http://m.baidu.com");
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
+
+        PreferenceManager.getDefaultSharedPreferences(this.context);
 
 
     }
