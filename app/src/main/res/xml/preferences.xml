@@ -17,6 +17,15 @@
             android:summary="@string/pref_summary_home"
             android:title="主页" />
 
+            <ListPreference
+                android:key="@string/pref_key_searchitems"
+                android:title="@string/pref_title_searchitems"
+                android:entries="@array/pref_entries_searchitems"
+                android:entryValues="@array/pref_entryvalues_searchitems"
+                >
+            </ListPreference>
+
+
 
     </PreferenceCategory>
 

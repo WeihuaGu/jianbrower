@@ -21,4 +21,17 @@
 
     <string name="pref_key_home">prefhome</string>
     <string name="pref_summary_home">set the home url</string>
+    <string name="pref_key_searchitems">presearchitems</string>
+    <string name="pref_title_searchitems">search engine</string>
+
+
+    <string-array name="pref_entries_searchitems">
+        <item>bing</item>
+        <item>google</item>
+    </string-array>
+
+    <string-array name="pref_entryvalues_searchitems">
+        <item>bing</item>
+        <item>google</item>
+    </string-array>
 </resources>

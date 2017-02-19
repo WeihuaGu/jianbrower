@@ -19,6 +19,19 @@
     <string name="version">v1.2</string>
 
     <string name="pref_key_home">prefhome</string>
+    <string name="pref_key_searchitems">presearchitems</string>
     <string name="pref_summary_home">设置主页网址</string>
+    <string name="pref_title_searchitems">搜索引擎</string>
+
+
+    <string-array name="pref_entries_searchitems">
+        <item>比应</item>
+        <item>谷歌</item>
+    </string-array>
+
+    <string-array name="pref_entryvalues_searchitems">
+        <item>bing</item>
+        <item>google</item>
+    </string-array>
 
 </resources>

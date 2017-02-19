@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.util.Log;
 import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
 
 
 import weihuagu.com.jian.R;
@@ -30,7 +31,7 @@ import weihuagu.com.jian.model.MyWebViewDownLoadListener;
  */
 public class PhoneUIManager implements UIManager{
 
-    PreferenceManager sharedPref=null;
+    SharedPreferences sharedPref=null;
     PhoneUrlBar urlbar=null;
     CustomWebView webview=null;
     OnPhoneUrlBarEventListener urlbarEventhandle=null;
@@ -66,7 +67,24 @@ public class PhoneUIManager implements UIManager{
 
         }
         else{
-            this.searchByBing(url);
+
+            String engine=this.sharedPref.getString("presearchitems",null);
+            if(engine!=null)
+            Log.v("search engine",engine);
+            if(engine.equals("bing")) {
+                Log.v("fuck","1");
+                this.searchByBing(url);
+
+            }
+            if(engine.equals("google")){
+                Log.v("fuck","2");
+                this.searchByGoogle(url);
+
+            }
+            else{
+                Log.v("fuck","3");
+                //this.searchByBing(url);
+            }
 
         }
 
@@ -76,15 +94,29 @@ public class PhoneUIManager implements UIManager{
     }
 
     public void loadHome(){
+        String homeurl=this.sharedPref.getString("prefhome",null);
+        if(homeurl!=null){
+            if(homeurl!=""){
+                this.loadUrl(homeurl);
+            }
+        }
+
 
     }
 
     public void searchByBing(String searchkey){
-        Log.v("loadurl","not url"+searchkey+"use research");
+        Log.v("loadurl","not url and use bing:"+searchkey);
         String searchurl=context.getString(R.string.SearchUrlBing);
         String openurl=UrlUtil.getSearchUrl(searchurl,searchkey);
         this.webview.loadUrl(openurl);
 
+    }
+
+    public void searchByGoogle(String searchkey){
+        Log.v("loadurl","not url and use google:"+searchkey);
+        String searchurl=context.getString(R.string.SearchUrlGoogle);
+        String openurl=UrlUtil.getSearchUrl(searchurl,searchkey);
+        this.webview.loadUrl(openurl);
 
     }
     @Override
@@ -147,8 +179,8 @@ public class PhoneUIManager implements UIManager{
         //this.webview.loadUrl("http://m.baidu.com");
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
-
-        PreferenceManager.getDefaultSharedPreferences(this.context);
+        sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
+        this.loadHome();
 
 
     }
