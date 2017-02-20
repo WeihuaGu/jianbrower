@@ -22,7 +22,10 @@
     <string name="pref_key_home">prefhome</string>
     <string name="pref_key_searchitems">presearchitems</string>
     <string name="pref_summary_home">设置主页网址</string>
+    <string name="pref_summary_fontsize">默认字体大小将会在下次启动后生效</string>
     <string name="pref_title_searchitems">搜索引擎</string>
+    <string name="pref_key_fontsizeitems">prefontsizeitems</string>
+    <string name="pref_title_fontsize">默认字体大小</string>
 
 
     <string-array name="pref_entries_searchitems">
@@ -35,6 +38,22 @@
         <item>bing</item>
         <item>google</item>
         <item>wolframalpha</item>
+    </string-array>
+
+    <string-array name="pref_entries_fontsizeitems">
+        <item>50%</item>
+        <item>75%</item>
+        <item>100%</item>
+        <item>150%</item>
+        <item>200%</item>
+    </string-array>
+
+    <string-array name="pref_entryvalues_fontsizeitems">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
 </resources>

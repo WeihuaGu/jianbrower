@@ -15,7 +15,7 @@ import android.webkit.WebChromeClient;
 import android.util.Log;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
-
+import android.webkit.WebSettings.TextSize;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
@@ -23,6 +23,7 @@ import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.util.UrlUtil;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
+
 
 
 
@@ -141,6 +142,8 @@ public class PhoneUIManager implements UIManager{
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
         this.webview.getSettings().setDomStorageEnabled(true);
         this.webview.getSettings().setSupportZoom(true);
+        this.webview.getSettings().setBuiltInZoomControls(true);
+        this.webview.getSettings().setDisplayZoomControls(false);//隐藏Zoom缩放按钮
 
         webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
 
@@ -191,10 +194,48 @@ public class PhoneUIManager implements UIManager{
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
         sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
+        this.setFontSize();
         this.loadHome();
 
 
     }
+
+    public void setFontSize(){
+        String fontsize=this.sharedPref.getString("prefontsizeitems",null);
+        if(fontsize!=null){
+            TextSize size=fontSizeIntToTextSize(fontsize);
+            Log.v("fontsize:",size.toString());
+            this.webview.getSettings().setTextSize(size);
+
+        }
+
+    }
+
+    private TextSize fontSizeIntToTextSize(String sizenum){
+        if(sizenum.equals("1")){
+            return TextSize.SMALLEST;
+
+        }
+        if(sizenum.equals("2")){
+            return TextSize.SMALLER;
+        }
+        if(sizenum.equals("3")){
+            return TextSize.NORMAL;
+        }
+        if(sizenum.equals("4")){
+            return TextSize.LARGER;
+
+        }
+        if(sizenum.equals("5")){
+            return TextSize.LARGEST;
+
+        }
+        else{
+            return TextSize.NORMAL;
+        }
+
+    }
+
 
     public void setUrlbarUrl(String url){
         this.urlbar.setUrl(url);

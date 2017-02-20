@@ -24,6 +24,14 @@
                 android:entryValues="@array/pref_entryvalues_searchitems"
                 >
             </ListPreference>
+            <ListPreference
+                android:summary="@string/pref_summary_fontsize"
+            android:key="@string/pref_key_fontsizeitems"
+            android:title="@string/pref_title_fontsize"
+            android:entries="@array/pref_entries_fontsizeitems"
+            android:entryValues="@array/pref_entryvalues_fontsizeitems"
+            >
+            </ListPreference>
 
 
 

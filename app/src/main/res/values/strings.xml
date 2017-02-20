@@ -22,7 +22,10 @@
 
     <string name="pref_key_home">prefhome</string>
     <string name="pref_summary_home">set the home url</string>
+    <string name="pref_summary_fontsize">the setting will be use at next boot</string>
     <string name="pref_key_searchitems">presearchitems</string>
+    <string name="pref_key_fontsizeitems">prefontsizeitems</string>
+    <string name="pref_title_fontsize">set the font size</string>
     <string name="pref_title_searchitems">search engine</string>
 
 
@@ -36,5 +39,21 @@
         <item>bing</item>
         <item>google</item>
         <item>wolframalpha</item>
+    </string-array>
+
+    <string-array name="pref_entries_fontsizeitems">
+        <item>50%</item>
+        <item>75%</item>
+        <item>100%</item>
+        <item>150%</item>
+        <item>200%</item>
+    </string-array>
+
+    <string-array name="pref_entryvalues_fontsizeitems">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 </resources>
