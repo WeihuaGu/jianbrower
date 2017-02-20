@@ -16,6 +16,7 @@
 
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
+    <string name="SearchUrlWolframAlpha">http://m.wolframalpha.com/input/?i={searchTerms}</string>
     <string name="version">v1.2</string>
 
 
@@ -28,10 +29,12 @@
     <string-array name="pref_entries_searchitems">
         <item>bing</item>
         <item>google</item>
+        <item>wolframalpha</item>
     </string-array>
 
     <string-array name="pref_entryvalues_searchitems">
         <item>bing</item>
         <item>google</item>
+        <item>wolframalpha</item>
     </string-array>
 </resources>

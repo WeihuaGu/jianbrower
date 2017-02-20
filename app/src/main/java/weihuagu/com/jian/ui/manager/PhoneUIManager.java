@@ -81,6 +81,9 @@ public class PhoneUIManager implements UIManager{
                 this.searchByGoogle(url);
 
             }
+            if(engine.equals("wolframalpha")){
+                this.searchByWolframalpha(url);
+            }
             else{
                 Log.v("fuck","3");
                 //this.searchByBing(url);
@@ -119,6 +122,14 @@ public class PhoneUIManager implements UIManager{
         this.webview.loadUrl(openurl);
 
     }
+
+    public void searchByWolframalpha(String searchkey){
+        Log.v("loadurl","not url and use Wolframalpha:"+searchkey);
+        String searchurl=context.getString(R.string.SearchUrlWolframAlpha);
+        String openurl=UrlUtil.getSearchUrl(searchurl,searchkey);
+        this.webview.loadUrl(openurl);
+    }
+
     @Override
     public void loadUrlInHttps(String url){
         Log.v("loadinhttps:","sorce url"+url);

@@ -16,6 +16,7 @@
     <string name="action_loadinhttps">使用https重新载入 </string>
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
+    <string name="SearchUrlWolframAlpha">http://m.wolframalpha.com/input/?i={searchTerms}</string>
     <string name="version">v1.2</string>
 
     <string name="pref_key_home">prefhome</string>
@@ -27,11 +28,13 @@
     <string-array name="pref_entries_searchitems">
         <item>必应</item>
         <item>谷歌</item>
+        <item>wolframalpha</item>
     </string-array>
 
     <string-array name="pref_entryvalues_searchitems">
         <item>bing</item>
         <item>google</item>
+        <item>wolframalpha</item>
     </string-array>
 
 </resources>
