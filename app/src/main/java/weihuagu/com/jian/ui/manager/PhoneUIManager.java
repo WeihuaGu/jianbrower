@@ -307,4 +307,81 @@ public class PhoneUIManager implements UIManager{
 
         }
     }
+
+
+    class WebViewListener implements View.OnTouchListener,View.OnLongClickListener {
+        int downX;
+        int downY;
+        ItemLongClickedPopWindow itemLongClickedPopWindow;
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            downX = (int) motionEvent.getX();
+            downY = (int) motionEvent.getY();
+            return false;
+        }
+
+
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            WebView.HitTestResult result = ((WebView)v).getHitTestResult();
+            if (null == result)
+                return false;
+            int type = result.getType();
+            if (type == WebView.HitTestResult.UNKNOWN_TYPE)
+                return false;
+            if (type == WebView.HitTestResult.EDIT_TEXT_TYPE) {
+
+            }
+            // 相应长按事件弹出菜单
+            itemLongClickedPopWindow = new ItemLongClickedPopWindow(MainActivity.this,
+                    ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
+                    SizeUtil.dp2px(mContext, 120), SizeUtil.dp2px(mContext, 90));
+
+            // 这里可以拦截很多类型，我们只处理图片类型就可以了
+            switch (type) {
+                case WebView.HitTestResult.PHONE_TYPE: // 处理拨号
+                    break;
+                case WebView.HitTestResult.EMAIL_TYPE: // 处理Email
+                    break;
+                case WebView.HitTestResult.GEO_TYPE: // TODO
+                    break;
+                case WebView.HitTestResult.SRC_ANCHOR_TYPE: // 超链接
+                    break;
+                case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
+                    break;
+                case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
+                    // 获取图片的路径
+                    saveImgUrl = result.getExtra();
+                    //通过GestureDetector获取按下的位置，来定位PopWindow显示的位置
+                    itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+                    break;
+                default:
+                    break;
+            }
+            // 项目中有两个菜单（菜单一：查看图片），项目中我使用了Glide+PhotoView实现
+            itemLongClickedPopWindow.getView(R.id.item_longclicked_viewImage)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            itemLongClickedPopWindow.dismiss();
+                            Intent intent = new Intent(mContext, ShowImgActivity.class);
+                            intent.putExtra("info", saveImgUrl);
+                            startActivity(intent);
+                        }
+                    });
+            // 菜单二：AsyncTask保存图片
+            itemLongClickedPopWindow.getView(R.id.item_longclicked_saveImage)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            itemLongClickedPopWindow.dismiss();
+                            new SaveImage().execute();
+                        }
+                    });
+            return true;
+        }
+    }
 }
