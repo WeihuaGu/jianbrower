@@ -16,6 +16,7 @@ import android.util.Log;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.webkit.WebSettings.TextSize;
+import android.view.Gravity;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
@@ -23,6 +24,7 @@ import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.util.UrlUtil;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
+import weihuagu.com.jian.ui.view.ItemLongClickedPopWindow;
 
 
 
@@ -37,6 +39,7 @@ public class PhoneUIManager implements UIManager{
     CustomWebView webview=null;
     OnPhoneUrlBarEventListener urlbarEventhandle=null;
     Context context=null;
+    WebViewListener listerner=new WebViewListener();
 
 
     public void setUrlbar(PhoneUrlBar urlbar) {
@@ -145,7 +148,9 @@ public class PhoneUIManager implements UIManager{
         this.webview.getSettings().setBuiltInZoomControls(true);
         this.webview.getSettings().setDisplayZoomControls(false);//隐藏Zoom缩放按钮
 
-        webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
+        this.webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
+        this.webview.setOnTouchListener(listerner);
+        this.webview.setOnLongClickListener(listerner);
 
         this.webview.setWebViewClient(new WebViewClient() {
             @Override
@@ -313,6 +318,7 @@ public class PhoneUIManager implements UIManager{
         int downX;
         int downY;
         ItemLongClickedPopWindow itemLongClickedPopWindow;
+        String saveImgUrl;
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -327,6 +333,7 @@ public class PhoneUIManager implements UIManager{
         @Override
         public boolean onLongClick(View v) {
             WebView.HitTestResult result = ((WebView)v).getHitTestResult();
+            Log.v("longclick",Integer.toString(result.getType()));
             if (null == result)
                 return false;
             int type = result.getType();
@@ -336,9 +343,6 @@ public class PhoneUIManager implements UIManager{
 
             }
             // 相应长按事件弹出菜单
-            itemLongClickedPopWindow = new ItemLongClickedPopWindow(MainActivity.this,
-                    ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
-                    SizeUtil.dp2px(mContext, 120), SizeUtil.dp2px(mContext, 90));
 
             // 这里可以拦截很多类型，我们只处理图片类型就可以了
             switch (type) {
@@ -353,26 +357,24 @@ public class PhoneUIManager implements UIManager{
                 case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
                     break;
                 case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
+
+                    Log.v("longpress","image"+type);
                     // 获取图片的路径
                     saveImgUrl = result.getExtra();
                     //通过GestureDetector获取按下的位置，来定位PopWindow显示的位置
+
+                    itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
+                            ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
+                            300,420);
+
                     itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
                     break;
                 default:
                     break;
             }
-            // 项目中有两个菜单（菜单一：查看图片），项目中我使用了Glide+PhotoView实现
-            itemLongClickedPopWindow.getView(R.id.item_longclicked_viewImage)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            itemLongClickedPopWindow.dismiss();
-                            Intent intent = new Intent(mContext, ShowImgActivity.class);
-                            intent.putExtra("info", saveImgUrl);
-                            startActivity(intent);
-                        }
-                    });
+
             // 菜单二：AsyncTask保存图片
+            /**
             itemLongClickedPopWindow.getView(R.id.item_longclicked_saveImage)
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -381,7 +383,11 @@ public class PhoneUIManager implements UIManager{
                             new SaveImage().execute();
                         }
                     });
+            **/
             return true;
+
+
         }
+
     }
 }
