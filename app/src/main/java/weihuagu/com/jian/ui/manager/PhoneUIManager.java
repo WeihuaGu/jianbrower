@@ -6,6 +6,7 @@
 
 package weihuagu.com.jian.ui.manager;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,8 +18,10 @@ import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.webkit.WebSettings.TextSize;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import weihuagu.com.jian.R;
+import weihuagu.com.jian.model.DownloadItem;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
@@ -57,9 +60,6 @@ public class PhoneUIManager implements UIManager{
         this.webview=webview;
         this.initresources();
         this.init();
-
-
-
     }
 
     @Override
@@ -90,7 +90,7 @@ public class PhoneUIManager implements UIManager{
             }
             else{
                 Log.v("fuck","3");
-                //this.searchByBing(url);
+                this.searchByBing(url);
             }
 
         }
@@ -156,6 +156,9 @@ public class PhoneUIManager implements UIManager{
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                if(!url.startsWith("http://")| !url.startsWith("http://") ){
+                    return false;
+                }
                 return true;
             }
 
@@ -279,7 +282,6 @@ public class PhoneUIManager implements UIManager{
         return false;
     }
 
-
     class UrlBarEventHandle implements OnPhoneUrlBarEventListener{
 
 
@@ -320,6 +322,54 @@ public class PhoneUIManager implements UIManager{
         ItemLongClickedPopWindow itemLongClickedPopWindow;
         String saveImgUrl;
 
+        public void hindleIMAGE_TYPE(String ImgUrl,View v){
+            // 获取图片的路径
+            saveImgUrl =ImgUrl;
+            //通过GestureDetector获取按下的位置，来定位PopWindow显示的位置
+
+            itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
+                    ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
+                    300,400);
+
+            itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+
+            itemLongClickedPopWindow.getView(R.id.item_longclicked_save)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(saveImgUrl!=null|saveImgUrl.equals("")){
+                               saveImage();
+                            }
+                        }
+                    });
+
+            itemLongClickedPopWindow.getView(R.id.item_longclicked_attr)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(saveImgUrl!=null|saveImgUrl.equals("")){
+                                //showDialog("图片属性","图片地址："+saveImgUrl);
+                                ItemLongClickedPopWindow attrshowpop=new ItemLongClickedPopWindow(context,
+                                        ItemLongClickedPopWindow.ATTR_SHOW,
+                                        600,800);
+                                attrshowpop.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+                                TextView attrcontent=(TextView)attrshowpop.getView(R.id.item_attrcontent);
+                                attrcontent.setText(saveImgUrl);
+
+                            }
+                        }
+                    });
+
+        }
+
+        public void saveImage(){
+            DownloadManager downloadManager;
+            downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadItem request=new DownloadItem(saveImgUrl);
+            downloadManager.enqueue(request);
+
+        }
+
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             downX = (int) motionEvent.getX();
@@ -333,10 +383,13 @@ public class PhoneUIManager implements UIManager{
         @Override
         public boolean onLongClick(View v) {
             WebView.HitTestResult result = ((WebView)v).getHitTestResult();
-            Log.v("longclick",Integer.toString(result.getType()));
+            Log.v("longclick type",Integer.toString(result.getType()));
+
             if (null == result)
                 return false;
+
             int type = result.getType();
+
             if (type == WebView.HitTestResult.UNKNOWN_TYPE)
                 return false;
             if (type == WebView.HitTestResult.EDIT_TEXT_TYPE) {
@@ -357,35 +410,14 @@ public class PhoneUIManager implements UIManager{
                 case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
                     break;
                 case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
-
                     Log.v("longpress","image"+type);
-                    // 获取图片的路径
-                    saveImgUrl = result.getExtra();
-                    //通过GestureDetector获取按下的位置，来定位PopWindow显示的位置
-
-                    itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
-                            ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
-                            300,420);
-
-                    itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+                    this.hindleIMAGE_TYPE(result.getExtra(),v);
                     break;
                 default:
                     break;
             }
 
-            // 菜单二：AsyncTask保存图片
-            /**
-            itemLongClickedPopWindow.getView(R.id.item_longclicked_saveImage)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            itemLongClickedPopWindow.dismiss();
-                            new SaveImage().execute();
-                        }
-                    });
-            **/
             return true;
-
 
         }
 

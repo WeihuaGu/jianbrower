@@ -1,0 +1,55 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 131072 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2627), pid=7730, tid=0x6387ab40
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_111-b14) (build 1.8.0_111-b14)
+# Java VM: Java HotSpot(TM) Server VM (25.111-b14 mixed mode linux-x86 )
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x63d35800):  JavaThread "C1 CompilerThread1" daemon [_thread_in_vm, id=7800, stack(0x637fa000,0x6387b000)]
+
+Stack: [0x637fa000,0x6387b000],  sp=0x638792e0,  free space=508k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x8d5b9f]  VMError::report_and_die()+0x16f
+V  [libjvm.so+0x38e6d5]  report_vm_out_of_memory(char const*, int, unsigned int, VMErrorType, char const*)+0x55
+V  [libjvm.so+0x756a26]  os::Linux::commit_memory_impl(char*, unsigned int, bool)+0xe6
+V  [libjvm.so+0x756ef8]  os::pd_commit_memory(char*, unsigned int, unsigned int, bool)+0x28
+V  [libjvm.so+0x750e1c]  os::commit_memory(char*, unsigned int, unsigned int, bool)+0x2c
+V  [libjvm.so+0x8d1c3c]  VirtualSpace::expand_by(unsigned int, bool)+0x1ec
+V  [libjvm.so+0x6e5fd2]  VirtualSpaceList::expand_node_by(VirtualSpaceNode*, unsigned int, unsigned int)+0x52
+V  [libjvm.so+0x6e7fe4]  VirtualSpaceList::expand_by(unsigned int, unsigned int)+0xa4
+V  [libjvm.so+0x6e8115]  VirtualSpaceList::get_new_chunk(unsigned int, unsigned int, unsigned int)+0x85
+V  [libjvm.so+0x6e94a4]  SpaceManager::grow_and_allocate(unsigned int)+0x264
+V  [libjvm.so+0x6e9681]  SpaceManager::allocate_work(unsigned int)+0x131
+V  [libjvm.so+0x6e96f1]  SpaceManager::allocate(unsigned int)+0x61
+V  [libjvm.so+0x6e982f]  Metaspace::allocate(ClassLoaderData*, unsigned int, bool, MetaspaceObj::Type, Thread*)+0x9f
+V  [libjvm.so+0x702e69]  MethodData::allocate(ClassLoaderData*, methodHandle, Thread*)+0x1e9
+V  [libjvm.so+0x6f1d29]  Method::build_interpreter_method_data(methodHandle, Thread*)+0x89
+V  [libjvm.so+0x2c4e8b]  ciMethod::ensure_method_data(methodHandle)+0xbb
+V  [libjvm.so+0x2c4f83]  ciMethod::ensure_method_data()+0xa3
+V  [libjvm.so+0x20d4e4]  Compilation::compile_java_method()+0x124
+V  [libjvm.so+0x20d564]  Compilation::compile_method()+0x54
+V  [libjvm.so+0x20d847]  Compilation::Compilation(AbstractCompiler*, ciEnv*, ciMethod*, int, BufferBlob*)+0x207
+V  [libjvm.so+0x20e60b]  Compiler::compile_method(ciEnv*, ciMethod*, int)+0x7b
+V  [libjvm.so+0x34a371]  CompileBroker::invoke_compiler_on_method(CompileTask*)+0xda1
+V  [libjvm.so+0x34b187]  CompileBroker::compiler_thread_loop()+0x567
+V  [libjvm.so+0x87e418]  compiler_thread_entry(JavaThread*, Thread*)+0x18
+V  [libjvm.so+0x888faf]

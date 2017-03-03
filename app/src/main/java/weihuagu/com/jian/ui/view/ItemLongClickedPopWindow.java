@@ -57,6 +57,8 @@ public class ItemLongClickedPopWindow extends PopupWindow{
      * {@value}
      * */
 
+    public static final int ATTR_SHOW=6;
+
     public ItemLongClickedPopWindow(Context context, int type, int width, int height){
         super(context);
         this.context = context;
@@ -93,8 +95,18 @@ public class ItemLongClickedPopWindow extends PopupWindow{
                 //图片
                 this.itemLongClickedPopWindowView = this.itemLongClickedPopWindowInflater.inflate(R.layout.longclickedpop, null);
                 break;
+            case ATTR_SHOW:
+                //属性展示
+                this.itemLongClickedPopWindowView = this.itemLongClickedPopWindowInflater.inflate(R.layout.attrshow, null);
+                break;
         }
 
+    }
+
+
+    public View getView(int id){
+
+        return this.itemLongClickedPopWindowView.findViewById(id);
     }
 
 

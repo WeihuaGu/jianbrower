@@ -1,3 +1,9 @@
+<!--
+  ~ Created By WeihuaGu (email:weihuagu_work@163.com)
+  ~ Copyright (c) 2017
+  ~ All right reserved.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -5,24 +11,24 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/item_longclicked_save"
+        android:id="@+id/item_attrtitle"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:text="保存图片"
+        android:text="属性"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         />
 
     <TextView
-        android:id="@+id/item_longclicked_attr"
+        android:id="@+id/item_attrcontent"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:text="图片属性"
+        android:text=""
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
