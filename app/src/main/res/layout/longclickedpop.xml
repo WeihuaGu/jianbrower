@@ -16,17 +16,6 @@
         android:layout_marginBottom="5dp"
         />
 
-    <TextView
-        android:id="@+id/item_longclicked_attr"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:text="图片属性"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        />
 
 
 </LinearLayout>

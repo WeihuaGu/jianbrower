@@ -18,7 +18,9 @@ import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.webkit.WebSettings.TextSize;
 import android.view.Gravity;
-import android.widget.TextView;
+import android.content.Intent;
+import android.net.Uri;
+
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.DownloadItem;
@@ -71,28 +73,28 @@ public class PhoneUIManager implements UIManager{
 
         }
         else{
-
+            Log.v("loadurl","is not urltype:"+url);
             String engine=this.sharedPref.getString("presearchitems",null);
-            if(engine!=null)
-            Log.v("search engine",engine);
-            if(engine.equals("bing")) {
-                Log.v("fuck","1");
-                this.searchByBing(url);
+            if(engine!=null){
+                    Log.v("search engine",engine);
+                    if(engine.equals("bing")) {
+                        Log.v("fuck","1");
+                        this.searchByBing(url);
 
-            }
-            if(engine.equals("google")){
-                Log.v("fuck","2");
-                this.searchByGoogle(url);
+                    }
+                    if(engine.equals("google")){
+                        Log.v("fuck","2");
+                        this.searchByGoogle(url);
 
-            }
-            if(engine.equals("wolframalpha")){
-                this.searchByWolframalpha(url);
-            }
-            else{
+                     }
+                    if(engine.equals("wolframalpha")){
+                        this.searchByWolframalpha(url);
+                    }
+
+            }else{
                 Log.v("fuck","3");
                 this.searchByBing(url);
             }
-
         }
 
 
@@ -155,9 +157,18 @@ public class PhoneUIManager implements UIManager{
         this.webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                if(!url.startsWith("http://")| !url.startsWith("http://") ){
-                    return false;
+
+                if(url.startsWith("http://")| url.startsWith("http://") ){
+                    view.loadUrl(url);
+                }else{
+                    try {
+                        Uri uri = Uri.parse(url);
+                        Intent intent =new Intent(Intent.ACTION_VIEW, uri);
+                        view.getContext().startActivity(intent);
+                    }catch (Exception e){
+                        Log.v("loadnonomal",e.getMessage());
+
+                    }
                 }
                 return true;
             }
@@ -329,7 +340,7 @@ public class PhoneUIManager implements UIManager{
 
             itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
                     ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
-                    300,400);
+                    300,200);
 
             itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
 
@@ -339,23 +350,6 @@ public class PhoneUIManager implements UIManager{
                         public void onClick(View v) {
                             if(saveImgUrl!=null|saveImgUrl.equals("")){
                                saveImage();
-                            }
-                        }
-                    });
-
-            itemLongClickedPopWindow.getView(R.id.item_longclicked_attr)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(saveImgUrl!=null|saveImgUrl.equals("")){
-                                //showDialog("图片属性","图片地址："+saveImgUrl);
-                                ItemLongClickedPopWindow attrshowpop=new ItemLongClickedPopWindow(context,
-                                        ItemLongClickedPopWindow.ATTR_SHOW,
-                                        600,800);
-                                attrshowpop.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
-                                TextView attrcontent=(TextView)attrshowpop.getView(R.id.item_attrcontent);
-                                attrcontent.setText(saveImgUrl);
-
                             }
                         }
                     });
