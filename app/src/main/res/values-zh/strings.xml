@@ -17,7 +17,7 @@
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
     <string name="SearchUrlWolframAlpha">http://m.wolframalpha.com/input/?i={searchTerms}</string>
-    <string name="version">v1.3</string>
+    <string name="version">v1.4</string>
 
     <string name="pref_key_home">prefhome</string>
     <string name="pref_key_searchitems">presearchitems</string>

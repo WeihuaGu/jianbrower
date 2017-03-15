@@ -7,7 +7,7 @@
 package weihuagu.com.jian.util;
 
 public class UrlUtil {
-    public static String [] commonusedurls={"m.baidu.com","www.baidu.com","cn.bing.com","Jd.com","weibo.com","weibo.cn","sina.cn","www.tmall.com","www.taobao.com","tianya.cn","github.com","news.163.com","mail.163.com","image.baidu.com","wwww.zhihu.com"};
+    public static String [] commonusedurls={"m.baidu.com","www.baidu.com","cn.bing.com","Jd.com","weibo.com","weibo.cn","sina.cn","www.tmall.com","www.taobao.com","tianya.cn","github.com","news.163.com","mail.163.com","image.baidu.com","wwww.zhihu.com","www.huanqiu.com","www.ifeng.com","www.jianshu.com","www.xueqiu.com"};
     public static String [] getCommonlyUsedUrls(){
         return commonusedurls;
     }

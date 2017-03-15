@@ -20,7 +20,7 @@ import android.webkit.WebSettings.TextSize;
 import android.view.Gravity;
 import android.content.Intent;
 import android.net.Uri;
-
+import android.widget.ProgressBar;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.DownloadItem;
@@ -41,6 +41,7 @@ public class PhoneUIManager implements UIManager{
 
     SharedPreferences sharedPref=null;
     PhoneUrlBar urlbar=null;
+    ProgressBar progressbar = null;
     CustomWebView webview=null;
     OnPhoneUrlBarEventListener urlbarEventhandle=null;
     Context context=null;
@@ -64,6 +65,19 @@ public class PhoneUIManager implements UIManager{
         this.init();
     }
 
+    public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview,ProgressBar progressbar,Context context){
+        this.context=context;
+        this.urlbar=urlbar;
+        this.webview=webview;
+        this.setProgressbar(progressbar);
+        this.initresources();
+        this.init();
+    }
+
+    public void setProgressbar(ProgressBar progressbar){
+        this.progressbar=progressbar;
+    }
+
     @Override
     public void loadUrl(String url) {
         if(UrlUtil.isUrl(url)){
@@ -78,12 +92,12 @@ public class PhoneUIManager implements UIManager{
             if(engine!=null){
                     Log.v("search engine",engine);
                     if(engine.equals("bing")) {
-                        Log.v("fuck","1");
+
                         this.searchByBing(url);
 
                     }
                     if(engine.equals("google")){
-                        Log.v("fuck","2");
+
                         this.searchByGoogle(url);
 
                      }
@@ -92,7 +106,7 @@ public class PhoneUIManager implements UIManager{
                     }
 
             }else{
-                Log.v("fuck","3");
+
                 this.searchByBing(url);
             }
         }
@@ -144,6 +158,7 @@ public class PhoneUIManager implements UIManager{
         this.webview.loadUrl(openurl);
     }
     public void initresources(){
+
         this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
         this.webview.getSettings().setDomStorageEnabled(true);
         this.webview.getSettings().setSupportZoom(true);
@@ -191,9 +206,20 @@ public class PhoneUIManager implements UIManager{
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 // TODO Auto-generated method stub
+
+                if(progressbar!=null) {
+                    if (newProgress == 100) {
+                        progressbar.setVisibility(View.INVISIBLE);
+                    } else {
+                        if (View.INVISIBLE == progressbar.getVisibility()) {
+                            progressbar.setVisibility(View.VISIBLE);
+                        }
+                        progressbar.setProgress(newProgress);
+                    }
+
+                }
                 super.onProgressChanged(view, newProgress);
                 urlbar.setTitle(webview.getTitle());
-                Log.i("phonuimanager","pageprogressChanged and title:"+webview.getTitle());
             }
 
         });
@@ -298,8 +324,6 @@ public class PhoneUIManager implements UIManager{
 
         @Override
         public void onVisibilityChanged(boolean urlBarVisible) {
-
-            Log.v("urlbar","visible changed");
 
             String title=webview.getTitle();
             if(title!=null){

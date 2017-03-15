@@ -22,6 +22,7 @@ import java.util.List;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -43,6 +44,7 @@ public class BrowserActivity extends AppCompatActivity
     PhoneUrlBar urlbar=null;
     CustomWebView webview =null;
     UIManager phoneuimanager=null;
+    ProgressBar progressbar = null;
 
 
 
@@ -168,10 +170,16 @@ public class BrowserActivity extends AppCompatActivity
 
         webview = (CustomWebView) findViewById(R.id.webView); //加载WebView
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
+        progressbar=(ProgressBar)findViewById(R.id.progressbar);
     }
 
     public void bindUIManager(){
-        this.phoneuimanager=new PhoneUIManager(urlbar,webview,getApplicationContext());
+        if(progressbar!=null) {
+            this.phoneuimanager = new PhoneUIManager(urlbar, webview,progressbar, getApplicationContext());
+        }else{
+            this.phoneuimanager = new PhoneUIManager(urlbar, webview, getApplicationContext());
+        }
+
     }
 
     public void handleIntent(){
