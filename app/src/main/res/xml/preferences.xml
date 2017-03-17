@@ -33,6 +33,10 @@
             >
             </ListPreference>
 
+         <CheckBoxPreference
+            android:title="@string/pref_title_EnableImages"
+            android:defaultValue="true"
+            android:key="@string/pref_key_enableimages" />
 
 
     </PreferenceCategory>

@@ -25,6 +25,7 @@ import android.util.Log;
 import android.widget.ProgressBar;
 
 
+import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.ui.manager.UIManager;
@@ -53,6 +54,7 @@ public class BrowserActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.initResources();
+        this.createRuntimeSetting();
         this.bindUIManager();
         this.handleIntent();
         if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
@@ -180,6 +182,10 @@ public class BrowserActivity extends AppCompatActivity
             this.phoneuimanager = new PhoneUIManager(urlbar, webview, getApplicationContext());
         }
 
+    }
+
+    public void createRuntimeSetting(){
+        RuntimeSetting.setInstance(getApplicationContext());
     }
 
     public void handleIntent(){

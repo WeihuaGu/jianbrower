@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.ProgressBar;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.DownloadItem;
@@ -40,6 +41,7 @@ import weihuagu.com.jian.ui.view.ItemLongClickedPopWindow;
 public class PhoneUIManager implements UIManager{
 
     SharedPreferences sharedPref=null;
+    OnSharedPreferenceChangeListener preferenceChangeListener=null;
     PhoneUrlBar urlbar=null;
     ProgressBar progressbar = null;
     CustomWebView webview=null;
@@ -239,8 +241,12 @@ public class PhoneUIManager implements UIManager{
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
         sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
+        this.preferenceChangeListener=new OnPreferenceChangeListener();
+        sharedPref.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         this.setFontSize();
+        this.setEnableImage();
         this.loadHome();
+
 
 
     }
@@ -254,6 +260,11 @@ public class PhoneUIManager implements UIManager{
 
         }
 
+    }
+
+    public void setEnableImage(){
+        boolean enableimage=sharedPref.getBoolean("preenableimage",true);
+        this.webview.getSettings().setLoadsImagesAutomatically(enableimage);
     }
 
     private TextSize fontSizeIntToTextSize(String sizenum){
@@ -439,5 +450,18 @@ public class PhoneUIManager implements UIManager{
 
         }
 
+    }
+
+    class OnPreferenceChangeListener implements OnSharedPreferenceChangeListener{
+
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.i("preferenceChanged key",key);
+            if(key.equals("preenableimage")){
+                setEnableImage();
+            }
+
+        }
     }
 }
