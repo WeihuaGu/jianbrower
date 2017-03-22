@@ -160,16 +160,11 @@ public class PhoneUIManager implements UIManager{
         this.webview.loadUrl(openurl);
     }
     public void initresources(){
-
-        this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
-        this.webview.getSettings().setDomStorageEnabled(true);
-        this.webview.getSettings().setSupportZoom(true);
         this.webview.getSettings().setBuiltInZoomControls(true);
         this.webview.getSettings().setDisplayZoomControls(false);//隐藏Zoom缩放按钮
 
-        this.webview.setDownloadListener(new MyWebViewDownLoadListener(this.context));
-        this.webview.setOnTouchListener(listerner);
-        this.webview.setOnLongClickListener(listerner);
+        //this.webview.setOnTouchListener(listerner);
+        //this.webview.setOnLongClickListener(listerner);
 
         this.webview.setWebViewClient(new WebViewClient() {
             @Override
