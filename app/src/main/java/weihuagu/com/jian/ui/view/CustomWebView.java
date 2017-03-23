@@ -14,6 +14,7 @@ import android.util.Log;
 import android.webkit.WebViewClient;
 
 
+import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 import weihuagu.com.jian.model.OnCustemWebViewEventListener;
 import weihuagu.com.jian.model.WebViewListener;
@@ -21,7 +22,7 @@ import weihuagu.com.jian.model.WebViewListener;
 /**
  * Created by root on 17-2-9.
  */
-public class CustomWebView extends WebView {
+public class CustomWebView extends WebView implements IWebViewContainer{
 
     private OnCustemWebViewEventListener mEventListener = null;
     WebSettings websetting=null;

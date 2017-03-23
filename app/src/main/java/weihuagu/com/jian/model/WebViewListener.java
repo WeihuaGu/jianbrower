@@ -18,14 +18,14 @@ import weihuagu.com.jian.R;
 import weihuagu.com.jian.ui.view.ItemLongClickedPopWindow;
 
 /**
- * Created by root on 17-3-22.
+ * Created by root on 17-3-23.
  */
-public class WebViewListener implements View.OnTouchListener,View.OnLongClickListener{
+public class WebViewListener implements View.OnTouchListener,View.OnLongClickListener {
     int downX;
     int downY;
     ItemLongClickedPopWindow itemLongClickedPopWindow;
     String saveImgUrl;
-    Context context=null;
+    private Context context=null;
 
     public WebViewListener(Context context) {
         this.context = context;
@@ -113,8 +113,4 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
         return true;
 
     }
-
-
-
-
 }

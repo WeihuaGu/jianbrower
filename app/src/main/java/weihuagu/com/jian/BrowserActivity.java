@@ -151,6 +151,12 @@ public class BrowserActivity extends AppCompatActivity
                 finish();
             return true;
         }
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            //你的操作
+        }
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+            //你的操作
+        }
         return false;
 
 
