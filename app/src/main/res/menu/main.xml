@@ -17,4 +17,15 @@
         android:orderInCategory="100"
         android:title="@string/action_loadinhttps"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_newtab"
+        android:orderInCategory="100"
+        android:title="@string/action_newtab"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_tabmanage"
+        android:orderInCategory="100"
+        android:title="@string/action_tabmanage"
+        app:showAsAction="never" />
 </menu>

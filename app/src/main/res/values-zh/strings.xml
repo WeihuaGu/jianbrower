@@ -14,6 +14,8 @@
     <string name="action_share">分享</string>
     <string name="action_openscanedurl">打开识别网址</string>
     <string name="action_loadinhttps">使用https重新载入 </string>
+    <string name="action_newtab">打开新标签</string>
+    <string name="action_tabmanage">管理标签</string>
     <string name="SearchUrlGoogle">https://www.google.com.hk/m?q={searchTerms}</string>
     <string name="SearchUrlBing">http://cn.bing.com/search?q={searchTerms}</string>
     <string name="SearchUrlWolframAlpha">http://m.wolframalpha.com/input/?i={searchTerms}</string>

@@ -14,9 +14,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
+import android.view.View;
 import android.Manifest;
 import java.util.List;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +48,7 @@ public class BrowserActivity extends AppCompatActivity
     CustomWebView webview =null;
     UIManager phoneuimanager=null;
     ProgressBar progressbar = null;
+    DrawerLayout mrootdrawerlayout=null;
 
 
 
@@ -99,6 +102,10 @@ public class BrowserActivity extends AppCompatActivity
             String url=phoneuimanager.getCurrentUrl();
             if(url!=null)
             this.phoneuimanager.loadUrlInHttps(url);
+        }
+
+        if (id==R.id.action_tabmanage){
+            openTabManager();
         }
 
         return super.onOptionsItemSelected(item);
@@ -175,12 +182,20 @@ public class BrowserActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+
+
 
         webview = (CustomWebView) findViewById(R.id.webView); //加载WebView
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
         progressbar=(ProgressBar)findViewById(R.id.progressbar);
     }
 
+
+
+    public void openTabManager(){
+
+    }
     public void bindUIManager(){
         if(progressbar!=null) {
             this.phoneuimanager = new PhoneUIManager(urlbar, webview,progressbar, getApplicationContext());
