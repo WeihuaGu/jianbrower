@@ -29,7 +29,9 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     Context context;
     public CustomWebView(Context context) {
         super(context);
-
+        this.logWebview();
+        this.context=context;
+        this.init();
 
     }
 

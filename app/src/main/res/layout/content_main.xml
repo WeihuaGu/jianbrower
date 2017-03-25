@@ -13,10 +13,18 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".BrowserActivity"
     tools:showIn="@layout/app_bar_main">
+
+    <RelativeLayout
+        android:id="@+id/webViewlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+
     <weihuagu.com.jian.ui.view.CustomWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -28,13 +36,17 @@
         />
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:background="@color/whiteback">
         <TextView
             android:id="@+id/right_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="个人登陆页面" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标签页管理" />
+
     </RelativeLayout>
 </RelativeLayout>

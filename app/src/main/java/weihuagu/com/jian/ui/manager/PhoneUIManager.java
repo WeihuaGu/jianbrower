@@ -25,6 +25,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.DownloadItem;
+import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
@@ -77,6 +78,12 @@ public class PhoneUIManager implements UIManager{
 
     public void setProgressbar(ProgressBar progressbar){
         this.progressbar=progressbar;
+    }
+
+    @Override
+    public void setCurrentWebview(CustomWebView webview) {
+        this.webview=webview;
+
     }
 
     @Override

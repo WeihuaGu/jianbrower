@@ -25,13 +25,14 @@ import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.ProgressBar;
-
+import android.widget.RelativeLayout;
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.ui.manager.UIManager;
 import weihuagu.com.jian.ui.manager.PhoneUIManager;
+import weihuagu.com.jian.model.BrowserContainer;
 
 
 import com.yanzhenjie.permission.AndPermission;
@@ -44,11 +45,15 @@ public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String ACTION_OPENURL = "com.weihuagu.jian.action.OPENURL";
     private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
+    BrowserContainer webviewcontainer=null;
+    RelativeLayout webviewlayout=null;
     PhoneUrlBar urlbar=null;
     CustomWebView webview =null;
+    CustomWebView webviewdongtai=null;
     UIManager phoneuimanager=null;
     ProgressBar progressbar = null;
     DrawerLayout mrootdrawerlayout=null;
+    RelativeLayout tabmanagerlayout=null;
 
 
 
@@ -182,8 +187,12 @@ public class BrowserActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
+        webviewdongtai=new CustomWebView(getApplicationContext());
+        webviewlayout.addView(webviewdongtai);
 
+        mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
 
 
         webview = (CustomWebView) findViewById(R.id.webView); //加载WebView
@@ -194,13 +203,14 @@ public class BrowserActivity extends AppCompatActivity
 
 
     public void openTabManager(){
+        this.tabmanagerlayout.setVisibility(View.VISIBLE);
 
     }
     public void bindUIManager(){
         if(progressbar!=null) {
-            this.phoneuimanager = new PhoneUIManager(urlbar, webview,progressbar, getApplicationContext());
+            this.phoneuimanager = new PhoneUIManager(urlbar, webviewdongtai,progressbar, getApplicationContext());
         }else{
-            this.phoneuimanager = new PhoneUIManager(urlbar, webview, getApplicationContext());
+            this.phoneuimanager = new PhoneUIManager(urlbar, webviewdongtai, getApplicationContext());
         }
 
     }
