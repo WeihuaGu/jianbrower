@@ -45,11 +45,9 @@ public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String ACTION_OPENURL = "com.weihuagu.jian.action.OPENURL";
     private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
-    BrowserContainer webviewcontainer=null;
+
     RelativeLayout webviewlayout=null;
     PhoneUrlBar urlbar=null;
-    CustomWebView webview =null;
-    CustomWebView webviewdongtai=null;
     UIManager phoneuimanager=null;
     ProgressBar progressbar = null;
     DrawerLayout mrootdrawerlayout=null;
@@ -187,15 +185,12 @@ public class BrowserActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
-        webviewdongtai=new CustomWebView(getApplicationContext());
-        webviewlayout.addView(webviewdongtai);
+        addWebviewToLayout(createNewWebview());
 
         mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
-
-
-        webview = (CustomWebView) findViewById(R.id.webView); //加载WebView
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
         progressbar=(ProgressBar)findViewById(R.id.progressbar);
     }
@@ -207,11 +202,7 @@ public class BrowserActivity extends AppCompatActivity
 
     }
     public void bindUIManager(){
-        if(progressbar!=null) {
-            this.phoneuimanager = new PhoneUIManager(urlbar, webviewdongtai,progressbar, getApplicationContext());
-        }else{
-            this.phoneuimanager = new PhoneUIManager(urlbar, webviewdongtai, getApplicationContext());
-        }
+        this.phoneuimanager = new PhoneUIManager(urlbar, (CustomWebView) BrowserContainer.getCurrent(),progressbar, getApplicationContext());
 
     }
 
@@ -241,8 +232,19 @@ public class BrowserActivity extends AppCompatActivity
     }
 
 
+    //webview
+    private  CustomWebView createNewWebview(){
+        BrowserContainer.add(new CustomWebView(getApplicationContext()));
+        return (CustomWebView)BrowserContainer.getCurrent();
+    }
+    private void addWebviewToLayout(CustomWebView webview){
+        this.webviewlayout.removeAllViews();
+        this.webviewlayout.addView(webview);
 
-    //permission
+    }
+
+
+    //permissions
 
     public void getPermissionWRITE_EXTERNAL_STORAGE(){
         AndPermission.with(this)
@@ -258,8 +260,6 @@ public class BrowserActivity extends AppCompatActivity
 
 
     }
-
-
     public boolean checkPermissionCAMERA(){
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -270,7 +270,6 @@ public class BrowserActivity extends AppCompatActivity
             return false;
         }
     }
-
     public boolean checkPermissionWRITE_EXTERNAL_STORAGE(){
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -281,14 +280,11 @@ public class BrowserActivity extends AppCompatActivity
             return false;
         }
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // 只需要调用这一句，其它的交给AndPermission吧，最后一个参数是PermissionListener。
         AndPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, listener);
     }
-
     private PermissionListener listener = new PermissionListener() {
         @Override
         public void onSucceed(int requestCode, List<String> grantedPermissions) {
@@ -311,6 +307,5 @@ public class BrowserActivity extends AppCompatActivity
 
         }
     };
-
 
 }
