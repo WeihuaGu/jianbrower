@@ -233,11 +233,16 @@ public class BrowserActivity extends AppCompatActivity
 
 
     //webview
+    private  CustomWebView createNewWebview(int index){
+        BrowserContainer.add(new CustomWebView(getApplicationContext()),index);
+        return (CustomWebView)BrowserContainer.getCurrent();
+    }
     private  CustomWebView createNewWebview(){
-        BrowserContainer.add(new CustomWebView(getApplicationContext()));
+        BrowserContainer.add(new CustomWebView(getApplicationContext()),0);
         return (CustomWebView)BrowserContainer.getCurrent();
     }
     private void addWebviewToLayout(CustomWebView webview){
+
         this.webviewlayout.removeAllViews();
         this.webviewlayout.addView(webview);
 

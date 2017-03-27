@@ -6,9 +6,13 @@
 
 package weihuagu.com.jian.model;
 
+import java.util.UUID;
+
 /**
  * Created by root on 17-3-23.
  */
 public interface IWebViewContainer {
+
+    public UUID getUUID();
 
 }

@@ -18,12 +18,15 @@ import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 import weihuagu.com.jian.model.OnCustemWebViewEventListener;
 import weihuagu.com.jian.model.WebViewListener;
+import java.util.UUID;
 
 /**
  * Created by root on 17-2-9.
  */
 public class CustomWebView extends WebView implements IWebViewContainer{
 
+
+    protected UUID mUUID;
     private OnCustemWebViewEventListener mEventListener = null;
     WebSettings websetting=null;
     Context context;
@@ -48,6 +51,7 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     }
 
     public void init(){
+        this.setUUID();
         this.initWebView();
         this.initSetting();
     }
@@ -72,6 +76,17 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     }
     public void logWebview(){
         Log.i("customwebview", "start");
+
+    }
+
+    private void setUUID(){
+        mUUID = UUID.randomUUID();
+    }
+
+
+    @Override
+    public UUID getUUID(){
+        return mUUID;
 
     }
 
