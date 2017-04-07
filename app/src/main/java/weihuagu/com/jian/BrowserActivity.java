@@ -109,6 +109,11 @@ public class BrowserActivity extends AppCompatActivity
             this.phoneuimanager.loadUrlInHttps(url);
         }
 
+        if(id==R.id.action_newtab){
+            addWebviewToLayout(createNewWebview("front"));
+            this.phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+
+        }
         if (id==R.id.action_tabmanage){
             Log.i("webviewnum",""+BrowserContainer.WebViewNum());
             Log.i("webnamelist",BrowserContainer.getWebViewListname().toString());
@@ -179,7 +184,7 @@ public class BrowserActivity extends AppCompatActivity
 
 
     public void initResources(){
-        Log.i("webtest","initResources been run");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,8 +197,9 @@ public class BrowserActivity extends AppCompatActivity
 
 
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
-        if(!filledupwebviewlayout) {
-            addWebviewToLayout(createNewWebview());
+        if(filledupwebviewlayout==false) {
+            Log.i("web filled flag",""+filledupwebviewlayout);
+            addWebviewToLayout(createNewWebview("front"));
         }
         mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
@@ -239,20 +245,23 @@ public class BrowserActivity extends AppCompatActivity
 
 
     //webview
-    private  CustomWebView createNewWebview(int index){
-        BrowserContainer.add(new CustomWebView(getApplicationContext()),index);
-        return (CustomWebView)BrowserContainer.getCurrent();
-    }
-    private  CustomWebView createNewWebview(){
+    private  CustomWebView createNewWebview(String positon){
         Log.i("createnew","webvie");
-        BrowserContainer.add(new CustomWebView(getApplicationContext()),0);
-        return (CustomWebView)BrowserContainer.getCurrent();
+        CustomWebView tmpwebveiw=new CustomWebView(getApplicationContext());
+        if(positon.equals("front")){
+            BrowserContainer.addCurrent(tmpwebveiw);
+
+        }else {
+            BrowserContainer.add(tmpwebveiw);
+        }
+        return tmpwebveiw;
     }
     private void addWebviewToLayout(CustomWebView webview){
 
         this.webviewlayout.removeAllViews();
         this.webviewlayout.addView(webview);
         this.filledupwebviewlayout=true;
+        Log.i("web alter fill boolean",""+filledupwebviewlayout);
     }
 
 
