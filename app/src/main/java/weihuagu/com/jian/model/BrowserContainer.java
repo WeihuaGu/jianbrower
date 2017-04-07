@@ -10,6 +10,7 @@ package weihuagu.com.jian.model;
  * Created by root on 17-3-23.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -77,5 +78,28 @@ public class BrowserContainer {
         }
 
         list.clear();
+    }
+
+
+
+    public static List<String> getWebViewListname(){
+
+        List<String> namelist=new ArrayList<String>();
+        for(int i=0;i<list.size();i++){
+            CustomWebView tmpwebview=(CustomWebView)list.get(i);
+            String title=tmpwebview.getTitle();
+            if(title!=null){
+                String nameandindex=title+"&"+i;
+                namelist.add(nameandindex);
+            }else{
+                String namenandindex="&"+i;
+                namelist.add(namenandindex);
+            }
+
+        }
+        return namelist;
+    }
+    public static int WebViewNum(){
+        return list.size();
     }
 }

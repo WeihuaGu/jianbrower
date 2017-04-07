@@ -52,6 +52,7 @@ public class BrowserActivity extends AppCompatActivity
     ProgressBar progressbar = null;
     DrawerLayout mrootdrawerlayout=null;
     RelativeLayout tabmanagerlayout=null;
+    boolean filledupwebviewlayout=false;
 
 
 
@@ -66,6 +67,7 @@ public class BrowserActivity extends AppCompatActivity
         if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
             this.getPermissionWRITE_EXTERNAL_STORAGE();
         }
+
 
 
 
@@ -108,6 +110,8 @@ public class BrowserActivity extends AppCompatActivity
         }
 
         if (id==R.id.action_tabmanage){
+            Log.i("webviewnum",""+BrowserContainer.WebViewNum());
+            Log.i("webnamelist",BrowserContainer.getWebViewListname().toString());
             openTabManager();
         }
 
@@ -175,6 +179,7 @@ public class BrowserActivity extends AppCompatActivity
 
 
     public void initResources(){
+        Log.i("webtest","initResources been run");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -187,8 +192,9 @@ public class BrowserActivity extends AppCompatActivity
 
 
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
-        addWebviewToLayout(createNewWebview());
-
+        if(!filledupwebviewlayout) {
+            addWebviewToLayout(createNewWebview());
+        }
         mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
@@ -238,6 +244,7 @@ public class BrowserActivity extends AppCompatActivity
         return (CustomWebView)BrowserContainer.getCurrent();
     }
     private  CustomWebView createNewWebview(){
+        Log.i("createnew","webvie");
         BrowserContainer.add(new CustomWebView(getApplicationContext()),0);
         return (CustomWebView)BrowserContainer.getCurrent();
     }
@@ -245,7 +252,7 @@ public class BrowserActivity extends AppCompatActivity
 
         this.webviewlayout.removeAllViews();
         this.webviewlayout.addView(webview);
-
+        this.filledupwebviewlayout=true;
     }
 
 
