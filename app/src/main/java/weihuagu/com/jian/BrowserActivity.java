@@ -13,13 +13,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.View;
 import android.Manifest;
+
+import java.util.ArrayList;
 import java.util.List;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
@@ -33,7 +36,7 @@ import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.ui.manager.UIManager;
 import weihuagu.com.jian.ui.manager.PhoneUIManager;
 import weihuagu.com.jian.model.BrowserContainer;
-
+import weihuagu.com.jian.model.WebviewNameListAdapter;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -52,7 +55,9 @@ public class BrowserActivity extends AppCompatActivity
     ProgressBar progressbar = null;
     DrawerLayout mrootdrawerlayout=null;
     RelativeLayout tabmanagerlayout=null;
+    private RecyclerView webviewnamelist =null;
     boolean filledupwebviewlayout=false;
+    WebviewNameListAdapter webviewnamelistadapter=null;
 
 
 
@@ -203,6 +208,10 @@ public class BrowserActivity extends AppCompatActivity
         }
         mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
+
+        this.webviewnamelist =(RecyclerView) findViewById(R.id.webviewlist);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        this.webviewnamelist.setLayoutManager(layoutManager);
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
         progressbar=(ProgressBar)findViewById(R.id.progressbar);
     }
@@ -210,6 +219,20 @@ public class BrowserActivity extends AppCompatActivity
 
 
     public void openTabManager(){
+        List<String> resultlist=BrowserContainer.getWebViewListname();
+        List<String> datalist= new ArrayList<String>();
+        if(resultlist!=null) {
+            for (int i = 0; i < resultlist.size(); i++) {
+                if (resultlist.get(i) != null) {
+                    datalist.add(resultlist.get(i));
+                }
+
+            }
+
+            this.webviewnamelistadapter=new WebviewNameListAdapter(getBaseContext());
+            this.webviewnamelistadapter.addWebviewNameList(datalist);
+            this.webviewnamelist.setAdapter(webviewnamelistadapter);
+        }
         this.tabmanagerlayout.setVisibility(View.VISIBLE);
 
     }

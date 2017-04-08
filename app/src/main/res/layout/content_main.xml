@@ -42,5 +42,12 @@
             android:layout_height="wrap_content"
             android:text="标签页管理" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/webviewlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </android.support.v7.widget.RecyclerView>
+
+
     </RelativeLayout>
 </RelativeLayout>
