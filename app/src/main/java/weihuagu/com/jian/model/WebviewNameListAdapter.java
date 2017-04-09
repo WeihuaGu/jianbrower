@@ -14,7 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 
 import weihuagu.com.jian.R;
@@ -38,6 +40,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
     @Override
     public void onBindViewHolder(WebviewNameHolder holder, int position) {
         String item=this.namelist.get(position);
+        holder.setPositon(position);
         if(item!=null){
             String [] tmp=splitNameAndInext(item);
             String name=tmp[0];
@@ -46,12 +49,15 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
                 if(name.equals("")){
                     if(!index.equals("")){
                         holder.webviewtitle.setText("空白标签:"+index);
+
+
                     }
 
                 }
                 else {
                     holder.webviewtitle.setText(tmp[0]);
                 }
+                holder.setWebviewindex(Integer.parseInt(index));
             }
 
         }
@@ -79,13 +85,48 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     }
 
-    class WebviewNameHolder extends RecyclerView.ViewHolder{
+    class WebviewNameHolder extends RecyclerView.ViewHolder implements  OnClickListener {
         TextView webviewtitle;
+
+        public void setWebviewindex(int webviewindex) {
+            this.webviewindex = webviewindex;
+        }
+
         int webviewindex;
+
+
+        public void setPositon(int positon) {
+            this.positon = positon;
+        }
+
+        int positon;
+        ImageButton close;
 
         public WebviewNameHolder(View itemView) {
             super(itemView);
             this.webviewtitle=(TextView) itemView.findViewById(R.id.webviewtitle);
+            this.webviewtitle.setTag("webviewtitle");
+            this.close=(ImageButton) itemView.findViewById(R.id.close);
+            this.close.setTag("close");
+        }
+
+        public void setListerner(){
+            webviewtitle.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String tag = (String) view.getTag();
+            if(tag.equals("webviewtitle")){
+
+            }
+            if(tag.equals("close")){
+
+                namelist.remove(positon);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+
+            }
         }
     }
 
