@@ -39,7 +39,21 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
     public void onBindViewHolder(WebviewNameHolder holder, int position) {
         String item=this.namelist.get(position);
         if(item!=null){
-            holder.webviewtitle.setText(item);
+            String [] tmp=splitNameAndInext(item);
+            String name=tmp[0];
+            String index=tmp[1];
+            if(name!=null){
+                if(name.equals("")){
+                    if(!index.equals("")){
+                        holder.webviewtitle.setText("空白标签:"+index);
+                    }
+
+                }
+                else {
+                    holder.webviewtitle.setText(tmp[0]);
+                }
+            }
+
         }
 
     }
@@ -58,8 +72,16 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     }
 
+    private String [] splitNameAndInext(String string){
+        String [] nameandindex=string.split("\\&");
+        return nameandindex;
+
+
+    }
+
     class WebviewNameHolder extends RecyclerView.ViewHolder{
         TextView webviewtitle;
+        int webviewindex;
 
         public WebviewNameHolder(View itemView) {
             super(itemView);
