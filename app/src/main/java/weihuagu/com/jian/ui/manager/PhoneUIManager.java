@@ -83,6 +83,7 @@ public class PhoneUIManager implements UIManager{
     @Override
     public void setCurrentWebview(CustomWebView webview) {
         this.webview=webview;
+        this.urlbar.getUrlFocus();
 
     }
 

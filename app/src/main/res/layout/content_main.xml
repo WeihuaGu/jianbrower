@@ -35,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:visibility="gone"
-        android:background="@color/whiteback">
+        android:background="@color/aliceblue">
         <TextView
             android:id="@+id/right_textview"
             android:layout_width="wrap_content"
@@ -43,6 +43,7 @@
             android:text="标签页管理" />
 
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/right_textview"
             android:id="@+id/webviewlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
