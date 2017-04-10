@@ -37,6 +37,7 @@ import weihuagu.com.jian.ui.manager.UIManager;
 import weihuagu.com.jian.ui.manager.PhoneUIManager;
 import weihuagu.com.jian.model.BrowserContainer;
 import weihuagu.com.jian.model.WebviewNameListAdapter;
+import weihuagu.com.jian.ui.manager.ITabManager;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -45,7 +46,7 @@ import com.yanzhenjie.permission.PermissionListener;
 
 
 public class BrowserActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,ITabManager{
     private static final String ACTION_OPENURL = "com.weihuagu.jian.action.OPENURL";
     private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
 
@@ -115,8 +116,7 @@ public class BrowserActivity extends AppCompatActivity
         }
 
         if(id==R.id.action_newtab){
-            addWebviewToLayout(createNewWebview("front"));
-            this.phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+           this.openNewTab();
 
         }
         if (id==R.id.action_tabmanage){
@@ -231,6 +231,7 @@ public class BrowserActivity extends AppCompatActivity
 
             this.webviewnamelistadapter=new WebviewNameListAdapter(getBaseContext());
             this.webviewnamelistadapter.addWebviewNameList(datalist);
+            this.webviewnamelistadapter.setTabManager(this);
             this.webviewnamelist.setAdapter(webviewnamelistadapter);
         }
         this.tabmanagerlayout.setVisibility(View.VISIBLE);
@@ -352,4 +353,16 @@ public class BrowserActivity extends AppCompatActivity
         }
     };
 
+    @Override
+    public void openNewTab() {
+        addWebviewToLayout(createNewWebview("front"));
+        this.phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+
+    }
+
+    @Override
+    public void alterToTab(int tabindex) {
+        BrowserContainer.setCurrentindex(tabindex);
+        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+    }
 }

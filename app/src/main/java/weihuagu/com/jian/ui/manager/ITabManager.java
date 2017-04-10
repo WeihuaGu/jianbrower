@@ -11,5 +11,6 @@ package weihuagu.com.jian.ui.manager;
  */
 public interface ITabManager {
     public void openNewTab();
+    public void alterToTab(int tabindex);
 
 }

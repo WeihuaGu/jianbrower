@@ -47,6 +47,11 @@ public class BrowserContainer {
         currentindex=list.indexOf(controller);
     }
 
+    public synchronized static void setCurrentindex(int index){
+        
+        currentindex=index;
+    }
+
     public synchronized static void remove(int index) {
         if (list.get(index) instanceof IWebViewContainer) {
             ((CustomWebView) list.get(index)).destroy();

@@ -17,9 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.util.Log;
 
 
 import weihuagu.com.jian.R;
+import weihuagu.com.jian.ui.manager.ITabManager;
+
 
 /**
  * Created by root on 17-4-7.
@@ -27,6 +30,12 @@ import weihuagu.com.jian.R;
 public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameListAdapter.WebviewNameHolder> {
     private Context mContext;
     private List<String> namelist=new ArrayList<String>();
+
+    public void setTabManager(ITabManager tabManager) {
+        this.tabManager = tabManager;
+    }
+
+    public ITabManager tabManager;
 
     public WebviewNameListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -85,6 +94,17 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     }
 
+    public void addItem(){
+
+    }
+
+    public void removeItem(int positon){
+        namelist.remove(positon);
+        this.notifyItemRemoved(positon);
+        this.notifyItemRangeChanged(positon, getItemCount());
+
+    }
+
     class WebviewNameHolder extends RecyclerView.ViewHolder implements  OnClickListener {
         TextView webviewtitle;
 
@@ -101,30 +121,39 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
         int positon;
         ImageButton close;
+        View itemView;
 
         public WebviewNameHolder(View itemView) {
             super(itemView);
+            this.itemView=itemView;
+            this.itemView.setTag("itemview");
             this.webviewtitle=(TextView) itemView.findViewById(R.id.webviewtitle);
             this.webviewtitle.setTag("webviewtitle");
             this.close=(ImageButton) itemView.findViewById(R.id.close);
             this.close.setTag("close");
+            this.setListerner();
         }
 
         public void setListerner(){
+
             webviewtitle.setOnClickListener(this);
+            close.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             String tag = (String) view.getTag();
+            Log.i("ada tag",tag);
+            if(tag.equals("itemview")){
+
+            }
             if(tag.equals("webviewtitle")){
 
             }
             if(tag.equals("close")){
+                removeItem(positon);
 
-                namelist.remove(positon);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
 
             }
         }
