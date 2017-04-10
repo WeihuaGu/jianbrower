@@ -12,5 +12,8 @@ package weihuagu.com.jian.ui.manager;
 public interface ITabManager {
     public void openNewTab();
     public void alterToTab(int tabindex);
+    public void closeTab(int tabindex);
+    public void showTabManager();
+    public void hideTabManager();
 
 }

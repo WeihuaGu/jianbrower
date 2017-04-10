@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import weihuagu.com.jian.ui.view.CustomWebView;
 public class BrowserContainer {
 
+
+
     private static int currentindex=0;
 
     private static List<IWebViewContainer> list = new LinkedList<>();
@@ -25,6 +27,10 @@ public class BrowserContainer {
     }
 
     public static IWebViewContainer getCurrent(){return list.get(currentindex);}
+
+    public static int getCurrentindex() {
+        return currentindex;
+    }
 
     public synchronized static void set(IWebViewContainer controller, int index) {
         if (list.get(index) instanceof CustomWebView) {

@@ -110,7 +110,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 break;
         }
 
-        return true;
+        return false;
 
     }
 }

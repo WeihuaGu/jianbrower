@@ -149,7 +149,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
             }
             if(tag.equals("webviewtitle")){
-
+                tabManager.alterToTab(webviewindex);
             }
             if(tag.equals("close")){
                 removeItem(positon);

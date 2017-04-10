@@ -11,8 +11,6 @@ import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.util.Log;
-import android.webkit.WebViewClient;
-
 
 import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;

@@ -169,11 +169,23 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if(this.phoneuimanager.onKeyBack())
-                ;
-            else
-                finish();
-            return true;
+            if(tabmanagerlayout.getVisibility()==View.VISIBLE){
+                hideTabManager();
+
+            }else{
+                if(this.phoneuimanager.onKeyBack()){
+                    return true;
+                }
+                else{
+                    moveTaskToBack(true);
+                    //finish();
+                    return true;
+                }
+
+            }
+
+
+
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
             //你的操作
@@ -364,5 +376,23 @@ public class BrowserActivity extends AppCompatActivity
     public void alterToTab(int tabindex) {
         BrowserContainer.setCurrentindex(tabindex);
         phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+    }
+
+    @Override
+    public void closeTab(int tabindex) {
+        if(tabindex!=BrowserContainer.getCurrentindex()){
+            BrowserContainer.remove(tabindex);
+        }
+    }
+
+    @Override
+    public void showTabManager() {
+        this.tabmanagerlayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideTabManager() {
+        this.tabmanagerlayout.setVisibility(View.GONE);
+
     }
 }
