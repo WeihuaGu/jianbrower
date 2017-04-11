@@ -39,24 +39,18 @@
         android:background="@android:color/transparent">
         <LinearLayout
             android:id="@+id/addtablayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/aliceblue"
+            android:layout_alignParentRight="true"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/right_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:textStyle="bold"
-                android:text="@string/addtab" />
             <ImageButton
                 android:id="@+id/addtab"
                 android:src="@drawable/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginRight="25dp"
+
                 android:background="@android:color/transparent"/>
         </LinearLayout>
 
@@ -64,6 +58,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_below="@+id/addtablayout"
             android:id="@+id/webviewlist"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
         </android.support.v7.widget.RecyclerView>

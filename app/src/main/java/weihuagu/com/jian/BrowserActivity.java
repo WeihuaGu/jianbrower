@@ -177,8 +177,8 @@ public class BrowserActivity extends AppCompatActivity
                     return true;
                 }
                 else{
-                    moveTaskToBack(true);
-                    //finish();
+                    //moveTaskToBack(true);
+                    finish();
                     return true;
                 }
 
