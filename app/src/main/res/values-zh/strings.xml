@@ -30,7 +30,7 @@
     <string name="pref_title_fontsize">默认字体大小</string>
     <string name="pref_title_EnableImages">允许载入图片</string>
     <string name="pref_key_enableimages">preenableimage</string>
-
+    <string name="addtab">增加标签</string>
     <string-array name="pref_entries_searchitems">
         <item>必应</item>
         <item>谷歌</item>

@@ -23,19 +23,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <TextView
-    android:id="@+id/webviewtitle"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:gravity="left"/>
+        <TextView
+            android:id="@+id/webviewtitle"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="left"/>
+
         <ImageButton
             android:id="@+id/close"
+            android:src="@drawable/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/close"/>
-
+            android:background="@android:color/transparent"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

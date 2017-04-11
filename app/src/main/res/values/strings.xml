@@ -31,6 +31,7 @@
     <string name="pref_title_searchitems">search engine</string>
     <string name="pref_title_EnableImages">enable load imagese</string>
     <string name="pref_key_enableimages">preenableimage</string>
+    <string name="addtab">add tab</string>
 
     <string-array name="pref_entries_searchitems">
         <item>bing</item>
