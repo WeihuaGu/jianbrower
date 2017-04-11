@@ -29,6 +29,13 @@
         android:progress="0"
         />
     <RelativeLayout
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e0000000">
+
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/tabs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,10 +54,11 @@
             <ImageButton
                 android:id="@+id/addtab"
                 android:src="@drawable/add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="25dp"
-
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:scaleType="centerInside"
+                android:layout_marginRight="18dp"
+                android:onClick="clickAddButton"
                 android:background="@android:color/transparent"/>
         </LinearLayout>
 

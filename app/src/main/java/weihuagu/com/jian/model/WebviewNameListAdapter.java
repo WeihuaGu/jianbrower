@@ -46,6 +46,12 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
         return new WebviewNameHolder(LayoutInflater.from(mContext).inflate(R.layout.webviewnamelistview_row_item, parent, false));
     }
 
+
+    public void closeTab(int webviewindex){
+        this.tabManager.closeTab(webviewindex);
+
+    }
+
     @Override
     public void onBindViewHolder(WebviewNameHolder holder, int position) {
         String item=this.namelist.get(position);
@@ -144,16 +150,17 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
         @Override
         public void onClick(View view) {
             String tag = (String) view.getTag();
-            Log.i("ada tag",tag);
+
             if(tag.equals("itemview")){
 
             }
             if(tag.equals("webviewtitle")){
+                Log.i("ada tag",tag);
                 tabManager.alterToTab(webviewindex);
             }
             if(tag.equals("close")){
                 removeItem(positon);
-
+                closeTab(webviewindex);
 
             }
         }

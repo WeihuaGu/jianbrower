@@ -7,6 +7,7 @@
 package weihuagu.com.jian;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,14 +22,18 @@ import android.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.View;
 import android.Manifest;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.graphics.Canvas;
 
 import java.util.ArrayList;
 import java.util.List;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -59,6 +64,7 @@ public class BrowserActivity extends AppCompatActivity
     private RecyclerView webviewnamelist =null;
     boolean filledupwebviewlayout=false;
     WebviewNameListAdapter webviewnamelistadapter=null;
+    ImageButton addtab=null;
 
 
 
@@ -200,6 +206,7 @@ public class BrowserActivity extends AppCompatActivity
     }
 
 
+
     public void initResources(){
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -226,10 +233,60 @@ public class BrowserActivity extends AppCompatActivity
         this.webviewnamelist.setLayoutManager(layoutManager);
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
         progressbar=(ProgressBar)findViewById(R.id.progressbar);
+        addtab=(ImageButton)findViewById(R.id.addtab);
+        addtab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(BrowserActivity.this,"onClick单击",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
+    private ItemTouchHelper getItemTouchHelper(){
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView rv, RecyclerView.ViewHolder vh) {
+                return makeMovementFlags(0, ItemTouchHelper.RIGHT);
+            }
 
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int adapterPosition = viewHolder.getAdapterPosition();
+                //根据adapterPosition移除item
+
+            }
+            @Override
+            public void clearView(RecyclerView rv, RecyclerView.ViewHolder viewHolder) {
+
+            }
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+
+            }
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView,
+                                    RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                    int actionState, boolean isCurrentlyActive) {
+
+            }
+            @Override
+            public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
+                                        RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                        int actionState, boolean isCurrentlyActive) {
+
+            }
+        });
+        return helper;
+
+
+    }
     public void openTabManager(){
         List<String> resultlist=BrowserContainer.getWebViewListname();
         List<String> datalist= new ArrayList<String>();
@@ -245,6 +302,7 @@ public class BrowserActivity extends AppCompatActivity
             this.webviewnamelistadapter.addWebviewNameList(datalist);
             this.webviewnamelistadapter.setTabManager(this);
             this.webviewnamelist.setAdapter(webviewnamelistadapter);
+            this.getItemTouchHelper().attachToRecyclerView(webviewnamelist);
         }
         this.tabmanagerlayout.setVisibility(View.VISIBLE);
 
@@ -380,7 +438,9 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public void closeTab(int tabindex) {
+        Log.i("tab:","close tab"+tabindex);
         if(tabindex!=BrowserContainer.getCurrentindex()){
+
             BrowserContainer.remove(tabindex);
         }
     }
