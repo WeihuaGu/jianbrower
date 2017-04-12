@@ -7,7 +7,6 @@
 package weihuagu.com.jian;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -65,6 +64,7 @@ public class BrowserActivity extends AppCompatActivity
     boolean filledupwebviewlayout=false;
     WebviewNameListAdapter webviewnamelistadapter=null;
     ImageButton addtab=null;
+    RelativeLayout cover=null;
 
 
 
@@ -228,9 +228,9 @@ public class BrowserActivity extends AppCompatActivity
         mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
 
-        this.webviewnamelist =(RecyclerView) findViewById(R.id.webviewlist);
+        webviewnamelist =(RecyclerView) findViewById(R.id.webviewlist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        this.webviewnamelist.setLayoutManager(layoutManager);
+        webviewnamelist.setLayoutManager(layoutManager);
         urlbar=(PhoneUrlBar) findViewById(R.id.urlbar);
         progressbar=(ProgressBar)findViewById(R.id.progressbar);
         addtab=(ImageButton)findViewById(R.id.addtab);
@@ -240,6 +240,12 @@ public class BrowserActivity extends AppCompatActivity
                 Toast.makeText(BrowserActivity.this,"onClick单击",Toast.LENGTH_SHORT).show();
             }
         });
+
+        cover=(RelativeLayout)findViewById(R.id.cover);
+
+        webviewnamelistadapter=new WebviewNameListAdapter(getBaseContext());
+        webviewnamelistadapter.setTabManager(this);
+        webviewnamelist.setAdapter(webviewnamelistadapter);
 
     }
 
@@ -298,13 +304,11 @@ public class BrowserActivity extends AppCompatActivity
 
             }
 
-            this.webviewnamelistadapter=new WebviewNameListAdapter(getBaseContext());
-            this.webviewnamelistadapter.addWebviewNameList(datalist);
-            this.webviewnamelistadapter.setTabManager(this);
-            this.webviewnamelist.setAdapter(webviewnamelistadapter);
+            webviewnamelistadapter.setWebviewNameList(datalist);
+            webviewnamelistadapter.notifyDataSetChanged();
             this.getItemTouchHelper().attachToRecyclerView(webviewnamelist);
         }
-        this.tabmanagerlayout.setVisibility(View.VISIBLE);
+        showTabManager();
 
     }
     public void bindUIManager(){
@@ -357,6 +361,11 @@ public class BrowserActivity extends AppCompatActivity
         this.filledupwebviewlayout=true;
         Log.i("web alter fill boolean",""+filledupwebviewlayout);
     }
+
+
+
+
+
 
 
     //permissions
@@ -423,6 +432,11 @@ public class BrowserActivity extends AppCompatActivity
         }
     };
 
+
+
+
+
+
     @Override
     public void openNewTab() {
         addWebviewToLayout(createNewWebview("front"));
@@ -447,12 +461,26 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public void showTabManager() {
+        showCover();
         this.tabmanagerlayout.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void hideTabManager() {
+        hideCover();
         this.tabmanagerlayout.setVisibility(View.GONE);
+
+    }
+
+    private void showCover(){
+        cover.setVisibility(View.VISIBLE);
+        cover.getBackground().setAlpha(100);
+
+    }
+
+    private void hideCover(){
+        cover.setVisibility(View.GONE);
 
     }
 }

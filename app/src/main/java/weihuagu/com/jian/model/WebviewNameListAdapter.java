@@ -84,7 +84,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
         return this.namelist.size();
     }
 
-    public void addWebviewNameList(List<String> list){
+    public void setWebviewNameList(List<String> list){
 
         for (int i=0;i<list.size();i++){
             this.namelist.add(list.get(i));
