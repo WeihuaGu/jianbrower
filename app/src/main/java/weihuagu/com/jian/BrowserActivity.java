@@ -58,9 +58,8 @@ public class BrowserActivity extends AppCompatActivity
     PhoneUrlBar urlbar=null;
     UIManager phoneuimanager=null;
     ProgressBar progressbar = null;
-    DrawerLayout mrootdrawerlayout=null;
     RelativeLayout tabmanagerlayout=null;
-    private RecyclerView webviewnamelist =null;
+    RecyclerView webviewnamelist =null;
     boolean filledupwebviewlayout=false;
     WebviewNameListAdapter webviewnamelistadapter=null;
     ImageButton addtab=null;
@@ -225,7 +224,6 @@ public class BrowserActivity extends AppCompatActivity
             Log.i("web filled flag",""+filledupwebviewlayout);
             addWebviewToLayout(createNewWebview("front"));
         }
-        mrootdrawerlayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
 
         webviewnamelist =(RecyclerView) findViewById(R.id.webviewlist);
@@ -237,7 +235,7 @@ public class BrowserActivity extends AppCompatActivity
         addtab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BrowserActivity.this,"onClick单击",Toast.LENGTH_SHORT).show();
+                openNewTab();
             }
         });
 
@@ -440,14 +438,24 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void openNewTab() {
         addWebviewToLayout(createNewWebview("front"));
-        this.phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        hideTabManager();
 
     }
 
     @Override
     public void alterToTab(int tabindex) {
+        Toast.makeText(getApplicationContext(), "tab:"+tabindex+"设置为当前index", Toast.LENGTH_SHORT).show();
         BrowserContainer.setCurrentindex(tabindex);
-        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        CustomWebView current=(CustomWebView)BrowserContainer.getCurrent();
+        if(current!=null){
+            phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+
+        }
+        hideTabManager();
+
+
+
     }
 
     @Override

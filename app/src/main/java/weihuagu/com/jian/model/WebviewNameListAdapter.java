@@ -52,6 +52,15 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     }
 
+    public void alterToTab(int webviewindex){
+        tabManager.alterToTab(webviewindex);
+    }
+
+    public int getCurrentWebviewIndex(){
+        return BrowserContainer.getCurrentindex();
+    }
+
+
     @Override
     public void onBindViewHolder(WebviewNameHolder holder, int position) {
         String item=this.namelist.get(position);
@@ -63,7 +72,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
             if(name!=null){
                 if(name.equals("")){
                     if(!index.equals("")){
-                        holder.webviewtitle.setText("空白标签:"+index);
+                        holder.webviewtitle.setText("空白标签"+index);
 
 
                     }
@@ -73,6 +82,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
                     holder.webviewtitle.setText(tmp[0]);
                 }
                 holder.setWebviewindex(Integer.parseInt(index));
+
             }
 
         }
@@ -86,6 +96,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     public void setWebviewNameList(List<String> list){
 
+        this.namelist.clear();
         for (int i=0;i<list.size();i++){
             this.namelist.add(list.get(i));
         }
@@ -113,21 +124,18 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
     class WebviewNameHolder extends RecyclerView.ViewHolder implements  OnClickListener {
         TextView webviewtitle;
+        int webviewindex;
+        int positon;
+        ImageButton close;
+        View itemView;
 
         public void setWebviewindex(int webviewindex) {
             this.webviewindex = webviewindex;
         }
 
-        int webviewindex;
-
-
         public void setPositon(int positon) {
             this.positon = positon;
         }
-
-        int positon;
-        ImageButton close;
-        View itemView;
 
         public WebviewNameHolder(View itemView) {
             super(itemView);
@@ -138,6 +146,7 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
             this.close=(ImageButton) itemView.findViewById(R.id.close);
             this.close.setTag("close");
             this.setListerner();
+            this.setCurrentWebviewitem();
         }
 
         public void setListerner(){
@@ -145,6 +154,13 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
             webviewtitle.setOnClickListener(this);
             close.setOnClickListener(this);
             itemView.setOnClickListener(this);
+        }
+
+        public void setCurrentWebviewitem(){
+            if(this.webviewindex==getCurrentWebviewIndex()){
+                this.webviewtitle.setTextColor(0XFF3F51B5);
+            }
+
         }
 
         @Override
@@ -155,8 +171,8 @@ public class WebviewNameListAdapter extends RecyclerView.Adapter<WebviewNameList
 
             }
             if(tag.equals("webviewtitle")){
-                Log.i("ada tag",tag);
-                tabManager.alterToTab(webviewindex);
+                alterToTab(webviewindex);
+
             }
             if(tag.equals("close")){
                 removeItem(positon);
