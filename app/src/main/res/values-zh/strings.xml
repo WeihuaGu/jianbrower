@@ -13,6 +13,8 @@
     <string name="action_scan">扫一扫</string>
     <string name="action_share">分享</string>
     <string name="action_openscanedurl">打开识别网址</string>
+    <string name="action_nightmode">夜间模式</string>
+    <string name="action_daymode">日间模式</string>
     <string name="action_loadinhttps">使用https重新载入 </string>
     <string name="action_newtab">打开新标签</string>
     <string name="action_tabmanage">管理标签</string>

@@ -6,6 +6,8 @@
 
 package weihuagu.com.jian;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -23,9 +25,6 @@ import android.view.View;
 import android.Manifest;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.graphics.Canvas;
-
-import java.util.ArrayList;
-import java.util.List;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.util.Log;
@@ -108,7 +107,6 @@ public class BrowserActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_fresh) {
             this.phoneuimanager.freshUrl();
             return true;
@@ -161,6 +159,21 @@ public class BrowserActivity extends AppCompatActivity
             intent1.putExtra(Intent.EXTRA_TEXT,sharestring);
             intent1.setType("text/plain");
             startActivity(Intent.createChooser(intent1,"share"));
+
+        }else if (id == R.id.nav_nightmode) {
+            // 有权限，直接do anything.
+            String title=item.getTitle().toString();
+            String daystring=getString(R.string.action_daymode);
+            String nightstring=getString(R.string.action_nightmode);
+            if(title.equals(daystring)){
+                item.setTitle(nightstring);
+                setDayMode();
+            }
+            if(title.equals(nightstring)){
+                item.setTitle(daystring);
+                setNightMode();
+            }
+
 
         }
 
@@ -491,4 +504,14 @@ public class BrowserActivity extends AppCompatActivity
         cover.setVisibility(View.GONE);
 
     }
+
+    private void setNightMode(){
+        Toast.makeText(getApplicationContext(), "night mode", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void setDayMode(){
+        Toast.makeText(getApplicationContext(), "day mode", Toast.LENGTH_SHORT).show();
+    }
+
 }

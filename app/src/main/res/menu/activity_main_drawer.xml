@@ -13,6 +13,18 @@
             android:title="@string/action_settings" />
     </group>
 
+
+    <group>
+        <item android:title="Interface">
+            <menu>
+                <item
+                    android:id="@+id/nav_nightmode"
+                    android:icon="@drawable/ic_menu_moon"
+                    android:title="@string/action_nightmode" />
+            </menu>
+        </item>
+    </group>
+
     <item android:title="Communicate">
         <menu>
             <item
@@ -22,9 +34,6 @@
         </menu>
     </item>
 
-    <group>
 
-
-    </group>
 
 </menu>
