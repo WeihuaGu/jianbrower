@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatDelegate;
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -167,10 +168,12 @@ public class BrowserActivity extends AppCompatActivity
             String nightstring=getString(R.string.action_nightmode);
             if(title.equals(daystring)){
                 item.setTitle(nightstring);
+                item.setIcon(R.drawable.ic_menu_moon);
                 setDayMode();
             }
             if(title.equals(nightstring)){
                 item.setTitle(daystring);
+                item.setIcon(R.drawable.ic_menu_sun);
                 setNightMode();
             }
 
@@ -507,11 +510,14 @@ public class BrowserActivity extends AppCompatActivity
 
     private void setNightMode(){
         Toast.makeText(getApplicationContext(), "night mode", Toast.LENGTH_SHORT).show();
-
+        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        recreate();
     }
 
     private void setDayMode(){
         Toast.makeText(getApplicationContext(), "day mode", Toast.LENGTH_SHORT).show();
+        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        recreate();
     }
 
 }
