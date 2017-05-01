@@ -32,7 +32,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.support.v7.app.AppCompatDelegate;
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -67,32 +66,6 @@ public class BrowserActivity extends AppCompatActivity
 
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        this.initResources();
-        this.createRuntimeSetting();
-        this.bindUIManager();
-        this.handleIntent();
-        if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
-            this.getPermissionWRITE_EXTERNAL_STORAGE();
-        }
-
-
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,11 +89,11 @@ public class BrowserActivity extends AppCompatActivity
         if (id==R.id.action_loadinhttps){
             String url=phoneuimanager.getCurrentUrl();
             if(url!=null)
-            this.phoneuimanager.loadUrlInHttps(url);
+                this.phoneuimanager.loadUrlInHttps(url);
         }
 
         if(id==R.id.action_newtab){
-           this.openNewTab();
+            this.openNewTab();
 
         }
         if (id==R.id.action_tabmanage){
@@ -150,9 +123,9 @@ public class BrowserActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_setting) {
-                // 有权限，直接do anything.
-                Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
-                startActivity(intent);
+            // 有权限，直接do anything.
+            Intent intent=new Intent(BrowserActivity.this,SettingsActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
             String sharestring=phoneuimanager.getCurrentUrl();
@@ -186,41 +159,19 @@ public class BrowserActivity extends AppCompatActivity
     }
 
 
-
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if(tabmanagerlayout.getVisibility()==View.VISIBLE){
-                hideTabManager();
-
-            }else{
-                if(this.phoneuimanager.onKeyBack()){
-                    return true;
-                }
-                else{
-                    //moveTaskToBack(true);
-                    finish();
-                    return true;
-                }
-
-            }
-
-
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        this.initResources();
+        this.createRuntimeSetting();
+        this.bindUIManager();
+        this.handleIntent();
+        if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
+            this.getPermissionWRITE_EXTERNAL_STORAGE();
         }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-            //你的操作
-        }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-            //你的操作
-        }
-        return false;
-
-
 
     }
-
-
 
     public void initResources(){
 
@@ -264,49 +215,7 @@ public class BrowserActivity extends AppCompatActivity
     }
 
 
-    private ItemTouchHelper getItemTouchHelper(){
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(RecyclerView rv, RecyclerView.ViewHolder vh) {
-                return makeMovementFlags(0, ItemTouchHelper.RIGHT);
-            }
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int adapterPosition = viewHolder.getAdapterPosition();
-                //根据adapterPosition移除item
-
-            }
-            @Override
-            public void clearView(RecyclerView rv, RecyclerView.ViewHolder viewHolder) {
-
-            }
-            @Override
-            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-
-            }
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView,
-                                    RecyclerView.ViewHolder viewHolder, float dX, float dY,
-                                    int actionState, boolean isCurrentlyActive) {
-
-            }
-            @Override
-            public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
-                                        RecyclerView.ViewHolder viewHolder, float dX, float dY,
-                                        int actionState, boolean isCurrentlyActive) {
-
-            }
-        });
-        return helper;
-
-
-    }
     public void openTabManager(){
         List<String> resultlist=BrowserContainer.getWebViewListname();
         List<String> datalist= new ArrayList<String>();
@@ -320,7 +229,6 @@ public class BrowserActivity extends AppCompatActivity
 
             webviewnamelistadapter.setWebviewNameList(datalist);
             webviewnamelistadapter.notifyDataSetChanged();
-            this.getItemTouchHelper().attachToRecyclerView(webviewnamelist);
         }
         showTabManager();
 
@@ -381,6 +289,85 @@ public class BrowserActivity extends AppCompatActivity
 
 
 
+
+
+
+
+
+    //操作
+
+    //标签操作
+
+
+
+    @Override
+    public void openNewTab() {
+        addWebviewToLayout(createNewWebview("front"));
+        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        hideTabManager();
+
+    }
+
+    @Override
+    public void alterToTab(int tabindex) {
+        Toast.makeText(getApplicationContext(), "tab:"+tabindex+"设置为当前index", Toast.LENGTH_SHORT).show();
+        BrowserContainer.setCurrentindex(tabindex);
+        CustomWebView current=(CustomWebView)BrowserContainer.getCurrent();
+        if(current!=null){
+            phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+
+        }
+        hideTabManager();
+    }
+
+    @Override
+    public void closeTab(int tabindex) {
+        Log.i("tab:","close tab"+tabindex);
+        if(tabindex!=BrowserContainer.getCurrentindex()){
+
+            BrowserContainer.remove(tabindex);
+        }
+    }
+
+
+    @Override
+    public void showTabManager() {
+        showCover();
+        this.tabmanagerlayout.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideTabManager() {
+        hideCover();
+        this.tabmanagerlayout.setVisibility(View.GONE);
+
+    }
+
+
+    //遮罩
+
+    private void showCover(){
+        cover.setVisibility(View.VISIBLE);
+        cover.getBackground().setAlpha(100);
+
+    }
+
+    private void hideCover(){
+        cover.setVisibility(View.GONE);
+
+    }
+
+
+
+    //action
+    private void setNightMode(){
+        Toast.makeText(getApplicationContext(), "night mode", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setDayMode(){
+        Toast.makeText(getApplicationContext(), "day mode", Toast.LENGTH_SHORT).show();
+    }
 
     //permissions
 
@@ -448,76 +435,43 @@ public class BrowserActivity extends AppCompatActivity
 
 
 
-
-
-
+//按键响应
     @Override
-    public void openNewTab() {
-        addWebviewToLayout(createNewWebview("front"));
-        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
-        hideTabManager();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if(tabmanagerlayout.getVisibility()==View.VISIBLE){
+                hideTabManager();
+            }else{
+                if(this.phoneuimanager.onKeyBack()){
+                    return true;
+                }
+                else{
+                    //moveTaskToBack(true);
+                    finish();
+                    return true;
+                }
 
-    }
-
-    @Override
-    public void alterToTab(int tabindex) {
-        Toast.makeText(getApplicationContext(), "tab:"+tabindex+"设置为当前index", Toast.LENGTH_SHORT).show();
-        BrowserContainer.setCurrentindex(tabindex);
-        CustomWebView current=(CustomWebView)BrowserContainer.getCurrent();
-        if(current!=null){
-            phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+            }
 
         }
-        hideTabManager();
-
-
-
-    }
-
-    @Override
-    public void closeTab(int tabindex) {
-        Log.i("tab:","close tab"+tabindex);
-        if(tabindex!=BrowserContainer.getCurrentindex()){
-
-            BrowserContainer.remove(tabindex);
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            //你的操作
         }
-    }
-
-    @Override
-    public void showTabManager() {
-        showCover();
-        this.tabmanagerlayout.setVisibility(View.VISIBLE);
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+            //你的操作
+        }
+        return false;
 
     }
 
     @Override
-    public void hideTabManager() {
-        hideCover();
-        this.tabmanagerlayout.setVisibility(View.GONE);
-
-    }
-
-    private void showCover(){
-        cover.setVisibility(View.VISIBLE);
-        cover.getBackground().setAlpha(100);
-
-    }
-
-    private void hideCover(){
-        cover.setVisibility(View.GONE);
-
-    }
-
-    private void setNightMode(){
-        Toast.makeText(getApplicationContext(), "night mode", Toast.LENGTH_SHORT).show();
-        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        recreate();
-    }
-
-    private void setDayMode(){
-        Toast.makeText(getApplicationContext(), "day mode", Toast.LENGTH_SHORT).show();
-        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        recreate();
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }
