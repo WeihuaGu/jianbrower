@@ -37,7 +37,7 @@ public class RecView extends View {
     }
 
     private void initParams() {
-        recmagin=getWidth()*(2/5);
+        recmagin=getWidth()*(3/5);
     }
 
     @Override
