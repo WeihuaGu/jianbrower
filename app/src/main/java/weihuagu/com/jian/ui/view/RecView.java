@@ -22,6 +22,9 @@ public class RecView extends View {
 
     private Paint mPaint;
     private float recmagin;
+    private float dist;
+    private float centerx;
+    private float centery;
     private static final float BODY_SCALE = 0.6f;//身体主干占整个view的比重
     private static final float BODY_WIDTH_HEIGHT_SCALE = 0.6f; //        身体的比例设定为 w:h = 3:5
     public RecView(Context context) {
@@ -37,7 +40,11 @@ public class RecView extends View {
     }
 
     private void initParams() {
-        recmagin=getWidth()*(3/5);
+        float viewwidth=getWidth();
+        recmagin=(float) (viewwidth*0.24);
+        dist=(getRight()-recmagin)-(getLeft()+recmagin);
+        centerx=(getRight()-getLeft())/2+getLeft();
+        centery=(getBottom()-getTop())/2+getTop();
     }
 
     @Override
@@ -45,14 +52,14 @@ public class RecView extends View {
         initParams();
         initPaint();
         mPaint.setColor(Color.GREEN);
-        mPaint.setAlpha(60);
-        // 设置填充颜色
-        Path path = new Path();
-        path.moveTo(getLeft()+recmagin, getTop()+recmagin);                           //起始点
-        path.lineTo(getRight()-recmagin, getTop()+recmagin);                           //连线到下一点
-        path.lineTo(getRight()-recmagin, getBottom()-recmagin);                      //连线到下一点
-        path.lineTo(getLeft()+recmagin, getBottom()-recmagin);
-        canvas.drawPath(path,mPaint);
+        mPaint.setStyle(Paint.Style.STROKE);
+
+        canvas.drawLine(centerx-dist/2, centery-dist/2,centerx+dist/2, centery-dist/2,mPaint);
+        canvas.drawLine(centerx+dist/2, centery-dist/2,centerx+dist/2, centery+dist/2,mPaint);
+        canvas.drawLine(centerx+dist/2, centery+dist/2,centerx-dist/2, centery+dist/2,mPaint);
+        canvas.drawLine(centerx-dist/2, centery+dist/2,centerx-dist/2, centery-dist/2,mPaint);
+
+
 
     }
 
