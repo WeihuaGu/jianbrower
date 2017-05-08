@@ -168,79 +168,13 @@ public class PhoneUIManager implements UIManager{
         this.webview.loadUrl(openurl);
     }
     public void initresources(){
-        this.webview.getSettings().setBuiltInZoomControls(true);
-        this.webview.getSettings().setDisplayZoomControls(false);//隐藏Zoom缩放按钮
-
-        //this.webview.setOnTouchListener(listerner);
-        //this.webview.setOnLongClickListener(listerner);
-
-        this.webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                if(url.startsWith("http://")| url.startsWith("http://") ){
-                    view.loadUrl(url);
-                }else{
-                    try {
-                        Uri uri = Uri.parse(url);
-                        Intent intent =new Intent(Intent.ACTION_VIEW, uri);
-                        view.getContext().startActivity(intent);
-                    }catch (Exception e){
-                        Log.v("loadnonomal",e.getMessage());
-
-                    }
-                }
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url)
-            {
-//结束
-                super.onPageFinished(view, url);
-                setUrlbarUrl(getCurrentUrl());
-                urlbar.hideUrl();
-                urlbar.setTitle(webview.getTitle());
-                Log.i("phonuimanager","pagefinised and title:"+webview.getTitle());
-            }
-
-
-        }); //设置浏览
-
-        this.webview.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                // TODO Auto-generated method stub
-
-                if(progressbar!=null) {
-                    if (newProgress == 100) {
-                        progressbar.setVisibility(View.INVISIBLE);
-                    } else {
-                        if (View.INVISIBLE == progressbar.getVisibility()) {
-                            progressbar.setVisibility(View.VISIBLE);
-                        }
-                        progressbar.setProgress(newProgress);
-                    }
-
-                }
-                super.onProgressChanged(view, newProgress);
-                urlbar.setTitle(webview.getTitle());
-            }
-
-        });
-
+        settingWebView();
         this.urlbarEventhandle=new UrlBarEventHandle();
         this.urlbar.setEventListener(urlbarEventhandle);
-
-
-
-
-
 
     }
 
     public void init(){
-        //this.webview.loadUrl("http://m.baidu.com");
         this.urlbar.showUrl();
         this.urlbar.getUrlFocus();
         sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -249,9 +183,6 @@ public class PhoneUIManager implements UIManager{
         this.setFontSize();
         this.setEnableImage();
         this.loadHome();
-
-
-
     }
 
     public void setFontSize(){
@@ -331,6 +262,66 @@ public class PhoneUIManager implements UIManager{
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
+    }
+
+
+    private void settingWebView(){
+        this.webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                if(url.startsWith("http://")| url.startsWith("http://") ){
+                    view.loadUrl(url);
+                }else{
+                    try {
+                        Uri uri = Uri.parse(url);
+                        Intent intent =new Intent(Intent.ACTION_VIEW, uri);
+                        view.getContext().startActivity(intent);
+                        Log.v("loadotherpro",intent.toString());
+                    }catch (Exception e){
+                        Log.v("loadnonomal",e.getMessage());
+
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+//结束
+                super.onPageFinished(view, url);
+                setUrlbarUrl(getCurrentUrl());
+                urlbar.hideUrl();
+                urlbar.setTitle(webview.getTitle());
+            }
+
+
+        }); //设置浏览
+
+        this.webview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                // TODO Auto-generated method stub
+
+                if(progressbar!=null) {
+                    if (newProgress == 100) {
+                        progressbar.setVisibility(View.INVISIBLE);
+                    } else {
+                        if (View.INVISIBLE == progressbar.getVisibility()) {
+                            progressbar.setVisibility(View.VISIBLE);
+                        }
+                        progressbar.setProgress(newProgress);
+                    }
+
+                }
+                super.onProgressChanged(view, newProgress);
+                urlbar.setTitle(webview.getTitle());
+            }
+
+        });
+
+
     }
 
     class UrlBarEventHandle implements OnPhoneUrlBarEventListener{

@@ -69,6 +69,8 @@ public class CustomWebView extends WebView implements IWebViewContainer{
         websetting.setJavaScriptEnabled(true); //设置设否支持JavaScript
         websetting.setDomStorageEnabled(true);
         websetting.setSupportZoom(true);
+        websetting.setBuiltInZoomControls(true);
+        websetting.setDisplayZoomControls(false);//隐藏Zoom缩放按钮
 
 
     }

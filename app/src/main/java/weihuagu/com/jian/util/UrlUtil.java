@@ -25,6 +25,13 @@ public class UrlUtil {
         return searchurl.replaceAll("\\{searchTerms\\}", serchcontent);
     }
     public static String addressMatch(String address){
+
+
+        if(address.startsWith("jian")){
+            return address;
+        }
+
+
         if(address.startsWith("http://")){
             return address;
         }
@@ -34,6 +41,8 @@ public class UrlUtil {
         if(!address.startsWith("http://")|!address.startsWith("https://")) {
             address = "http://" + address;
         } // 如果不以http://开头，识别不了，所以判断
+
+
         return address;
     }
     public static String addressMatchInHttps(String address){
