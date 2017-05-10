@@ -27,7 +27,15 @@ public class UrlUtil {
     public static String addressMatch(String address){
 
 
-        if(address.startsWith("jian")){
+        if(address.startsWith("jian://")){
+            return address;
+        }
+
+        if(address.startsWith("alipay://")){
+            return address;
+        }
+
+        if(address.startsWith("wechat://")){
             return address;
         }
 

@@ -363,10 +363,12 @@ public class BrowserActivity extends AppCompatActivity
     //action
     private void setNightMode(){
         Toast.makeText(getApplicationContext(), "night mode", Toast.LENGTH_SHORT).show();
+        phoneuimanager.setNightMode("night");
     }
 
     private void setDayMode(){
         Toast.makeText(getApplicationContext(), "day mode", Toast.LENGTH_SHORT).show();
+        phoneuimanager.setNightMode("day");
     }
 
     //permissions

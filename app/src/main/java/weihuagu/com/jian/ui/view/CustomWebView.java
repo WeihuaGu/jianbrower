@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.util.Log;
+import java.lang.reflect.Method;
 
 import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
@@ -87,6 +88,11 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     @Override
     public UUID getUUID(){
         return mUUID;
+
+    }
+
+    public void setNightMode(String mode){
+
 
     }
 

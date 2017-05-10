@@ -22,6 +22,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.ProgressBar;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
+
+import java.lang.reflect.Method;
 
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.DownloadItem;
@@ -238,6 +241,37 @@ public class PhoneUIManager implements UIManager{
     }
 
     @Override
+    public void setNightMode(String mode) {
+
+        if(mode=="night"){
+            try {
+                Class clsWebSettingsClassic =
+                        this.context.getClassLoader().loadClass("android.webkit.WebSettings");
+                Method md = clsWebSettingsClassic.getMethod(
+                        "setProperty", String.class, String.class);
+                md.invoke(webview.getSettings(), "inverted", "true");
+                md.invoke(webview.getSettings(), "inverted_contrast", "1");
+            } catch (Exception e) {
+                Log.v("nightmode",e.getMessage().toString());
+            }
+
+        }
+        if(mode=="day"){
+            try {
+                Class clsWebSettingsClassic =
+                        this.context.getClassLoader().loadClass("android.webkit.WebSettings");
+                Method md = clsWebSettingsClassic.getMethod(
+                        "setProperty", String.class, String.class);
+                md.invoke(webview.getSettings(), "inverted", "true");
+                md.invoke(webview.getSettings(), "inverted_contrast", "1");
+            } catch (Exception e) {}
+
+        }
+        this.freshUrl();
+
+    }
+
+    @Override
     public boolean onKeyBack() {
         if(webview.canGoBack()){
             webview.goBack();
@@ -272,12 +306,15 @@ public class PhoneUIManager implements UIManager{
 
                 if(url.startsWith("http://")| url.startsWith("http://") ){
                     view.loadUrl(url);
-                }else{
+                }
+                else{
                     try {
-                        Uri uri = Uri.parse(url);
-                        Intent intent =new Intent(Intent.ACTION_VIEW, uri);
+
+                        Intent intent =Intent.parseUri(url,
+                                Intent.URI_INTENT_SCHEME);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
                         view.getContext().startActivity(intent);
-                        Log.v("loadotherpro",intent.toString());
+                        Log.v("loadotherapp",intent.toString());
                     }catch (Exception e){
                         Log.v("loadnonomal",e.getMessage());
 

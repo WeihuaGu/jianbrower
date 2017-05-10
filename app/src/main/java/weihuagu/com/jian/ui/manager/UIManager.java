@@ -19,5 +19,6 @@ public interface UIManager extends OnTouchListener{
     String getCurrentUrl();
     void freshUrl();
     void hideurl();
+    void setNightMode(String mode);
 
 }
