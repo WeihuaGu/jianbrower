@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.widget.ProgressBar;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
+import weihuagu.com.jian.model.CustomWebViewClient;
 
 import java.lang.reflect.Method;
 
@@ -300,41 +301,10 @@ public class PhoneUIManager implements UIManager{
 
 
     private void settingWebView(){
-        this.webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if(url.startsWith("http://")| url.startsWith("http://") ){
-                    view.loadUrl(url);
-                }
-                else{
-                    try {
-
-                        Intent intent =Intent.parseUri(url,
-                                Intent.URI_INTENT_SCHEME);
-                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        view.getContext().startActivity(intent);
-                        Log.v("loadotherapp",intent.toString());
-                    }catch (Exception e){
-                        Log.v("loadnonomal",e.getMessage());
-
-                    }
-                }
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url)
-            {
-//结束
-                super.onPageFinished(view, url);
-                setUrlbarUrl(getCurrentUrl());
-                urlbar.hideUrl();
-                urlbar.setTitle(webview.getTitle());
-            }
-
-
-        }); //设置浏览
+        CustomWebViewClient webviewclient=new CustomWebViewClient();
+        webviewclient.setUrlbar(urlbar);
+        webview.setWebViewClient(webviewclient);
 
         this.webview.setWebChromeClient(new WebChromeClient(){
             @Override
