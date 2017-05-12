@@ -76,7 +76,7 @@ public class CustomWebView extends WebView implements IWebViewContainer{
 
     }
     public void logWebview(){
-        Log.i("customwebview", "start");
+
 
     }
 

@@ -59,6 +59,13 @@ public class BrowserContainer {
     }
 
     public synchronized static void remove(int index) {
+        if(list.get(index)==null)
+            return ;
+
+        if(list.isEmpty()){
+            return ;
+        }
+
         if (list.get(index) instanceof IWebViewContainer) {
             ((CustomWebView) list.get(index)).destroy();
         }

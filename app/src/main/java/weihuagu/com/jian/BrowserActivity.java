@@ -188,7 +188,6 @@ public class BrowserActivity extends AppCompatActivity
 
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
         if(filledupwebviewlayout==false) {
-            Log.i("web filled flag",""+filledupwebviewlayout);
             addWebviewToLayout(createNewWebview("front"));
         }
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
@@ -266,7 +265,7 @@ public class BrowserActivity extends AppCompatActivity
 
     //webview
     private  CustomWebView createNewWebview(String positon){
-        Log.i("createnew","webvie");
+        Log.i("createnew","webview");
         CustomWebView tmpwebveiw=new CustomWebView(getApplicationContext());
         if(positon.equals("front")){
             BrowserContainer.addCurrent(tmpwebveiw);
@@ -281,7 +280,7 @@ public class BrowserActivity extends AppCompatActivity
         this.webviewlayout.removeAllViews();
         this.webviewlayout.addView(webview);
         this.filledupwebviewlayout=true;
-        Log.i("web alter fill boolean",""+filledupwebviewlayout);
+        Log.i("webview be loaded",""+filledupwebviewlayout);
     }
 
 

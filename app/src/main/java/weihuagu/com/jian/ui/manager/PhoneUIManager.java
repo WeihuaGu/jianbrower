@@ -58,19 +58,6 @@ public class PhoneUIManager implements UIManager{
         this.urlbar = urlbar;
     }
 
-
-    public void setWebview(CustomWebView webview) {
-        this.webview = webview;
-    }
-
-    public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview,Context context){
-        this.context=context;
-        this.urlbar=urlbar;
-        this.webview=webview;
-        this.initresources();
-        this.init();
-    }
-
     public PhoneUIManager(PhoneUrlBar urlbar,CustomWebView webview,ProgressBar progressbar,Context context){
         this.context=context;
         this.urlbar=urlbar;
@@ -87,8 +74,9 @@ public class PhoneUIManager implements UIManager{
     @Override
     public void setCurrentWebview(CustomWebView webview) {
         this.webview=webview;
-        this.initresources();
-        this.init();
+        settingWebView();
+
+        freshUrl();
 
     }
 
@@ -173,20 +161,19 @@ public class PhoneUIManager implements UIManager{
     }
     public void initresources(){
         settingWebView();
-        this.urlbarEventhandle=new UrlBarEventHandle();
-        this.urlbar.setEventListener(urlbarEventhandle);
-
+        urlbarEventhandle=new UrlBarEventHandle();
+        urlbar.setEventListener(urlbarEventhandle);
     }
 
     public void init(){
-        this.urlbar.showUrl();
-        this.urlbar.getUrlFocus();
+        urlbar.showUrl();
+        urlbar.getUrlFocus();
         sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
-        this.preferenceChangeListener=new OnPreferenceChangeListener();
+        preferenceChangeListener=new OnPreferenceChangeListener();
         sharedPref.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-        this.setFontSize();
-        this.setEnableImage();
-        this.loadHome();
+        setFontSize();
+        setEnableImage();
+        loadHome();
     }
 
     public void setFontSize(){
@@ -286,7 +273,7 @@ public class PhoneUIManager implements UIManager{
     @Override
     public String getCurrentUrl() {
 
-        return this.webview.getUrl();
+        return webview.getUrl();
     }
 
     @Override
@@ -305,8 +292,7 @@ public class PhoneUIManager implements UIManager{
         CustomWebViewClient webviewclient=new CustomWebViewClient();
         webviewclient.setUrlbar(urlbar);
         webview.setWebViewClient(webviewclient);
-
-        this.webview.setWebChromeClient(new WebChromeClient(){
+        webview.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 // TODO Auto-generated method stub
@@ -346,7 +332,7 @@ public class PhoneUIManager implements UIManager{
 
         @Override
         public void onUrlValidated() {
-            Log.v("urlbar","key enter");
+            Log.i("urlbar","key enter");
             loadUrl(urlbar.getUrl());
 
         }
