@@ -14,5 +14,6 @@ import java.util.UUID;
 public interface IWebViewContainer {
 
     public UUID getUUID();
+    public void destroyWebView();
 
 }

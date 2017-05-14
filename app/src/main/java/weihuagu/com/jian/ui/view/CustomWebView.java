@@ -91,10 +91,33 @@ public class CustomWebView extends WebView implements IWebViewContainer{
 
     }
 
+    @Override
+    public void destroyWebView() {
+        this.destroy();
+    }
+
     public void setNightMode(String mode){
 
 
     }
+
+    @Override
+    public void destroy(){
+    //flushMessageQueue();
+    clearCache(true);
+    clearFormData();
+    clearMatches();
+    clearSslPreferences();
+    clearDisappearingChildren();
+    clearHistory();
+    //@Deprecated
+    //clearView();
+    clearAnimation();
+    loadUrl("about:blank");
+    removeAllViews();
+    freeMemory();
+    super.destroy();
+   }
 
 
 

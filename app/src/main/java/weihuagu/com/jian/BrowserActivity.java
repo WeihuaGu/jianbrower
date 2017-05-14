@@ -41,6 +41,7 @@ import weihuagu.com.jian.ui.manager.PhoneUIManager;
 import weihuagu.com.jian.model.BrowserContainer;
 import weihuagu.com.jian.model.WebviewNameListAdapter;
 import weihuagu.com.jian.ui.manager.ITabManager;
+import weihuagu.com.jian.model.WebViewFactory;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -63,6 +64,7 @@ public class BrowserActivity extends AppCompatActivity
     WebviewNameListAdapter webviewnamelistadapter=null;
     ImageButton addtab=null;
     RelativeLayout cover=null;
+    WebViewFactory webviewfactory=null;
 
 
 
@@ -161,6 +163,7 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("jian","oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.initResources();
@@ -185,6 +188,8 @@ public class BrowserActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        webviewfactory=new WebViewFactory(getApplicationContext());
 
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
         if(filledupwebviewlayout==false) {
@@ -264,16 +269,8 @@ public class BrowserActivity extends AppCompatActivity
 
 
     //webview
-    private  CustomWebView createNewWebview(String positon){
-        Log.i("createnew","webview");
-        CustomWebView tmpwebveiw=new CustomWebView(getApplicationContext());
-        if(positon.equals("front")){
-            BrowserContainer.addCurrent(tmpwebveiw);
-
-        }else {
-            BrowserContainer.add(tmpwebveiw);
-        }
-        return tmpwebveiw;
+    private  CustomWebView createNewWebview(String openmethed){
+        return webviewfactory.createWebView(openmethed);
     }
     private void addWebviewToLayout(CustomWebView webview){
 
@@ -349,6 +346,12 @@ public class BrowserActivity extends AppCompatActivity
     private void showCover(){
         cover.setVisibility(View.VISIBLE);
         cover.getBackground().setAlpha(100);
+        cover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideTabManager();
+            }
+        });
 
     }
 
@@ -475,4 +478,36 @@ public class BrowserActivity extends AppCompatActivity
         }
     }
 
+
+
+    //activity 自身生命周期
+    @Override
+    protected void onDestroy(){
+        Log.i("jian","destroy");
+        BrowserContainer.destroyContainer();
+        super.onDestroy();
+    }
+    @Override
+    protected void onStart(){
+        Log.i("jian","onstart");
+        super.onStart();
+    }
+    @Override
+    protected void onPause(){
+        Log.i("jian","onpause");
+        super.onPause();
+    }
+
+
+    @Override
+    protected  void onResume(){
+        Log.i("jian","onresume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop(){
+        Log.i("jian","onstop");
+        super.onStop();
+    }
 }

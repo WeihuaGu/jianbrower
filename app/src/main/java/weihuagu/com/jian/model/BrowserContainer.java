@@ -10,6 +10,8 @@ package weihuagu.com.jian.model;
  * Created by root on 17-3-23.
  */
 
+import android.webkit.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
@@ -124,5 +126,13 @@ public class BrowserContainer {
     }
     public static int WebViewNum(){
         return list.size();
+    }
+
+    public static void destroyContainer(){
+        for(int i=0;i<list.size();i++){
+            CustomWebView tmpwebview=(CustomWebView)list.get(i);
+            tmpwebview.destroyWebView();
+        }
+
     }
 }
