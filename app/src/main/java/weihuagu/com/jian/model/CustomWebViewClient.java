@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebResourceRequest;
 
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 
@@ -32,8 +33,9 @@ public class CustomWebViewClient extends WebViewClient{
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-        if(url.startsWith("http://")| url.startsWith("http://") ){
+        if(url.startsWith("http://")| url.startsWith("https://") ){
             view.loadUrl(url);
+            return true;
         }
         else{
             try {
@@ -48,8 +50,10 @@ public class CustomWebViewClient extends WebViewClient{
 
             }
         }
-        return true;
+        return super.shouldOverrideUrlLoading(view,url);
     }
+
+
 
 
     public void onPageFinished(WebView view, String url)
