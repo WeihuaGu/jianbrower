@@ -290,6 +290,7 @@ public class PhoneUIManager implements UIManager{
     private void settingWebView(){
 
         CustomWebViewClient webviewclient=new CustomWebViewClient();
+        webviewclient.setContext(context);
         webviewclient.setUrlbar(urlbar);
         webview.setWebViewClient(webviewclient);
         webview.setWebChromeClient(new WebChromeClient(){
