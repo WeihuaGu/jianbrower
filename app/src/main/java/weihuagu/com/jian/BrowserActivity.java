@@ -313,6 +313,9 @@ public class BrowserActivity extends AppCompatActivity
             phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
 
         }
+        if(current==null){
+            Toast.makeText(getApplicationContext(), "tab:"+tabindex+"切换到tab失败", Toast.LENGTH_SHORT).show();
+        }
         hideTabManager();
     }
 
