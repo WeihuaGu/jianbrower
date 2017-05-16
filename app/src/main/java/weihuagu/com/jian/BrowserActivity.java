@@ -310,6 +310,7 @@ public class BrowserActivity extends AppCompatActivity
         BrowserContainer.setCurrentindex(tabindex);
         CustomWebView current=(CustomWebView)BrowserContainer.getCurrent();
         if(current!=null){
+            Toast.makeText(getApplicationContext(), "tab:"+"跳转到"+current.getTitle(), Toast.LENGTH_LONG).show();
             phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
 
         }
