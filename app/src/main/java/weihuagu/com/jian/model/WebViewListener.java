@@ -107,6 +107,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 this.hindleSRC_ANCHOR_TYPE();
                 break;
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
+                Log.v("longpress","srcimage"+type);
                 break;
             case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
                 Log.v("longpress","image"+type);

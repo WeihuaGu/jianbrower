@@ -76,7 +76,7 @@ public class PhoneUIManager implements UIManager{
         this.webview=webview;
         settingWebView();
 
-        freshUrl();
+        //freshUrl();
 
     }
 
@@ -166,8 +166,7 @@ public class PhoneUIManager implements UIManager{
     }
 
     public void init(){
-        urlbar.showUrl();
-        urlbar.getUrlFocus();
+        urlbar.cleanUrlAndGetfocus();
         sharedPref=PreferenceManager.getDefaultSharedPreferences(this.context);
         preferenceChangeListener=new OnPreferenceChangeListener();
         sharedPref.registerOnSharedPreferenceChangeListener(preferenceChangeListener);

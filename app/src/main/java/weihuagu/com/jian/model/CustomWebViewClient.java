@@ -17,9 +17,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.telecom.Call;
 
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import okhttp3.Response;
 public class CustomWebViewClient extends WebViewClient{
 
     PhoneUrlBar urlbar=null;
@@ -42,8 +46,8 @@ public class CustomWebViewClient extends WebViewClient{
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
         if(url.startsWith("http://")| url.startsWith("https://") ){
+            getStatusCode(url);
             view.loadUrl(url);
-            return true;
         }
         else{
             showSkitSnackbar(view,url);
@@ -70,6 +74,15 @@ public class CustomWebViewClient extends WebViewClient{
         Snackbar.make(view,"跳转到app提示", Snackbar.LENGTH_INDEFINITE).setAction("跳转", new SnackbarButton(view,url)).show();
 
         
+    }
+
+    private void getStatusCode(final String url) {
+        OkGo.get(url).execute(new StringCallback() {
+            @Override
+            public void onSuccess(String s, okhttp3.Call call, Response response) {
+                Log.v("getstatuscode",response.toString());
+            }
+        });
     }
 
 

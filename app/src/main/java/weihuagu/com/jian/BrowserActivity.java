@@ -308,7 +308,6 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public void alterToTab(int tabindex) {
-        Toast.makeText(getApplicationContext(), "tab:"+tabindex+"设置为当前index", Toast.LENGTH_SHORT).show();
         BrowserContainer.setCurrentindex(tabindex);
         CustomWebView current=(CustomWebView)BrowserContainer.getCurrent();
         if(current!=null){

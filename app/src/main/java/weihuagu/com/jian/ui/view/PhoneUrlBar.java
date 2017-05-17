@@ -230,6 +230,7 @@ public class PhoneUrlBar extends LinearLayout{
     }
     public void cleanUrlAndGetfocus(){
         this.setUrl("");
+        this.showUrl();
         this.getUrlFocus();
     }
 
