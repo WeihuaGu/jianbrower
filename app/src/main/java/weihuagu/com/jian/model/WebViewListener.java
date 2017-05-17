@@ -55,6 +55,10 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
 
     }
 
+    public void hindleSRC_ANCHOR_TYPE(){
+
+    }
+
     public void saveImage(){
         DownloadManager downloadManager;
         downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -99,6 +103,8 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
             case WebView.HitTestResult.GEO_TYPE: // TODO
                 break;
             case WebView.HitTestResult.SRC_ANCHOR_TYPE: // 超链接
+                Log.v("longpree","link"+type);
+                this.hindleSRC_ANCHOR_TYPE();
                 break;
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
                 break;

@@ -300,6 +300,7 @@ public class BrowserActivity extends AppCompatActivity
     public void openNewTab() {
         addWebviewToLayout(createNewWebview("front"));
         phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        urlbar.cleanUrlAndGetfocus();
         hideTabManager();
 
     }
@@ -312,6 +313,7 @@ public class BrowserActivity extends AppCompatActivity
         if(current!=null){
             Toast.makeText(getApplicationContext(), "tab:"+"跳转到"+current.getTitle(), Toast.LENGTH_LONG).show();
             phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+            addWebviewToLayout(current);
 
         }
         if(current==null){

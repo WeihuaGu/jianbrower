@@ -14,7 +14,7 @@
     </group>
 
 
-    <group>
+    <!--<group>
         <item android:title="Interface">
             <menu>
                 <item
@@ -23,7 +23,7 @@
                     android:title="@string/action_nightmode" />
             </menu>
         </item>
-    </group>
+    </group>-->
 
     <item android:title="Communicate">
         <menu>

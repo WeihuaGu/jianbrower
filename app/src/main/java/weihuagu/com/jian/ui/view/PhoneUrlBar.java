@@ -228,6 +228,10 @@ public class PhoneUrlBar extends LinearLayout{
         mUrl.addTextChangedListener(mUrlTextWatcher);
         mIsUrlChangedByUser = false;
     }
+    public void cleanUrlAndGetfocus(){
+        this.setUrl("");
+        this.getUrlFocus();
+    }
 
     public boolean isUrlChangedByUser() {
         return mIsUrlChangedByUser;
