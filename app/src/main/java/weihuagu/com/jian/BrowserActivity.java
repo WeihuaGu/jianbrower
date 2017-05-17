@@ -136,7 +136,8 @@ public class BrowserActivity extends AppCompatActivity
             intent1.setType("text/plain");
             startActivity(Intent.createChooser(intent1,"share"));
 
-        }else if (id == R.id.nav_nightmode) {
+        }
+        /**else if (id == R.id.nav_nightmode) {
             // 有权限，直接do anything.
             String title=item.getTitle().toString();
             String daystring=getString(R.string.action_daymode);
@@ -153,7 +154,7 @@ public class BrowserActivity extends AppCompatActivity
             }
 
 
-        }
+        }**/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
