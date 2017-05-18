@@ -10,9 +10,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
-import android.util.Log;
-import java.lang.reflect.Method;
+import java.util.Stack;
+import java.net.URL;
 
+import android.util.Log;
 import weihuagu.com.jian.model.IWebViewContainer;
 import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 import weihuagu.com.jian.model.OnCustemWebViewEventListener;
@@ -29,6 +30,12 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     private OnCustemWebViewEventListener mEventListener = null;
     WebSettings websetting=null;
     Context context;
+
+    public Stack<String> getUrlhistorystack() {
+        return urlhistorystack;
+    }
+
+    private Stack<String> urlhistorystack = new Stack<String>();
     public CustomWebView(Context context) {
         super(context);
         this.logWebview();
@@ -36,6 +43,7 @@ public class CustomWebView extends WebView implements IWebViewContainer{
         this.init();
 
     }
+
 
     public CustomWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -118,6 +126,29 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     freeMemory();
     super.destroy();
    }
+
+    @Override
+    public synchronized void loadUrl(String url){
+
+        if(urlhistorystack.size()>0){
+            String preurl=urlhistorystack.peek();
+            try {
+                URL pre = new URL(preurl);
+                URL now = new URL(url);
+
+                Log.v("nowpath",now.getHost()+now.getFile());
+                Log.v("prepath",now.getHost()+pre.getFile());
+                if((now.getHost()+now.getFile()).equals(pre.getHost()+pre.getFile())){
+                    urlhistorystack.pop();
+                }
+            }catch (Exception e){
+
+            }
+        }
+        urlhistorystack.push(url);
+        Log.v("historypush",url);
+        super.loadUrl(url);
+    }
 
 
 

@@ -55,7 +55,28 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
 
     }
 
-    public void hindleSRC_ANCHOR_TYPE(){
+    public void hindleSRC_ANCHOR_TYPE(String url,View v){
+        itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
+                ItemLongClickedPopWindow.SRC_ANCHOR_TYPE,
+                300,200);
+
+        itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+
+        itemLongClickedPopWindow.getView(R.id.item_longclicked_openlinkinback)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+        itemLongClickedPopWindow.getView(R.id.item_longclicked_openlinkinnewtab)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
 
     }
 
@@ -104,7 +125,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 break;
             case WebView.HitTestResult.SRC_ANCHOR_TYPE: // 超链接
                 Log.v("longpree","link"+type);
-                this.hindleSRC_ANCHOR_TYPE();
+                this.hindleSRC_ANCHOR_TYPE(result.getExtra(),v);
                 break;
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
                 Log.v("longpress","srcimage"+type);

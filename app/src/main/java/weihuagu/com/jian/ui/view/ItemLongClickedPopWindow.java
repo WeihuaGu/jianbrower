@@ -59,6 +59,8 @@ public class ItemLongClickedPopWindow extends PopupWindow{
 
     public static final int ATTR_SHOW=6;
 
+    public static final int SRC_ANCHOR_TYPE=7;
+
     public ItemLongClickedPopWindow(Context context, int type, int width, int height){
         super(context);
         this.context = context;
@@ -79,6 +81,9 @@ public class ItemLongClickedPopWindow extends PopupWindow{
     private void initTab(){
         this.itemLongClickedPopWindowInflater = LayoutInflater.from(this.context);
         switch(type){
+            case SRC_ANCHOR_TYPE:
+                this.itemLongClickedPopWindowView = this.itemLongClickedPopWindowInflater.inflate(R.layout.longclickedpopinlink, null);
+                break;
             case FAVORITES_ITEM_POPUPWINDOW:
                 this.itemLongClickedPopWindowView = this.itemLongClickedPopWindowInflater.inflate(R.layout.longclickedpop, null);
                 break;

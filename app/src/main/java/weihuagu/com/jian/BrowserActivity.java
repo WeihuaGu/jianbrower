@@ -52,6 +52,8 @@ import com.yanzhenjie.permission.PermissionListener;
 public class BrowserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,ITabManager{
     private static final String ACTION_OPENURL = "com.weihuagu.jian.action.OPENURL";
+    private static final String ACTION_OPENURLINBACK = "com.weihuagu.jian.action.OPENURLINBACK";
+    private static final String ACTION_OPENURLINNEWTAB = "com.weihuagu.jian.action.OPENURLINNEWTAB";
     private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
 
     RelativeLayout webviewlayout=null;
@@ -254,6 +256,11 @@ public class BrowserActivity extends AppCompatActivity
             String url=intent.getStringExtra(EXTRA_URL);
             this.phoneuimanager.loadUrl(url);
         }
+        if(intent.getAction()==ACTION_OPENURLINNEWTAB){
+            Log.i("broseractivity","received:"+ACTION_OPENURLINNEWTAB);
+            String url=intent.getStringExtra(EXTRA_URL);
+            this.openNewTab(url);
+        }
         if(intent.getAction()=="android.intent.action.VIEW"){
             //String [] categories= new String [2];
             //intent.getCategories().toArray(categories);
@@ -303,6 +310,15 @@ public class BrowserActivity extends AppCompatActivity
         phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
         urlbar.cleanUrlAndGetfocus();
         hideTabManager();
+
+    }
+
+    @Override
+    public void openNewTab(String url) {
+        addWebviewToLayout(createNewWebview("front"));
+        phoneuimanager.setCurrentWebview((CustomWebView)BrowserContainer.getCurrent());
+        hideTabManager();
+        phoneuimanager.loadUrl(url);
 
     }
 

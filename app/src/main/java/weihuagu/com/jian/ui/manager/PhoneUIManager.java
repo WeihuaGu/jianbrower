@@ -6,36 +6,31 @@
 
 package weihuagu.com.jian.ui.manager;
 
-import android.app.DownloadManager;
+import java.util.Stack;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.util.Log;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.webkit.WebSettings.TextSize;
-import android.view.Gravity;
-import android.content.Intent;
-import android.net.Uri;
 import android.widget.ProgressBar;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Build;
-import weihuagu.com.jian.model.CustomWebViewClient;
 
-import java.lang.reflect.Method;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
+import okhttp3.Response;
 import weihuagu.com.jian.R;
-import weihuagu.com.jian.model.DownloadItem;
-import weihuagu.com.jian.model.IWebViewContainer;
+import weihuagu.com.jian.model.CustomWebViewClient;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.util.UrlUtil;
-import weihuagu.com.jian.model.MyWebViewDownLoadListener;
-import weihuagu.com.jian.ui.view.ItemLongClickedPopWindow;
 
 
 
@@ -258,12 +253,33 @@ public class PhoneUIManager implements UIManager{
 
     }
 
+    private void hindleGoBack(final String url) {
+        OkGo.get(url).execute(new StringCallback() {
+            @Override
+            public void onSuccess(String s, okhttp3.Call call, Response response) {
+                Stack<String> history=webview.getUrlhistorystack();
+                Log.v("backstatus",""+response.toString());
+                if(response.code()==301 | response.code()== 302){
+                    history.pop();
+                    webview.loadUrl(history.pop());
+
+                }else{
+                    webview.loadUrl(history.pop());
+
+                }
+            }
+        });
+    }
+
     @Override
     public boolean onKeyBack() {
-        if(webview.canGoBack()){
-            webview.goBack();
+        Stack<String> history=webview.getUrlhistorystack();
+        Log.v("historystackinback",history.toString());
+        if(history.size()>1){
+            history.pop();
+            String gobackurl=history.peek();
+            hindleGoBack(gobackurl);
             return true;
-
         }
         else
             return false;
