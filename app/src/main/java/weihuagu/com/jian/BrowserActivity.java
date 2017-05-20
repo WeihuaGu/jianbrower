@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.os.StrictMode;
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -69,7 +70,14 @@ public class BrowserActivity extends AppCompatActivity
     WebViewFactory webviewfactory=null;
 
 
-
+    private void weixiancaozuo(){
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork()
+                .penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                .penaltyLog().penaltyDeath().build());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,6 +177,7 @@ public class BrowserActivity extends AppCompatActivity
         Log.i("jian","oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         this.initResources();
         this.createRuntimeSetting();
         this.bindUIManager();

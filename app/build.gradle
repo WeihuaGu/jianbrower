@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
     compile 'com.yanzhenjie:permission:1.0.5'
-    compile 'com.lzy.net:okgo:2.1.4'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
     compile project(':bDIntegrationSDK_LibProject')
 }
