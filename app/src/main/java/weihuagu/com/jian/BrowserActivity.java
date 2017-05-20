@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.View;
 import android.Manifest;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.graphics.Canvas;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.util.Log;
@@ -32,7 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.os.StrictMode;
+
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -68,16 +66,6 @@ public class BrowserActivity extends AppCompatActivity
     ImageButton addtab=null;
     RelativeLayout cover=null;
     WebViewFactory webviewfactory=null;
-
-
-    private void weixiancaozuo(){
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork()
-                .penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-                .penaltyLog().penaltyDeath().build());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

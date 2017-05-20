@@ -26,11 +26,12 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.model.CustomWebViewClient;
+import weihuagu.com.jian.model.HttpCodeResponse;
 import weihuagu.com.jian.model.OnPhoneUrlBarEventListener;
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 import weihuagu.com.jian.util.UrlUtil;
-
+import weihuagu.com.jian.model.HttpCodeTask;
 
 import rx.Subscriber;
 import rx.Observable;
@@ -41,7 +42,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Created by root on 17-2-9.
  */
-public class PhoneUIManager implements UIManager{
+public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
 
     SharedPreferences sharedPref=null;
     OnSharedPreferenceChangeListener preferenceChangeListener=null;
@@ -257,47 +258,9 @@ public class PhoneUIManager implements UIManager{
     }
 
     private void hindleGoBack(String url) {
-        final String urlpath=url;
-        Observable httpcodeobservable = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                try {
-
-                    // 1.声明访问的路径， url 网络资源 http ftp rtsp
-
-                    Log.v("httpcodeurl",urlpath);
-                    URL url = new URL("https://m.baidu.com");
-                    if(url.getProtocol().toLowerCase().equals("https")){
-                        HttpsURLConnection httpUrlConn=(HttpsURLConnection) url.openConnection();
-                        Log.v("fuck","fuckhttps");
-                        int code=httpUrlConn.getResponseCode();
-                        Log.v("gobackhttpcode",String.valueOf(code));
-                        subscriber.onNext(String.valueOf(code));
-                        subscriber.onCompleted();
-                    }else{
-                        HttpURLConnection conn = (HttpURLConnection) url
-                                .openConnection();
-                        Log.v("fuck","fuck");
-                        int code = conn.getResponseCode();
-                        Log.v("gobackhttpcode",""+code);
-                        subscriber.onNext(String.valueOf(code));
-                        subscriber.onCompleted();
-                    }
-
-                }catch (IOException e){
-                    Log.v("gethttpcode","ioexception"+e.getMessage());
-                }catch (NullPointerException e){
-                    Log.v("gethttpcode","nullexception"+e.getMessage());
-                }
-
-            }
-        });
-
-        httpcodeobservable.subscribeOn(Schedulers.io());
-        httpcodeobservable.observeOn(Schedulers.immediate());
-        Observer<String> hindlegobackobserver = new HindleGobackObserver();
-
-        httpcodeobservable.subscribe(hindlegobackobserver);
+        HttpCodeTask httpcode=new HttpCodeTask();
+        httpcode.setReturncoderesponse(this);
+        httpcode.execute(url);
     }
 
     @Override
@@ -307,7 +270,11 @@ public class PhoneUIManager implements UIManager{
         if(history.size()>1){
             history.pop();
             String gobackurl=history.peek();
-            hindleGoBack(gobackurl);
+            if(gobackurl.startsWith("jian://")){
+                onKeyBack();
+            }else{
+                hindleGoBack(gobackurl);
+            }
             return true;
         }
         else
@@ -362,6 +329,29 @@ public class PhoneUIManager implements UIManager{
 
     }
 
+    @Override
+    public void onHttpCodeReturnSuccess(String httpcode) {
+        Log.v("getbackhttpcode",httpcode);
+        Stack<String> history=webview.getUrlhistorystack();
+        if(httpcode.equals("301") | httpcode.equals("302")){
+            history.pop();
+            webview.loadUrl(history.pop());
+
+        }
+        if(httpcode.equals("200")){
+            webview.loadUrl(history.pop());
+
+        }else {
+            webview.loadUrl(history.pop());
+        }
+
+    }
+
+    @Override
+    public void onHttpCodeReturnFailed() {
+
+    }
+
     class UrlBarEventHandle implements OnPhoneUrlBarEventListener{
 
 
@@ -409,33 +399,4 @@ public class PhoneUIManager implements UIManager{
         }
     }
 
-    class HindleGobackObserver implements Observer<String>{
-        @Override
-        public void onNext(String httpcode) {
-            Log.v("gobacknonext",httpcode);
-            Stack<String> history=webview.getUrlhistorystack();
-            if(httpcode.equals("301") | httpcode.equals("302")){
-                history.pop();
-                webview.loadUrl(history.pop());
-
-            }
-            if(httpcode.equals("200")){
-                webview.loadUrl(history.pop());
-
-            }else {
-                webview.loadUrl(history.pop());
-            }
-        }
-
-        @Override
-        public void onCompleted() {
-            Log.i("onCompleted ---> ", "完成");
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Log.i("onError ---> ", e.toString());
-        }
-
-    }
 }

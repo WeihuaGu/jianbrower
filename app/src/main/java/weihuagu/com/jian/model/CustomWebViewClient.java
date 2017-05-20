@@ -19,6 +19,9 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 
+import java.util.Stack;
+
+import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
 
 public class CustomWebViewClient extends WebViewClient{
@@ -46,7 +49,8 @@ public class CustomWebViewClient extends WebViewClient{
             view.loadUrl(url);
         }
         else{
-            showSkitSnackbar(view,url);
+            if(view instanceof CustomWebView)
+            showSkitSnackbar((CustomWebView)view,url);
         }
         return super.shouldOverrideUrlLoading(view,url);
     }
@@ -64,9 +68,11 @@ public class CustomWebViewClient extends WebViewClient{
     }
 
 
-    private void showSkitSnackbar(WebView view, String url){
+    private void showSkitSnackbar(CustomWebView view, String url){
         String html="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0\"><meta name=\"apple-mobile-web-app-capable\" content=\"yes\"><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\"><meta content=\"telephone=no\" name=\"format-detection\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><title>跳转到app</title></head><body><p><h4>你可以点击Snackbar右侧的跳转,跳转到相应的app</h4><h4>或者你也可以滑掉Snackbar不进行跳转</h4><h5>跳转的url为"+url+"<h5>你可以通过查看url中的scheme确定会跳转到的app</h5></body></html>";
         view.loadDataWithBaseURL(null,html,"text/html","UTF-8",null);
+        Stack<String> history=view.getUrlhistorystack();
+        history.push("jian://tiaozhuan");
         Snackbar.make(view,"跳转到app提示", Snackbar.LENGTH_INDEFINITE).setAction("跳转", new SnackbarButton(view,url)).show();
 
         
