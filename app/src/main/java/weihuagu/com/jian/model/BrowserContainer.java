@@ -25,6 +25,7 @@ public class BrowserContainer {
     private static List<IWebViewContainer> list = new LinkedList<>();
 
     public static IWebViewContainer get(int index) {
+
         return list.get(index);
     }
 

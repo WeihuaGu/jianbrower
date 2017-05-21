@@ -29,5 +29,6 @@ dependencies {
     compile 'com.yanzhenjie:permission:1.0.5'
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'org.jsoup:jsoup:1.9.2'
     compile project(':bDIntegrationSDK_LibProject')
 }

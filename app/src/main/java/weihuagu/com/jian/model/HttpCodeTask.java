@@ -31,16 +31,28 @@ public class HttpCodeTask extends AsyncTask<String, Void, String> {
             String httpcode=null;
             Log.v("httpcodeurl",urlpath[0]);
             URL url = new URL(urlpath[0]);
+            int code;
             if(url.getProtocol().toLowerCase().equals("https")){
                 HttpsURLConnection httpUrlConn=(HttpsURLConnection) url.openConnection();
-                int code=httpUrlConn.getResponseCode();
+                code=httpUrlConn.getResponseCode();
+                if(code==200 & new UrlSkipValid(urlpath[0]).validSkip()){
+                    Log.v("alterskiptocode","301http");
+                    return "301";
+                }
+
                 httpcode=String.valueOf(code);
                 return httpcode;
 
             }else{
                 HttpURLConnection conn = (HttpURLConnection) url
                         .openConnection();
-                int code = conn.getResponseCode();
+                code = conn.getResponseCode();
+
+                if(code==200 && new UrlSkipValid(urlpath[0]).validSkip()){
+                    Log.v("alterskiptocode","301http");
+                    return "301";
+                }
+
                 httpcode=String.valueOf(code);
                 return httpcode;
 
