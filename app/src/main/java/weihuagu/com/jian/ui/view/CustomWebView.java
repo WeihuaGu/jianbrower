@@ -19,6 +19,7 @@ import weihuagu.com.jian.model.MyWebViewDownLoadListener;
 import weihuagu.com.jian.model.OnCustemWebViewEventListener;
 import weihuagu.com.jian.model.WebViewListener;
 import java.util.UUID;
+import android.os.Build;
 
 /**
  * Created by root on 17-2-9.
@@ -80,6 +81,10 @@ public class CustomWebView extends WebView implements IWebViewContainer{
         websetting.setSupportZoom(true);
         websetting.setBuiltInZoomControls(true);
         websetting.setDisplayZoomControls(false);//隐藏Zoom缩放按钮
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            websetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+        }
 
 
     }

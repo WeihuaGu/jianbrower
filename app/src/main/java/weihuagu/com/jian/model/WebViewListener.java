@@ -55,10 +55,14 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
 
     }
 
+    public void hindleSRC_IMAGE_ANCHOR_TYPE(String url,View v){
+
+    }
+
     public void hindleSRC_ANCHOR_TYPE(String url,View v){
         itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
                 ItemLongClickedPopWindow.SRC_ANCHOR_TYPE,
-                300,200);
+                500,400);
 
         itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
 
@@ -66,7 +70,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Log.v("popwindow","link open in back");
                     }
                 });
 
@@ -74,6 +78,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.v("popwindow","link open in new tab");
 
                     }
                 });
@@ -129,6 +134,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                 break;
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
                 Log.v("longpress","srcimage"+type);
+                this.hindleSRC_IMAGE_ANCHOR_TYPE(result.getExtra(),v);
                 break;
             case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
                 Log.v("longpress","image"+type);

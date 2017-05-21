@@ -338,7 +338,7 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void closeTab(int tabindex) {
         Log.i("tab:","close tab"+tabindex);
-        if(tabindex!=BrowserContainer.getCurrentindex()&&(BrowserContainer.get(tabindex)!=null)){
+        if(tabindex!=BrowserContainer.getCurrentindex()){
 
             BrowserContainer.remove(tabindex);
         }

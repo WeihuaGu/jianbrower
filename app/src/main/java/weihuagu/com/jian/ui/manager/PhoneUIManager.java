@@ -10,8 +10,10 @@ import java.util.Stack;
 import java.lang.reflect.Method;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebChromeClient;
 import android.util.Log;
@@ -38,6 +40,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.schedulers.Schedulers;
 import rx.android.schedulers.AndroidSchedulers;
+import java.util.EmptyStackException;
 
 /**
  * Created by root on 17-2-9.
@@ -299,7 +302,6 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
 
 
     private void settingWebView(){
-
         CustomWebViewClient webviewclient=new CustomWebViewClient();
         webviewclient.setContext(context);
         webviewclient.setUrlbar(urlbar);
@@ -331,18 +333,23 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
 
     @Override
     public void onHttpCodeReturnSuccess(String httpcode) {
-        Log.v("getbackhttpcode",httpcode);
-        Stack<String> history=webview.getUrlhistorystack();
-        if(httpcode.equals("301") | httpcode.equals("302")){
-            history.pop();
-            webview.loadUrl(history.pop());
 
-        }
-        if(httpcode.equals("200")){
-            webview.loadUrl(history.pop());
+        try {
+            Log.v("getbackhttpcode", httpcode);
+            Stack<String> history = webview.getUrlhistorystack();
+            if (httpcode.equals("301") | httpcode.equals("302")) {
+                history.pop();
+                webview.loadUrl(history.pop());
 
-        }else {
-            webview.loadUrl(history.pop());
+            }
+            if (httpcode.equals("200")) {
+                webview.loadUrl(history.pop());
+
+            } else {
+                webview.loadUrl(history.pop());
+            }
+        }catch (EmptyStackException e){
+
         }
 
     }
@@ -387,7 +394,6 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
 
 
     class OnPreferenceChangeListener implements OnSharedPreferenceChangeListener{
-
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

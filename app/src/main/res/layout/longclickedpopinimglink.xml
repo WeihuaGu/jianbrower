@@ -1,0 +1,39 @@
+<!--
+  ~ Created By WeihuaGu (email:weihuagu_work@163.com)
+  ~ Copyright (c) 2017
+  ~ All right reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_longclicked_openlinkinback"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:text="后台打开链接"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <TextView
+        android:id="@+id/item_longclicked_openlinkinnewtab"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:text="新标签页打开链接"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        />
+
+
+
+</LinearLayout>

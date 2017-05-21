@@ -23,6 +23,8 @@ import java.util.Stack;
 
 import weihuagu.com.jian.ui.view.CustomWebView;
 import weihuagu.com.jian.ui.view.PhoneUrlBar;
+import android.net.http.SslError;
+import android.webkit.SslErrorHandler;
 
 public class CustomWebViewClient extends WebViewClient{
 
@@ -47,12 +49,24 @@ public class CustomWebViewClient extends WebViewClient{
 
         if(url.startsWith("http://")| url.startsWith("https://") ){
             view.loadUrl(url);
+            return false;
         }
         else{
             if(view instanceof CustomWebView)
             showSkitSnackbar((CustomWebView)view,url);
         }
         return super.shouldOverrideUrlLoading(view,url);
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+
+
+
+
+        Snackbar.make(view,"请注意这个ssl证书过期或有问题", Snackbar.LENGTH_SHORT).show();
+        super.onReceivedSslError(view,handler,error);
+
     }
 
 
