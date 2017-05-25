@@ -135,6 +135,8 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     @Override
     public synchronized void loadUrl(String url) {
         if (url != null) {
+
+            /**
             if (urlhistorystack.size() > 0) {
                 String preurl = urlhistorystack.peek();
                 try {
@@ -143,13 +145,13 @@ public class CustomWebView extends WebView implements IWebViewContainer{
 
                     Log.v("nowpath", now.getHost() + now.getFile());
                     Log.v("prepath", now.getHost() + pre.getFile());
-                    if ((now.getHost() + now.getFile()).equals(pre.getHost() + pre.getFile())) {
+                    if ((now.getHost() + now.getFile()+now.getQuery()).equals(pre.getHost() + pre.getFile()+pre.getQuery())) {
                         urlhistorystack.pop();
                     }
                 } catch (Exception e) {
 
                 }
-            }
+            }**/
             urlhistorystack.push(url);
             Log.v("historypush", url);
             super.loadUrl(url);

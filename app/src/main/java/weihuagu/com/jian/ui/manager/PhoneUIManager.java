@@ -9,10 +9,12 @@ package weihuagu.com.jian.ui.manager;
 import java.util.Stack;
 import java.lang.reflect.Method;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.PermissionRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebChromeClient;
@@ -307,6 +309,14 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
         webviewclient.setUrlbar(urlbar);
         webview.setWebViewClient(webviewclient);
         webview.setWebChromeClient(new WebChromeClient(){
+
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                request.grant(request.getResources());
+            }
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 // TODO Auto-generated method stub

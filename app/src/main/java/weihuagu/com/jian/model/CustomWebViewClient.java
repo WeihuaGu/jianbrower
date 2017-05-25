@@ -19,6 +19,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 
+
 import java.util.Stack;
 
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -44,6 +45,8 @@ public class CustomWebViewClient extends WebViewClient{
 
     }
 
+
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -57,6 +60,8 @@ public class CustomWebViewClient extends WebViewClient{
         }
         return super.shouldOverrideUrlLoading(view,url);
     }
+
+
 
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {

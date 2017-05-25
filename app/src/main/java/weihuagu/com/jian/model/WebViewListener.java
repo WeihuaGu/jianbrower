@@ -62,7 +62,27 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
 
     }
 
-    public void hindleSRC_IMAGE_ANCHOR_TYPE(String url,View v){
+    public void hindleSRC_IMAGE_ANCHOR_TYPE(String ImgUrl,View v){
+        saveImgUrl =ImgUrl;
+        //通过GestureDetector获取按下的位置，来定位PopWindow显示的位置
+
+        itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
+                ItemLongClickedPopWindow.IMAGE_VIEW_POPUPWINDOW,
+                300,200);
+
+        itemLongClickedPopWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, downX, downY + 10);
+
+        itemLongClickedPopWindow.getView(R.id.item_longclicked_save)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(saveImgUrl!=null|saveImgUrl.equals("")){
+                            saveImage();
+                            itemLongClickedPopWindow.dismiss();
+                        }
+                    }
+                });
+
 
     }
 
@@ -161,11 +181,11 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
             case WebView.HitTestResult.GEO_TYPE: // TODO
                 break;
             case WebView.HitTestResult.SRC_ANCHOR_TYPE: // 超链接
-                Log.v("longpree","link"+type);
+                Log.v("longpree","link"+type+":"+result.getExtra());
                 this.hindleSRC_ANCHOR_TYPE(result.getExtra(),v);
                 break;
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
-                Log.v("longpress","srcimage"+type);
+                Log.v("longpress","srcimage"+type+":"+result.getExtra());
                 this.hindleSRC_IMAGE_ANCHOR_TYPE(result.getExtra(),v);
                 break;
             case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
