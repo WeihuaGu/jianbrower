@@ -338,6 +338,8 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
             Log.v("getbackhttpcode", httpcode);
             Stack<String> history = webview.getUrlhistorystack();
             if (httpcode.equals("301") | httpcode.equals("302")) {
+                Log.v("back url","301 or 302");
+                Log.v("back url","his stack"+history.toString());
                 history.pop();
                 webview.loadUrl(history.pop());
 

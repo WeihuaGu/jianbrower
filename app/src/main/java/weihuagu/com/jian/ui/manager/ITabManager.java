@@ -16,6 +16,7 @@ public interface ITabManager {
     public void closeTab(int tabindex);
     public void showTabManager();
     public void hideTabManager();
+    public void openBackTab(String url);
 
 
 }

@@ -28,11 +28,17 @@ public class UrlSkipValid {
             Elements meta = doc.select("meta[http-equiv]");
             Log.v("jsoupgetmeta",meta.toString());
             if(meta!=null){
-                for (Element refresh:meta){
-                    if(refresh.attr("http-equiv")=="refresh")
+                Log.v("jsoup item num",""+meta.size());
+                for(int i=0;i<meta.size();i++){
+                    String isrefresh=meta.get(i).attr("http-equiv");
+                    Log.v("jsoup item",isrefresh);
+                    if(isrefresh.equals("refresh")){
+                        Log.v("jsoupskip","is skip");
                         return true;
+                    }
 
                 }
+
             }
         }
         catch (Exception e){

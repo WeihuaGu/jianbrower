@@ -258,6 +258,12 @@ public class BrowserActivity extends AppCompatActivity
             String url=intent.getStringExtra(EXTRA_URL);
             this.openNewTab(url);
         }
+        if(intent.getAction()==ACTION_OPENURLINBACK){
+            Log.i("broseractivity","received:"+ACTION_OPENURLINBACK);
+            String url=intent.getStringExtra(EXTRA_URL);
+
+
+        }
         if(intent.getAction()=="android.intent.action.VIEW"){
             //String [] categories= new String [2];
             //intent.getCategories().toArray(categories);
@@ -319,6 +325,8 @@ public class BrowserActivity extends AppCompatActivity
 
     }
 
+
+
     @Override
     public void alterToTab(int tabindex) {
         BrowserContainer.setCurrentindex(tabindex);
@@ -356,6 +364,13 @@ public class BrowserActivity extends AppCompatActivity
     public void hideTabManager() {
         hideCover();
         this.tabmanagerlayout.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void openBackTab(String url) {
+        createNewWebview(url);
+
 
     }
 

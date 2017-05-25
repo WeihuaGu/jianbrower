@@ -27,6 +27,7 @@ public class WebViewFactory {
         if(openmethed.equals("front")){
             BrowserContainer.addCurrent(tmpwebveiw);
         }else {
+            tmpwebveiw.loadUrl(openmethed);
             BrowserContainer.add(tmpwebveiw);
         }
 

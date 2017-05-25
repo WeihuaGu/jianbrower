@@ -36,7 +36,7 @@
                 <action android:name="com.weihuagu.jian.action.OPENURLINBACK" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.weihuagu.jian.action.OPENURLINBACK" />
+                <action android:name="com.weihuagu.jian.action.OPENURLINNEWTAB" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

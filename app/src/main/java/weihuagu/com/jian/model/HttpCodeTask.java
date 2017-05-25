@@ -35,9 +35,15 @@ public class HttpCodeTask extends AsyncTask<String, Void, String> {
             if(url.getProtocol().toLowerCase().equals("https")){
                 HttpsURLConnection httpUrlConn=(HttpsURLConnection) url.openConnection();
                 code=httpUrlConn.getResponseCode();
-                if(code==200 & new UrlSkipValid(urlpath[0]).validSkip()){
-                    Log.v("alterskiptocode","301http");
-                    return "301";
+                if(code==200){
+                    Boolean skip=new UrlSkipValid(urlpath[0]).validSkip();
+                    if(skip){
+                        Log.v("alterskiptocode","301http");
+                        return "301";
+
+                    }
+
+
                 }
 
                 httpcode=String.valueOf(code);
@@ -48,9 +54,14 @@ public class HttpCodeTask extends AsyncTask<String, Void, String> {
                         .openConnection();
                 code = conn.getResponseCode();
 
-                if(code==200 && new UrlSkipValid(urlpath[0]).validSkip()){
-                    Log.v("alterskiptocode","301http");
-                    return "301";
+                if(code==200 ){
+
+                    Boolean skip=new UrlSkipValid(urlpath[0]).validSkip();
+                    if(skip){
+                        Log.v("alterskiptocode","301http");
+                        return "301";
+                    }
+
                 }
 
                 httpcode=String.valueOf(code);

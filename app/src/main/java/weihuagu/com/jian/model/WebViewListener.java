@@ -8,12 +8,14 @@ package weihuagu.com.jian.model;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 
+import weihuagu.com.jian.BrowserActivity;
 import weihuagu.com.jian.R;
 import weihuagu.com.jian.ui.view.ItemLongClickedPopWindow;
 
@@ -25,8 +27,12 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
     int downY;
     ItemLongClickedPopWindow itemLongClickedPopWindow;
     String saveImgUrl;
+    String openUrl;
     private Context context=null;
-
+    WebViewFactory webviewfactory=null;
+    private static final String ACTION_OPENURLINBACK = "com.weihuagu.jian.action.OPENURLINBACK";
+    private static final String ACTION_OPENURLINNEWTAB = "com.weihuagu.jian.action.OPENURLINNEWTAB";
+    private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
     public WebViewListener(Context context) {
         this.context = context;
     }
@@ -49,6 +55,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                     public void onClick(View v) {
                         if(saveImgUrl!=null|saveImgUrl.equals("")){
                             saveImage();
+                            itemLongClickedPopWindow.dismiss();
                         }
                     }
                 });
@@ -60,6 +67,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
     }
 
     public void hindleSRC_ANCHOR_TYPE(String url,View v){
+        openUrl=url;
         itemLongClickedPopWindow = new ItemLongClickedPopWindow(context,
                 ItemLongClickedPopWindow.SRC_ANCHOR_TYPE,
                 500,400);
@@ -71,6 +79,9 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                     @Override
                     public void onClick(View v) {
                         Log.v("popwindow","link open in back");
+                        openUrlInBack(v,openUrl);
+                        itemLongClickedPopWindow.dismiss();
+
                     }
                 });
 
@@ -79,9 +90,30 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
                     @Override
                     public void onClick(View v) {
                         Log.v("popwindow","link open in new tab");
+                        openUrlInNewTab(v,openUrl);
+                        itemLongClickedPopWindow.dismiss();
 
                     }
                 });
+
+    }
+
+    public void openUrlInBack(View v,String url){
+        Log.i("Qrcode","open url");
+        webviewfactory=new WebViewFactory(context);
+        webviewfactory.createWebView(url);
+
+    }
+
+    public void openUrlInNewTab(View v,String url){
+        Log.i("Qrcode","open url");
+        if(!url.equals("")){
+            Log.i("Qrcode",url);
+            Intent send=new Intent(context, BrowserActivity.class);
+            send.setAction(ACTION_OPENURLINNEWTAB);
+            send.putExtra(EXTRA_URL,url);
+            context.startActivity(send);
+        }
 
     }
 

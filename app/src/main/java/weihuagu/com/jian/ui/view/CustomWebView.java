@@ -133,28 +133,28 @@ public class CustomWebView extends WebView implements IWebViewContainer{
    }
 
     @Override
-    public synchronized void loadUrl(String url){
+    public synchronized void loadUrl(String url) {
+        if (url != null) {
+            if (urlhistorystack.size() > 0) {
+                String preurl = urlhistorystack.peek();
+                try {
+                    URL pre = new URL(preurl);
+                    URL now = new URL(url);
 
-        if(urlhistorystack.size()>0){
-            String preurl=urlhistorystack.peek();
-            try {
-                URL pre = new URL(preurl);
-                URL now = new URL(url);
+                    Log.v("nowpath", now.getHost() + now.getFile());
+                    Log.v("prepath", now.getHost() + pre.getFile());
+                    if ((now.getHost() + now.getFile()).equals(pre.getHost() + pre.getFile())) {
+                        urlhistorystack.pop();
+                    }
+                } catch (Exception e) {
 
-                Log.v("nowpath",now.getHost()+now.getFile());
-                Log.v("prepath",now.getHost()+pre.getFile());
-                if((now.getHost()+now.getFile()).equals(pre.getHost()+pre.getFile())){
-                    urlhistorystack.pop();
                 }
-            }catch (Exception e){
-
             }
+            urlhistorystack.push(url);
+            Log.v("historypush", url);
+            super.loadUrl(url);
         }
-        urlhistorystack.push(url);
-        Log.v("historypush",url);
-        super.loadUrl(url);
     }
-
 
 
 }
