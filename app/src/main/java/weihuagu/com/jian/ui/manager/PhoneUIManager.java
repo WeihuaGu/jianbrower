@@ -79,7 +79,13 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
     public void setCurrentWebview(CustomWebView webview) {
         this.webview=webview;
         settingWebView();
+        try {
+            urlbar.setTitle(webview.getTitle());
+        }catch (Exception e){
 
+        }
+        setFontSize();
+        setEnableImage();
         //freshUrl();
 
     }

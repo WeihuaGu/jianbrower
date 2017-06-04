@@ -7,6 +7,7 @@
 package weihuagu.com.jian.ui.view;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
@@ -135,8 +136,13 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     @Override
     public synchronized void loadUrl(String url) {
         if (url != null) {
+            if(url.contains("https://m.baidu.com")&&url.contains("#iact")){
+                Log.v("baidu","dabukaiwangzhan");
+                Snackbar.make(this,"由于该网站存在问题或存有安全问题，十分抱歉，导致网页打开空白", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
 
-            /**
+
             if (urlhistorystack.size() > 0) {
                 String preurl = urlhistorystack.peek();
                 try {
@@ -147,11 +153,12 @@ public class CustomWebView extends WebView implements IWebViewContainer{
                     Log.v("prepath", now.getHost() + pre.getFile());
                     if ((now.getHost() + now.getFile()+now.getQuery()).equals(pre.getHost() + pre.getFile()+pre.getQuery())) {
                         urlhistorystack.pop();
+                        Log.v("historyrevomesame", url);
                     }
                 } catch (Exception e) {
 
                 }
-            }**/
+            }
             urlhistorystack.push(url);
             Log.v("historypush", url);
             super.loadUrl(url);

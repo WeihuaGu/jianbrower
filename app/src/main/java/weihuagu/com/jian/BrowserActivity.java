@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.view.ViewGroup;
 
 
 import weihuagu.com.jian.model.RuntimeSetting;
@@ -283,9 +284,13 @@ public class BrowserActivity extends AppCompatActivity
     private  CustomWebView createNewWebview(String openmethed){
         return webviewfactory.createWebView(openmethed);
     }
-    private void addWebviewToLayout(CustomWebView webview){
+    private synchronized void addWebviewToLayout(CustomWebView webview){
 
         this.webviewlayout.removeAllViews();
+        ViewGroup parent = (ViewGroup) webview.getParent();
+        if (parent != null) {
+            parent.removeAllViews();
+        }
         this.webviewlayout.addView(webview);
         this.filledupwebviewlayout=true;
         Log.i("webview be loaded",""+filledupwebviewlayout);
