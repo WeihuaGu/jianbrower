@@ -44,6 +44,11 @@ import rx.schedulers.Schedulers;
 import rx.android.schedulers.AndroidSchedulers;
 import java.util.EmptyStackException;
 
+
+import android.content.Intent;
+import android.net.Uri;
+import android.webkit.WebViewClient;
+
 /**
  * Created by root on 17-2-9.
  */
@@ -313,7 +318,47 @@ public class PhoneUIManager implements UIManager,HttpCodeResponse<String>{
         CustomWebViewClient webviewclient=new CustomWebViewClient();
         webviewclient.setContext(context);
         webviewclient.setUrlbar(urlbar);
-        webview.setWebViewClient(webviewclient);
+        this.webview.getSettings().setJavaScriptEnabled(true); //设置设否支持JavaScript
+        this.webview.getSettings().setDomStorageEnabled(true);
+        this.webview.getSettings().setSupportZoom(true);
+        this.webview.getSettings().setBuiltInZoomControls(true);
+        this.webview.getSettings().setDisplayZoomControls(false);//隐藏Zoom缩放按钮
+
+        //webview.setWebViewClient(webviewclient);
+        this.webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                if(url.startsWith("http://")| url.startsWith("http://") ){
+                    view.loadUrl(url);
+                }else{
+                    try {
+                        Uri uri = Uri.parse(url);
+                        Intent intent =new Intent(Intent.ACTION_VIEW, uri);
+                        view.getContext().startActivity(intent);
+                    }catch (Exception e){
+                        Log.v("loadnonomal",e.getMessage());
+
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+//结束
+                super.onPageFinished(view, url);
+                setUrlbarUrl(getCurrentUrl());
+                urlbar.hideUrl();
+                urlbar.setTitle(webview.getTitle());
+                Log.i("phonuimanager","pagefinised and title:"+webview.getTitle());
+            }
+
+
+
+        }); //设置浏览
+
         webview.setWebChromeClient(new WebChromeClient(){
 
 

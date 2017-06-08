@@ -58,7 +58,7 @@ public class CustomWebViewClient extends WebViewClient{
             if(view instanceof CustomWebView)
             showSkitSnackbar((CustomWebView)view,url);
         }
-        return super.shouldOverrideUrlLoading(view,url);
+        return true;
     }
 
 

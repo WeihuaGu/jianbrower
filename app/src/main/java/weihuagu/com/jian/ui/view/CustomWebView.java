@@ -32,9 +32,14 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     private OnCustemWebViewEventListener mEventListener = null;
     WebSettings websetting=null;
     Context context;
+    public AttributeSet copyattrs;
 
     public Stack<String> getUrlhistorystack() {
         return urlhistorystack;
+    }
+
+    public AttributeSet getAttrs(){
+        return copyattrs;
     }
 
     private Stack<String> urlhistorystack = new Stack<String>();
@@ -42,32 +47,35 @@ public class CustomWebView extends WebView implements IWebViewContainer{
         super(context);
         this.logWebview();
         this.context=context;
-        this.init();
+       // this.init();
 
     }
 
 
     public CustomWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.logWebview();
-        this.context=context;
-        this.init();
+        super(context,attrs);
+        copyattrs=attrs;
+
+
     }
 
     public CustomWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.logWebview();
+        this.context=context;
+        //this.init();
 
     }
 
     public void init(){
         this.setUUID();
         this.initWebView();
-        this.initSetting();
+       // this.initSetting();
     }
 
     private synchronized void initWebView() {
         setDownloadListener(new MyWebViewDownLoadListener(this.context));
-        WebViewListener listerner=new WebViewListener(context);
+        WebViewListener listerner=new WebViewListener(context,copyattrs);
         setOnTouchListener(listerner);
         setOnLongClickListener(listerner);
 
@@ -82,6 +90,8 @@ public class CustomWebView extends WebView implements IWebViewContainer{
         websetting.setSupportZoom(true);
         websetting.setBuiltInZoomControls(true);
         websetting.setDisplayZoomControls(false);//隐藏Zoom缩放按钮
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             websetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
@@ -133,13 +143,15 @@ public class CustomWebView extends WebView implements IWebViewContainer{
     super.destroy();
    }
 
+
+    /**
     @Override
-    public synchronized void loadUrl(String url) {
+    public  void loadUrl(String url) {
         if (url != null) {
             if(url.contains("https://m.baidu.com")&&url.contains("#iact")){
                 Log.v("baidu","dabukaiwangzhan");
                 Snackbar.make(this,"由于该网站存在问题或存有安全问题，十分抱歉，导致网页打开空白", Snackbar.LENGTH_SHORT).show();
-                return;
+              //  return;
             }
 
 
@@ -164,6 +176,6 @@ public class CustomWebView extends WebView implements IWebViewContainer{
             super.loadUrl(url);
         }
     }
-
+**/
 
 }

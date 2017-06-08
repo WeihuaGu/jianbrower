@@ -7,6 +7,7 @@
 package weihuagu.com.jian.model;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.util.Log;
 
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -16,14 +17,15 @@ import weihuagu.com.jian.ui.view.CustomWebView;
  */
 public class WebViewFactory {
     private Context context;
+    AttributeSet attrs;
 
-    public WebViewFactory(Context context) {
-        this.context = context;
+    public WebViewFactory(Context context,AttributeSet attrs) {
+        this.context = context;this.attrs=attrs;
     }
 
     public CustomWebView createWebView(String openmethed){
 
-        CustomWebView tmpwebveiw=new CustomWebView(context);
+        CustomWebView tmpwebveiw=new CustomWebView(context,attrs);
         if(openmethed.equals("front")){
             BrowserContainer.addCurrent(tmpwebveiw);
         }else {

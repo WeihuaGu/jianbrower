@@ -9,6 +9,7 @@ package weihuagu.com.jian.model;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -29,12 +30,16 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
     String saveImgUrl;
     String openUrl;
     private Context context=null;
+    AttributeSet attrs=null;
     WebViewFactory webviewfactory=null;
     private static final String ACTION_OPENURLINBACK = "com.weihuagu.jian.action.OPENURLINBACK";
     private static final String ACTION_OPENURLINNEWTAB = "com.weihuagu.jian.action.OPENURLINNEWTAB";
     private static final String EXTRA_URL = "com.weihuagu.jian.extra.url";
     public WebViewListener(Context context) {
         this.context = context;
+    }
+    public WebViewListener(Context context,AttributeSet attrs) {
+        this.context = context;this.attrs=attrs;
     }
 
 
@@ -120,7 +125,7 @@ public class WebViewListener implements View.OnTouchListener,View.OnLongClickLis
 
     public void openUrlInBack(View v,String url){
         Log.i("Qrcode","open url");
-        webviewfactory=new WebViewFactory(context);
+        webviewfactory=new WebViewFactory(context,attrs);
         webviewfactory.createWebView(url);
 
     }

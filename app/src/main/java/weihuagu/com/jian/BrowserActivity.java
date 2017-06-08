@@ -68,6 +68,8 @@ public class BrowserActivity extends AppCompatActivity
     RelativeLayout cover=null;
     WebViewFactory webviewfactory=null;
 
+    CustomWebView webview =null; //test
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -168,7 +170,7 @@ public class BrowserActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         this.initResources();
-        this.createRuntimeSetting();
+
         this.bindUIManager();
         this.handleIntent();
         if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
@@ -190,12 +192,18 @@ public class BrowserActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        webviewfactory=new WebViewFactory(getApplicationContext());
+        webview = (CustomWebView) findViewById(R.id.webView); //加载WebView test
+
+
+
+        webviewfactory=new WebViewFactory(getApplicationContext(),webview.getAttrs());
 
         webviewlayout=(RelativeLayout)findViewById(R.id.webViewlayout);
         if(filledupwebviewlayout==false) {
             addWebviewToLayout(createNewWebview("front"));
         }
+
+
         tabmanagerlayout=(RelativeLayout)findViewById(R.id.tabs);
 
         webviewnamelist =(RecyclerView) findViewById(R.id.webviewlist);
@@ -239,13 +247,12 @@ public class BrowserActivity extends AppCompatActivity
 
     }
     public void bindUIManager(){
+        webview=(CustomWebView)BrowserContainer.getCurrent();
         this.phoneuimanager = new PhoneUIManager(urlbar, (CustomWebView) BrowserContainer.getCurrent(),progressbar, getApplicationContext());
+       // this.phoneuimanager = new PhoneUIManager(urlbar, webview,progressbar, getApplicationContext());
 
     }
 
-    public void createRuntimeSetting(){
-        RuntimeSetting.setInstance(getApplicationContext());
-    }
 
     public void handleIntent(){
         Intent intent=getIntent();
@@ -282,7 +289,8 @@ public class BrowserActivity extends AppCompatActivity
 
     //webview
     private  CustomWebView createNewWebview(String openmethed){
-        return webviewfactory.createWebView(openmethed);
+        webview=webviewfactory.createWebView(openmethed);
+        return webview;
     }
     private synchronized void addWebviewToLayout(CustomWebView webview){
 
