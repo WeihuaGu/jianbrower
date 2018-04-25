@@ -25,11 +25,19 @@ public class BrowserContainer {
     private static List<IWebViewContainer> list = new LinkedList<>();
 
     public static IWebViewContainer get(int index) {
-
-        return list.get(index);
+        if(list == null || list.size()<1)
+        return null;
+        IWebViewContainer tmp=null;
+        try{
+        tmp=list.get(index);
+        }catch(Exception e1)
+        {
+          return null;
+        }
+        return tmp;
     }
 
-    public static IWebViewContainer getCurrent(){return list.get(currentindex);}
+    public static IWebViewContainer getCurrent(){return get(currentindex);}
 
     public static int getCurrentindex() {
         return currentindex;
@@ -57,7 +65,7 @@ public class BrowserContainer {
     }
 
     public synchronized static void setCurrentindex(int index){
-        
+
         currentindex=index;
     }
 

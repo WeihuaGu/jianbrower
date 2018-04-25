@@ -6,9 +6,6 @@
 
 package weihuagu.com.jian.util;
 
-/**
- * Created by root on 17-2-14.
- */
 public class Constants {
     /**
      * Actions.

@@ -6,9 +6,6 @@
 
 package weihuagu.com.jian.ui.manager;
 
-/**
- * Created by root on 17-3-25.
- */
 public interface ITabManager {
     public void openNewTab();
     public void openNewTab(String url);

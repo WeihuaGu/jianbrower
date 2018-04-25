@@ -4,10 +4,17 @@
  * All right reserved.
  */
 
+/**
+* weihuagu.com.jian.BrowserActivity
+* 浏览器主activity
+
+*/
 package weihuagu.com.jian;
+
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -31,7 +38,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.view.ViewGroup;
-
 
 import weihuagu.com.jian.model.RuntimeSetting;
 import weihuagu.com.jian.ui.view.CustomWebView;
@@ -58,8 +64,9 @@ public class BrowserActivity extends AppCompatActivity
 
     RelativeLayout webviewlayout=null;
     PhoneUrlBar urlbar=null;
-    UIManager phoneuimanager=null;
     ProgressBar progressbar = null;
+    CustomWebView webview =null; //test
+
     RelativeLayout tabmanagerlayout=null;
     RecyclerView webviewnamelist =null;
     boolean filledupwebviewlayout=false;
@@ -68,7 +75,7 @@ public class BrowserActivity extends AppCompatActivity
     RelativeLayout cover=null;
     WebViewFactory webviewfactory=null;
 
-    CustomWebView webview =null; //test
+    UIManager phoneuimanager=null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,12 +172,11 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("jian","oncreate");
+        Log.i("jian","BrowserActivity oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.initResources();
-
         this.bindUIManager();
         this.handleIntent();
         if(!checkPermissionWRITE_EXTERNAL_STORAGE()){
